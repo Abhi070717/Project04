@@ -10,11 +10,11 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public final class JDBCDataSource {
 
-	private static JDBCDataSource jds = null;
+	private static JDBCDataSource jds = null; // static attribute have only one copy in there life time
 
 	private ComboPooledDataSource cpds = null;
 
-	private static ResourceBundle rb = ResourceBundle.getBundle("in.co.rays.proj4.bundle.system");
+	private static ResourceBundle rb = ResourceBundle.getBundle("in.co.rays.bundle.system");
 
 	private JDBCDataSource() {
 		try {
