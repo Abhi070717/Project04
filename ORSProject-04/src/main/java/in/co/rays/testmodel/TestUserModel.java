@@ -2,6 +2,8 @@ package in.co.rays.testmodel;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import in.co.rays.bean.UserBean;
@@ -11,34 +13,32 @@ public class TestUserModel {
 
 	public static void main(String[] args) throws Exception {
 
-		// addTest();
-		// updateTest();
-		// deleteTest();
-		// findByPkTest();
-		// findByLoginTest();
-		// authenticateTest();
-		searchTest();
+//		testAdd();
+		testUpdate();
+//		testDelete();
+//		testFindByPk();
+//		testSearch();
 
 	}
 
-	public static void addTest() throws Exception {
+	public static void testAdd() throws Exception {
 
 		UserBean bean = new UserBean();
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-		bean.setFirstName("Ram");
-		bean.setLastName("Sharma");
+		bean.setFirstName("Abhishish");
+		bean.setLastName("Bhawsar");
 		bean.setLogin("ram@gmail.com");
 		bean.setPassword("123");
-		bean.setDob(sdf.parse("2000-01-01"));
-		bean.setMobileNo("9999999999");
-		bean.setRoleId(2);
+		bean.setDob(sdf.parse("1999-11-19"));
+		bean.setMobileNo("9876543210");
+		bean.setRoleId(1);
 		bean.setGender("Male");
-		bean.setCreatedBy("Admin");
-		bean.setModifiedBy("Admin");
-		bean.setCreatedDatetime(new Timestamp(System.currentTimeMillis()));
-		bean.setModifiedDatetime(new Timestamp(System.currentTimeMillis()));
+		bean.setCreatedBy("root");
+		bean.setModifiedBy("root");
+		bean.setCreatedDatetime(new Timestamp(new Date().getTime()));
+		bean.setModifiedDatetime(new Timestamp(new Date().getTime()));
 
 		UserModel model = new UserModel();
 
@@ -48,13 +48,21 @@ public class TestUserModel {
 
 	}
 
-	public static void updateTest() throws Exception {
+	public static void testUpdate() throws Exception {
 
 		UserModel model = new UserModel();
 
 		UserBean bean = model.findByPk(1);
 
-		bean.setFirstName("UpdatedName");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		bean.setFirstName("Abhishek");
+		bean.setLastName("Bhawsar");
+		bean.setLogin("abhi@gmail.com");
+		bean.setPassword("123");
+		bean.setDob(sdf.parse("1999-11-19"));
+		bean.setMobileNo("9876543210");
+		bean.setGender("Male");
 
 		model.update(bean);
 
@@ -62,7 +70,7 @@ public class TestUserModel {
 
 	}
 
-	public static void deleteTest() throws Exception {
+	public static void testDelete() throws Exception {
 
 		UserBean bean = new UserBean();
 
@@ -76,7 +84,7 @@ public class TestUserModel {
 
 	}
 
-	public static void findByPkTest() throws Exception {
+	public static void testFindByPk() throws Exception {
 
 		UserModel model = new UserModel();
 
@@ -88,52 +96,22 @@ public class TestUserModel {
 
 	}
 
-	public static void findByLoginTest() throws Exception {
-
-		UserModel model = new UserModel();
-
-		UserBean bean = model.findByLogin("ram@gmail.com");
-
-		System.out.println(bean.getId());
-		System.out.println(bean.getFirstName());
-		System.out.println(bean.getLogin());
-
-	}
-
-	public static void authenticateTest() throws Exception {
-
-		UserModel model = new UserModel();
-
-		UserBean bean = model.authenticate("ram@gmail.com", "123");
-
-		if (bean != null) {
-
-			System.out.println("Login Success");
-			System.out.println(bean.getFirstName());
-
-		} else {
-
-			System.out.println("Login Failed");
-
-		}
-
-	}
-
-	public static void searchTest() throws Exception {
+	public static void testSearch() throws Exception {
 
 		UserModel model = new UserModel();
 
 		UserBean bean = new UserBean();
 
-		bean.setFirstName("Ram");
+//		bean.setFirstName("Ram");
 
-		List<UserBean> list = model.search(bean);
+		List list = model.search(bean);
 
-		for (UserBean u : list) {
-
-			System.out.println(u.getId());
-			System.out.println(u.getFirstName());
-			System.out.println(u.getLogin());
+		Iterator it = list.iterator();
+		while (it.hasNext()) {
+			bean = (UserBean) it.next();
+			System.out.println(bean.getId());
+			System.out.println(bean.getFirstName());
+			System.out.println(bean.getLogin());
 
 		}
 
