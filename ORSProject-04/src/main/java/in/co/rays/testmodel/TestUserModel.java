@@ -52,21 +52,18 @@ public class TestUserModel {
 
 		UserModel model = new UserModel();
 
-		UserBean bean = model.findByPk(1);
+		UserBean bean = model.findByPk(1L);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		bean.setFirstName("Abhishek");
-		bean.setLastName("Bhawsar");
+		
 		bean.setLogin("abhi@gmail.com");
-		bean.setPassword("123");
-		bean.setDob(sdf.parse("1999-11-19"));
-		bean.setMobileNo("9876543210");
-		bean.setGender("Male");
+		
 
 		model.update(bean);
 
-		System.out.println("User Updated");
+		System.out.println("User Updated in st_user");
 
 	}
 
@@ -80,7 +77,7 @@ public class TestUserModel {
 
 		model.delete(bean);
 
-		System.out.println("User Deleted");
+		System.out.println("User Deleted in st_user");
 
 	}
 

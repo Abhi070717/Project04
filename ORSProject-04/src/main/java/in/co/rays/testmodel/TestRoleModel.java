@@ -85,9 +85,7 @@ public class TestRoleModel {
 
 		try {
 			RoleBean bean = model.findByPk(1L);
-			if (bean == null) {
-				System.out.println("Test FindByPk Failed");
-			}
+			
 			System.out.println(bean.getId());
 			System.out.println(bean.getName());
 			System.out.println(bean.getDescription());
