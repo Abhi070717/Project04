@@ -16,10 +16,8 @@ public class MarksheetModel {
 		int pk = 0;
 		try {
 			conn = JDBCDataSource.getConnection();
-			System.out.println("Connection Succesfully Establidh");
-			;
 
-			PreparedStatement pstmt = conn.prepareStatement("select max(ID) from ST_MARKSHEET");
+			PreparedStatement pstmt = conn.prepareStatement("select max(id) from ST_MARKSHEET");
 
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {

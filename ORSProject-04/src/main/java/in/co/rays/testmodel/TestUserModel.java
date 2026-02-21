@@ -7,17 +7,32 @@ import java.util.Iterator;
 import java.util.List;
 
 import in.co.rays.bean.UserBean;
+import in.co.rays.exception.DatabaseException;
+import in.co.rays.model.StudentModel;
 import in.co.rays.model.UserModel;
 
 public class TestUserModel {
 
 	public static void main(String[] args) throws Exception {
 
+//		testNextPk();
 //		testAdd();
-		testUpdate();
+//		testUpdate();
 //		testDelete();
 //		testFindByPk();
-//		testSearch();
+		testSearch();
+
+	}
+	
+	public static void testNextPk() {
+
+		UserModel model = new UserModel();
+		try {
+			int i = model.nextPk();
+			System.out.println("NextPk : " + i);
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
 
 	}
 
