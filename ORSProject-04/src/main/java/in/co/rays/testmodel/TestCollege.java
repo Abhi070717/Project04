@@ -108,11 +108,15 @@ public class TestCollege {
 		try {
 			CollegeBean bean = model.findByPk(1);
 
-			System.out.println(bean.getName());
-			System.out.println(bean.getAddress());
-			System.out.println(bean.getState());
-			System.out.println(bean.getCity());
-			System.out.println(bean.getPhoneNo());
+			System.out.println("Name: " + bean.getName());
+			System.out.println("Address: " + bean.getAddress());
+			System.out.println("State: " + bean.getState());
+			System.out.println("City: " + bean.getCity());
+			System.out.println("PhoneNo: " + bean.getPhoneNo());
+			System.out.println("CreatedBy: " + bean.getCreatedBy());
+			System.out.println("ModifiedBy: " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
