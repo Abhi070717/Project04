@@ -129,9 +129,9 @@ public class TestSubjectModel {
 			System.out.println("Course Name : " + bean.getCourseName());
 			System.out.println("Description : " + bean.getDescription());
 			System.out.println("CreatedBy: " + bean.getCreatedBy());
-			System.out.println("ModifiedBy: " + bean.getModifiedBy());
-			System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
-			System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
 		} catch (Exception e) {
 
@@ -147,13 +147,13 @@ public class TestSubjectModel {
 			SubjectBean bean = new SubjectBean();
 
 			SubjectModel model = new SubjectModel();
-			
+
 			List list = new ArrayList();
-			
+
 			list = model.search(bean);
 
 			Iterator it = list.iterator();
-			
+
 			while (it.hasNext()) {
 				bean = (SubjectBean) it.next();
 				System.out.println("ID : " + bean.getId());
@@ -161,10 +161,10 @@ public class TestSubjectModel {
 				System.out.println("Course ID : " + bean.getCourseId());
 				System.out.println("Course Name : " + bean.getCourseName());
 				System.out.println("Description : " + bean.getDescription());
-				System.out.println("CreatedBy: " + bean.getCreatedBy());
-				System.out.println("ModifiedBy: " + bean.getModifiedBy());
-				System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
-				System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+				System.out.println("CreatedBy : " + bean.getCreatedBy());
+				System.out.println("ModifiedBy : " + bean.getModifiedBy());
+				System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+				System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 			}
 		} catch (ApplicationException e) {
 			e.printStackTrace();

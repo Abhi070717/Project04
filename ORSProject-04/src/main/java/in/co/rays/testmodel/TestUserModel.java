@@ -20,10 +20,10 @@ public class TestUserModel {
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
-		testSearch();
+//		testSearch();
 
 	}
-	
+
 	public static void testNextPk() {
 
 		UserModel model = new UserModel();
@@ -33,7 +33,6 @@ public class TestUserModel {
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void testAdd() throws Exception {
@@ -60,7 +59,6 @@ public class TestUserModel {
 		long pk = model.add(bean);
 
 		System.out.println("User added with PK = " + pk);
-
 	}
 
 	public static void testUpdate() throws Exception {
@@ -72,14 +70,12 @@ public class TestUserModel {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		bean.setFirstName("Abhishek");
-		
+
 		bean.setLogin("abhi@gmail.com");
-		
 
 		model.update(bean);
 
 		System.out.println("User Updated in st_user");
-
 	}
 
 	public static void testDelete() throws Exception {
@@ -93,7 +89,6 @@ public class TestUserModel {
 		model.delete(bean);
 
 		System.out.println("User Deleted in st_user");
-
 	}
 
 	public static void testFindByPk() throws Exception {
@@ -102,9 +97,19 @@ public class TestUserModel {
 
 		UserBean bean = model.findByPk(1);
 
-		System.out.println(bean.getId());
-		System.out.println(bean.getFirstName());
-		System.out.println(bean.getLogin());
+		System.out.println("ID : " + bean.getId());
+		System.out.println("First Name : " + bean.getFirstName());
+		System.out.println("Last Name : " + bean.getLastName());
+		System.out.println("Login : " + bean.getLogin());
+		System.out.println("Password : " + bean.getPassword());
+		System.out.println("DOB : " + bean.getDob());
+		System.out.println("Mobile No : " + bean.getMobileNo());
+		System.out.println("Role ID : " + bean.getRoleId());
+		System.out.println("Gender : " + bean.getGender());
+		System.out.println("CreatedBy : " + bean.getCreatedBy());
+		System.out.println("ModifiedBy : " + bean.getModifiedBy());
+		System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+		System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
 	}
 
@@ -114,16 +119,25 @@ public class TestUserModel {
 
 		UserBean bean = new UserBean();
 
-//		bean.setFirstName("Ram");
-
 		List list = model.search(bean);
 
 		Iterator it = list.iterator();
+		
 		while (it.hasNext()) {
 			bean = (UserBean) it.next();
-			System.out.println(bean.getId());
-			System.out.println(bean.getFirstName());
-			System.out.println(bean.getLogin());
+			System.out.println("ID : " + bean.getId());
+			System.out.println("First Name : " + bean.getFirstName());
+			System.out.println("Last Name : " + bean.getLastName());
+			System.out.println("Login : " + bean.getLogin());
+			System.out.println("Password : " + bean.getPassword());
+			System.out.println("DOB : " + bean.getDob());
+			System.out.println("Mobile No : " + bean.getMobileNo());
+			System.out.println("Role ID : " + bean.getRoleId());
+			System.out.println("Gender : " + bean.getGender());
+			System.out.println("CreatedBy : " + bean.getCreatedBy());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
 		}
 

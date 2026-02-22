@@ -112,17 +112,17 @@ public class TestMarksheet {
 
 			bean = model.findByPk(1);
 
-			System.out.println(bean.getId());
-			System.out.println(bean.getRollNo());
-			System.out.println(bean.getStudentId());
-			System.out.println(bean.getName());
-			System.out.println(bean.getPhysics());
-			System.out.println(bean.getChemistry());
-			System.out.println(bean.getMaths());
-			System.out.println(bean.getCreatedBy());
-			System.out.println(bean.getModifiedBy());
-			System.out.println(bean.getCreatedDatetime());
-			System.out.println(bean.getModifiedDatetime());
+			System.out.println("ID : " + bean.getId());
+			System.out.println("Roll No. : " + bean.getRollNo());
+			System.out.println("Student ID : " + bean.getStudentId());
+			System.out.println("Name : " + bean.getName());
+			System.out.println("Physics : " + bean.getPhysics());
+			System.out.println("Chemistry : " + bean.getChemistry());
+			System.out.println("Maths : " + bean.getMaths());
+			System.out.println("CreatedBy : " + bean.getCreatedBy());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
 		} catch (ApplicationException e) {
 			e.printStackTrace();
@@ -133,25 +133,28 @@ public class TestMarksheet {
 
 		try {
 			MarksheetBean bean = new MarksheetBean();
-			bean.setName("AnkitJain");
 
 			MarksheetModel model = new MarksheetModel();
+			
 			List list = new ArrayList();
+			
 			list = model.search(bean);
 
 			Iterator it = list.iterator();
+			
 			while (it.hasNext()) {
 				bean = (MarksheetBean) it.next();
-				System.out.println(bean.getId());
-				System.out.println(bean.getRollNo());
-				System.out.println(bean.getStudentId());
-				System.out.println(bean.getName());
-				System.out.println(bean.getPhysics());
-				System.out.println(bean.getChemistry());
-				System.out.println("CreatedBy: " + bean.getCreatedBy());
-				System.out.println("ModifiedBy: " + bean.getModifiedBy());
-				System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
-				System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+				System.out.println("ID : " + bean.getId());
+				System.out.println("Roll No. : " + bean.getRollNo());
+				System.out.println("Student ID : " + bean.getStudentId());
+				System.out.println("Name : " + bean.getName());
+				System.out.println("Physics : " + bean.getPhysics());
+				System.out.println("Chemistry : " + bean.getChemistry());
+				System.out.println("Maths : " + bean.getMaths());
+				System.out.println("CreatedBy : " + bean.getCreatedBy());
+				System.out.println("ModifiedBy : " + bean.getModifiedBy());
+				System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+				System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 			}
 		} catch (ApplicationException e) {
 			e.printStackTrace();

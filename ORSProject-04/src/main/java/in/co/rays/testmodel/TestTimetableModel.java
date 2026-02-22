@@ -128,14 +128,17 @@ public class TestTimetableModel {
 
 			System.out.println("ID : " + bean.getId());
 			System.out.println("Semester : " + bean.getSemester());
-			System.out.println("Course : " + bean.getCourseName());
-			System.out.println("Subject : " + bean.getSubjectName());
+			System.out.println("Description : " + bean.getDescription());
 			System.out.println("Exam Date : " + bean.getExamDate());
 			System.out.println("Exam Time : " + bean.getExamTime());
-			System.out.println("CreatedBy: " + bean.getCreatedBy());
-			System.out.println("ModifiedBy: " + bean.getModifiedBy());
-			System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
-			System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+			System.out.println("Course ID : "+bean.getCourseId());
+			System.out.println("Course Name : " + bean.getCourseName());
+			System.out.println("Subject ID : "+bean.getSubjectId());
+			System.out.println("Subject Name : " + bean.getSubjectName());
+			System.out.println("CreatedBy : " + bean.getCreatedBy());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,14 +162,17 @@ public class TestTimetableModel {
 
 				System.out.println("ID : " + bean.getId());
 				System.out.println("Semester : " + bean.getSemester());
-				System.out.println("Course : " + bean.getCourseName());
-				System.out.println("Subject : " + bean.getSubjectName());
+				System.out.println("Description : " + bean.getDescription());
 				System.out.println("Exam Date : " + bean.getExamDate());
 				System.out.println("Exam Time : " + bean.getExamTime());
-				System.out.println("CreatedBy: " + bean.getCreatedBy());
-				System.out.println("ModifiedBy: " + bean.getModifiedBy());
-				System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
-				System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+				System.out.println("Course ID : "+bean.getCourseId());
+				System.out.println("Course Name : " + bean.getCourseName());
+				System.out.println("Subject ID : "+bean.getSubjectId());
+				System.out.println("Subject Name : " + bean.getSubjectName());
+				System.out.println("CreatedBy : " + bean.getCreatedBy());
+				System.out.println("ModifiedBy : " + bean.getModifiedBy());
+				System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+				System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
 			}
 		} catch (Exception e) {

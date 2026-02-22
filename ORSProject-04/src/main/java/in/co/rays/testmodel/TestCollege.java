@@ -20,7 +20,7 @@ public class TestCollege {
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
-		testsearch();
+//		testsearch();
 	}
 
 	public static void testNextPk() {
@@ -32,7 +32,6 @@ public class TestCollege {
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void testAdd() {
@@ -81,7 +80,6 @@ public class TestCollege {
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void testDelete() {
@@ -98,7 +96,6 @@ public class TestCollege {
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void testFindByPk() {
@@ -108,46 +105,48 @@ public class TestCollege {
 		try {
 			CollegeBean bean = model.findByPk(1);
 
+			System.out.println("ID : " + bean.getId());
 			System.out.println("Name: " + bean.getName());
 			System.out.println("Address: " + bean.getAddress());
 			System.out.println("State: " + bean.getState());
 			System.out.println("City: " + bean.getCity());
 			System.out.println("PhoneNo: " + bean.getPhoneNo());
-			System.out.println("CreatedBy: " + bean.getCreatedBy());
-			System.out.println("ModifiedBy: " + bean.getModifiedBy());
-			System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
-			System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+			System.out.println("CreatedBy : " + bean.getCreatedBy());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void testsearch() {
 		try {
 			CollegeBean bean = new CollegeBean();
-			bean.setName("SGSITS");
 
 			CollegeModel model = new CollegeModel();
+			
 			List list = new ArrayList();
+			
 			list = model.search(bean);
 
 			Iterator it = list.iterator();
+			
 			while (it.hasNext()) {
 				bean = (CollegeBean) it.next();
+				System.out.println("ID : " + bean.getId());
 				System.out.println("Name: " + bean.getName());
 				System.out.println("Address: " + bean.getAddress());
 				System.out.println("State: " + bean.getState());
 				System.out.println("City: " + bean.getCity());
 				System.out.println("PhoneNo: " + bean.getPhoneNo());
-				System.out.println("CreatedBy: " + bean.getCreatedBy());
-				System.out.println("ModifiedBy: " + bean.getModifiedBy());
-				System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
-				System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+				System.out.println("CreatedBy : " + bean.getCreatedBy());
+				System.out.println("ModifiedBy : " + bean.getModifiedBy());
+				System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+				System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 			}
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

@@ -86,9 +86,13 @@ public class TestRoleModel {
 		try {
 			RoleBean bean = model.findByPk(1L);
 			
-			System.out.println(bean.getId());
-			System.out.println(bean.getName());
-			System.out.println(bean.getDescription());
+			System.out.println("ID : " + bean.getId());
+			System.out.println("Name : " + bean.getName());
+			System.out.println("Description : " + bean.getDescription());
+			System.out.println("CreatedBy : " + bean.getCreatedBy());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
@@ -101,20 +105,23 @@ public class TestRoleModel {
 
 		try {
 			RoleBean bean = new RoleBean();
+
 			List list = new ArrayList();
-			bean.setName("Student");
+
 			list = model.search(bean);
-			if (list.size() < 0) {
-				System.out.println("Test Serach fail");
-			}
+			
 			Iterator it = list.iterator();
 
 			while (it.hasNext()) {
 				bean = (RoleBean) it.next();
 
-				System.out.println(bean.getId());
-				System.out.println(bean.getName());
-				System.out.println(bean.getDescription());
+				System.out.println("ID : " + bean.getId());
+				System.out.println("Name : " + bean.getName());
+				System.out.println("Description : " + bean.getDescription());
+				System.out.println("CreatedBy : " + bean.getCreatedBy());
+				System.out.println("ModifiedBy : " + bean.getModifiedBy());
+				System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+				System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 			}
 		} catch (ApplicationException e) {
 			e.printStackTrace();

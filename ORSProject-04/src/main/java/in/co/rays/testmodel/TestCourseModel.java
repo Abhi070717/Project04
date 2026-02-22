@@ -111,10 +111,10 @@ public class TestCourseModel {
 			System.out.println("Name : " + bean.getName());
 			System.out.println("Duration : " + bean.getDuration());
 			System.out.println("Description : " + bean.getDescription());
-			System.out.println("CreatedBy: " + bean.getCreatedBy());
-			System.out.println("ModifiedBy: " + bean.getModifiedBy());
-			System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
-			System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+			System.out.println("CreatedBy : " + bean.getCreatedBy());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
 		} catch (ApplicationException e) {
 			e.printStackTrace();
@@ -126,23 +126,25 @@ public class TestCourseModel {
 
 		try {
 			CourseBean bean = new CourseBean();
-			bean.setName("Java");
 
 			CourseModel model = new CourseModel();
+			
 			List list = new ArrayList();
+			
 			list = model.search(bean);
 
 			Iterator it = list.iterator();
+			
 			while (it.hasNext()) {
 				bean = (CourseBean) it.next();
 				System.out.println("ID : " + bean.getId());
 				System.out.println("Name : " + bean.getName());
 				System.out.println("Duration : " + bean.getDuration());
 				System.out.println("Description : " + bean.getDescription());
-				System.out.println("CreatedBy: " + bean.getCreatedBy());
-				System.out.println("ModifiedBy: " + bean.getModifiedBy());
-				System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
-				System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+				System.out.println("CreatedBy : " + bean.getCreatedBy());
+				System.out.println("ModifiedBy : " + bean.getModifiedBy());
+				System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+				System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 			}
 		} catch (ApplicationException e) {
 			e.printStackTrace();

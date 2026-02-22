@@ -72,12 +72,13 @@ public class TestStudentModel {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		StudentBean bean = new StudentBean();
 
-		bean.setFirstName("Aniket");
-		bean.setLastName("Singh");
-		bean.setDob(sdf.parse("2000-11-10"));
+		bean.setId(2);
+		bean.setFirstName("Viraj");
+		bean.setLastName("Rathi");
+		bean.setDob(sdf.parse("2001-11-14"));
 		bean.setGender("male");
-		bean.setMobileNo("7946554655");
-		bean.setEmail("ani@gmail.com");
+		bean.setMobileNo("9223322857");
+		bean.setEmail("vj@gmail.com");
 		bean.setCollegeId(1);
 		bean.setCollegeName("SGSITS");
 		bean.setCreatedBy("root@gmail.com");
@@ -122,18 +123,19 @@ public class TestStudentModel {
 
 			bean = model.findByPk(1);
 
-			System.out.println(bean.getFirstName());
-			System.out.println(bean.getLastName());
-			System.out.println(bean.getDob());
-			System.out.println(bean.getGender());
-			System.out.println(bean.getMobileNo());
-			System.out.println(bean.getEmail());
-			System.out.println(bean.getCollegeId());
-			System.out.println(bean.getCollegeName());
-			System.out.println(bean.getCreatedBy());
-			System.out.println(bean.getModifiedBy());
-			System.out.println(bean.getCreatedDatetime());
-			System.out.println(bean.getModifiedDatetime());
+			System.out.println("ID : " + bean.getId());
+			System.out.println("First Name : " + bean.getFirstName());
+            System.out.println("Last Name : " + bean.getLastName());
+            System.out.println("DOB : " + bean.getDob());
+            System.out.println("Gender : " + bean.getGender());
+            System.out.println("Mobile No : " + bean.getMobileNo());
+            System.out.println("Email : " + bean.getEmail());
+            System.out.println("College ID : " + bean.getCollegeId());
+            System.out.println("College Name : " + bean.getCollegeName());
+            System.out.println("CreatedBy : " + bean.getCreatedBy());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
 		} catch (ApplicationException e) {
 			e.printStackTrace();
@@ -154,18 +156,19 @@ public class TestStudentModel {
 			Iterator it = list.iterator();
 			while (it.hasNext()) {
 				bean = (StudentBean) it.next();
-				System.out.println(bean.getFirstName());
-				System.out.println(bean.getLastName());
-				System.out.println(bean.getDob());
-				System.out.println(bean.getGender());
-				System.out.println(bean.getMobileNo());
-				System.out.println(bean.getEmail());
-				System.out.println(bean.getCollegeId());
-				System.out.println(bean.getCollegeName());
-				System.out.println("CreatedBy: " + bean.getCreatedBy());
-				System.out.println("ModifiedBy: " + bean.getModifiedBy());
-				System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
-				System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+				System.out.println("ID : " + bean.getId());
+	            System.out.println("First Name : " + bean.getFirstName());
+	            System.out.println("Last Name : " + bean.getLastName());
+	            System.out.println("DOB : " + bean.getDob());
+	            System.out.println("Gender : " + bean.getGender());
+	            System.out.println("Mobile No : " + bean.getMobileNo());
+	            System.out.println("Email : " + bean.getEmail());
+	            System.out.println("College ID : " + bean.getCollegeId());
+	            System.out.println("College Name : " + bean.getCollegeName());
+	            System.out.println("CreatedBy : " + bean.getCreatedBy());
+				System.out.println("ModifiedBy : " + bean.getModifiedBy());
+				System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+				System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 			}
 		} catch (ApplicationException e) {
 			e.printStackTrace();
