@@ -8,9 +8,11 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import in.co.rays.bean.MarksheetBean;
 import in.co.rays.bean.StudentBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
+import in.co.rays.model.MarksheetModel;
 import in.co.rays.model.StudentModel;
 
 public class TestStudentModel {
@@ -21,7 +23,8 @@ public class TestStudentModel {
 //		testAdd();
 //		testUpdate();
 //		testDelete();
-		testFindByPk();
+//		testFindByPk();
+		testSearch();
 	}
 
 	public static void testNextPk() {
@@ -142,8 +145,7 @@ public class TestStudentModel {
 
 		try {
 			StudentBean bean = new StudentBean();
-
-			bean.setFirstName("Ankit");
+			bean.setFirstName("Aniket");
 
 			StudentModel model = new StudentModel();
 			List list = new ArrayList();
@@ -151,19 +153,19 @@ public class TestStudentModel {
 
 			Iterator it = list.iterator();
 			while (it.hasNext()) {
-
-			System.out.println(bean.getFirstName());
-			System.out.println(bean.getLastName());
-			System.out.println(bean.getDob());
-			System.out.println(bean.getGender());
-			System.out.println(bean.getMobileNo());
-			System.out.println(bean.getEmail());
-			System.out.println(bean.getCollegeId());
-			System.out.println(bean.getCollegeName());
-			System.out.println("CreatedBy: " + bean.getCreatedBy());
-			System.out.println("ModifiedBy: " + bean.getModifiedBy());
-			System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
-			System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+				bean = (StudentBean) it.next();
+				System.out.println(bean.getFirstName());
+				System.out.println(bean.getLastName());
+				System.out.println(bean.getDob());
+				System.out.println(bean.getGender());
+				System.out.println(bean.getMobileNo());
+				System.out.println(bean.getEmail());
+				System.out.println(bean.getCollegeId());
+				System.out.println(bean.getCollegeName());
+				System.out.println("CreatedBy: " + bean.getCreatedBy());
+				System.out.println("ModifiedBy: " + bean.getModifiedBy());
+				System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
+				System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
 			}
 		} catch (ApplicationException e) {
 			e.printStackTrace();

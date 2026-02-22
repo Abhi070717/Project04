@@ -1,5 +1,13 @@
 package in.co.rays.testmodel;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import in.co.rays.bean.MarksheetBean;
+import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
 import in.co.rays.model.MarksheetModel;
 
@@ -7,7 +15,12 @@ public class TestMarksheet {
 
 	public static void main(String[] args) {
 
-		testNextPk();
+//		testNextPk();
+//		testAdd();
+//		testUpdate();
+//		testDelete();
+//		testFindByPk();
+		testSearch();
 	}
 
 	public static void testNextPk() {
@@ -23,6 +36,126 @@ public class TestMarksheet {
 	}
 
 	public static void testAdd() {
+
+		MarksheetBean bean = new MarksheetBean();
+
+		bean.setRollNo("101");
+		bean.setStudentId(1);
+		bean.setName("Ankit Jain");
+		bean.setPhysics(74);
+		bean.setChemistry(96);
+		bean.setMaths(88);
+		bean.setCreatedBy("root@gmail.com");
+		bean.setModifiedBy("root@gmail.com");
+		bean.setCreatedDatetime(new Timestamp(new Date().getTime()));
+		bean.setModifiedDatetime(new Timestamp(new Date().getTime()));
+
+		try {
+			MarksheetModel model = new MarksheetModel();
+			long i = model.add(bean);
+			System.out.println("Add method : " + i);
+
+		} catch (ApplicationException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void testUpdate() {
+
+		MarksheetBean bean = new MarksheetBean();
+
+		bean.setRollNo("101");
+		bean.setStudentId(1);
+		bean.setName("Vinay Rawat");
+		bean.setPhysics(74);
+		bean.setChemistry(96);
+		bean.setMaths(88);
+		bean.setCreatedBy("root@gmail.com");
+		bean.setModifiedBy("root@gmail.com");
+		bean.setCreatedDatetime(new Timestamp(new Date().getTime()));
+		bean.setModifiedDatetime(new Timestamp(new Date().getTime()));
+
+		try {
+			MarksheetModel model = new MarksheetModel();
+			model.update(bean);
+			System.out.println("Data Updated Successfully in st_marksheet");
+
+		} catch (ApplicationException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void testDelete() {
+
+		MarksheetBean bean = new MarksheetBean();
+		bean.setId(2);
+		try {
+			MarksheetModel model = new MarksheetModel();
+			model.delete(bean);
+			System.out.println("Data Deleted Successfully in st_marksheet");
+		} catch (ApplicationException e) {
+
+			e.printStackTrace();
+		}
+	}
+
+	public static void testFindByPk() {
+
+		MarksheetModel model = new MarksheetModel();
+		MarksheetBean bean = new MarksheetBean();
+
+		try {
+
+			bean = model.findByPk(1);
+
+			System.out.println(bean.getId());
+			System.out.println(bean.getRollNo());
+			System.out.println(bean.getStudentId());
+			System.out.println(bean.getName());
+			System.out.println(bean.getPhysics());
+			System.out.println(bean.getChemistry());
+			System.out.println(bean.getMaths());
+			System.out.println(bean.getCreatedBy());
+			System.out.println(bean.getModifiedBy());
+			System.out.println(bean.getCreatedDatetime());
+			System.out.println(bean.getModifiedDatetime());
+
+		} catch (ApplicationException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void testSearch() {
+
+		try {
+			MarksheetBean bean = new MarksheetBean();
+			bean.setName("AnkitJain");
+
+			MarksheetModel model = new MarksheetModel();
+			List list = new ArrayList();
+			list = model.search(bean);
+
+			Iterator it = list.iterator();
+			while (it.hasNext()) {
+				bean = (MarksheetBean) it.next();
+				System.out.println(bean.getId());
+				System.out.println(bean.getRollNo());
+				System.out.println(bean.getStudentId());
+				System.out.println(bean.getName());
+				System.out.println(bean.getPhysics());
+				System.out.println(bean.getChemistry());
+				System.out.println("CreatedBy: " + bean.getCreatedBy());
+				System.out.println("ModifiedBy: " + bean.getModifiedBy());
+				System.out.println("CreatedDatetime: " + bean.getCreatedDatetime());
+				System.out.println("ModifiedDatetime: " + bean.getModifiedDatetime());
+			}
+		} catch (ApplicationException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
