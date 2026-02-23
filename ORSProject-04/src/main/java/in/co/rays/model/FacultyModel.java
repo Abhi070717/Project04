@@ -9,6 +9,7 @@ import java.util.List;
 import in.co.rays.bean.FacultyBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.util.JDBCDataSource;
 
 public class FacultyModel {
@@ -34,10 +35,16 @@ public class FacultyModel {
 		return pk + 1;
 	}
 
-	public long add(FacultyBean bean) throws ApplicationException {
+	public long add(FacultyBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 		int pk = 0;
+
+		FacultyBean existBean = findByEmail(bean.getEmail());
+
+		if (existBean != null) {
+			throw new DuplicateRecordException("Email Already Exist");
+		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -198,6 +205,49 @@ public class FacultyModel {
 
 		} catch (Exception e) {
 			throw new ApplicationException("Exception : Exception in getting Faculty by pk");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+		return bean;
+	}
+
+	public FacultyBean findByEmail(String email) throws ApplicationException {
+
+		StringBuffer sql = new StringBuffer("select * from st_faculty where email = ?");
+		FacultyBean bean = null;
+		Connection conn = null;
+
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, email);
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new FacultyBean();
+				bean.setId(rs.getLong(1));
+				bean.setFirstName(rs.getString(2));
+				bean.setLastName(rs.getString(3));
+				bean.setDob(rs.getDate(4));
+				bean.setGender(rs.getString(5));
+				bean.setMobileNo(rs.getString(6));
+				bean.setEmail(rs.getString(7));
+				bean.setCollegeId(rs.getLong(8));
+				bean.setCollegeName(rs.getString(9));
+				bean.setCourseId(rs.getLong(10));
+				bean.setCourseName(rs.getString(11));
+				bean.setSubjectId(rs.getLong(12));
+				bean.setSubjectName(rs.getString(13));
+				bean.setCreatedBy(rs.getString(14));
+				bean.setModifiedBy(rs.getString(15));
+				bean.setCreatedDatetime(rs.getTimestamp(16));
+				bean.setModifiedDatetime(rs.getTimestamp(17));
+			}
+			rs.close();
+			pstmt.close();
+
+		} catch (Exception e) {
+			throw new ApplicationException("Exception : Exception in getting Faculty by Email");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}

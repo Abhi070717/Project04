@@ -12,6 +12,8 @@ import in.co.rays.bean.MarksheetBean;
 import in.co.rays.bean.StudentBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
+import in.co.rays.exception.RecordNotFoundException;
 import in.co.rays.model.MarksheetModel;
 import in.co.rays.model.StudentModel;
 
@@ -24,15 +26,16 @@ public class TestStudentModel {
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
-		testSearch();
+//		testFindByEmail();
+//		testSearch();
 	}
 
 	public static void testNextPk() {
 
 		StudentModel model = new StudentModel();
 		try {
-			int i = model.nextPk();
-			System.out.println("NextPk : " + i);
+			int pk = model.nextPk();
+			System.out.println("NextPk : " + pk);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
@@ -58,9 +61,12 @@ public class TestStudentModel {
 		bean.setModifiedDatetime(new Timestamp(new Date().getTime()));
 
 		StudentModel model = new StudentModel();
+
 		try {
 			long i = model.add(bean);
 			System.out.println("Data Stored in st_student: " + i);
+		} catch (DuplicateRecordException e) {
+			e.printStackTrace();
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
@@ -125,14 +131,14 @@ public class TestStudentModel {
 
 			System.out.println("ID : " + bean.getId());
 			System.out.println("First Name : " + bean.getFirstName());
-            System.out.println("Last Name : " + bean.getLastName());
-            System.out.println("DOB : " + bean.getDob());
-            System.out.println("Gender : " + bean.getGender());
-            System.out.println("Mobile No : " + bean.getMobileNo());
-            System.out.println("Email : " + bean.getEmail());
-            System.out.println("College ID : " + bean.getCollegeId());
-            System.out.println("College Name : " + bean.getCollegeName());
-            System.out.println("CreatedBy : " + bean.getCreatedBy());
+			System.out.println("Last Name : " + bean.getLastName());
+			System.out.println("DOB : " + bean.getDob());
+			System.out.println("Gender : " + bean.getGender());
+			System.out.println("Mobile No : " + bean.getMobileNo());
+			System.out.println("Email : " + bean.getEmail());
+			System.out.println("College ID : " + bean.getCollegeId());
+			System.out.println("College Name : " + bean.getCollegeName());
+			System.out.println("CreatedBy : " + bean.getCreatedBy());
 			System.out.println("ModifiedBy : " + bean.getModifiedBy());
 			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
 			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
@@ -142,8 +148,35 @@ public class TestStudentModel {
 		}
 	}
 
-	public static void testSearch() {
+	public static void testFindByEmail() {
 
+		StudentModel model = new StudentModel();
+		StudentBean bean = new StudentBean();
+
+		try {
+
+			bean = model.findByEmail("ani@gmail.com");
+
+			System.out.println("ID : " + bean.getId());
+			System.out.println("First Name : " + bean.getFirstName());
+			System.out.println("Last Name : " + bean.getLastName());
+			System.out.println("DOB : " + bean.getDob());
+			System.out.println("Gender : " + bean.getGender());
+			System.out.println("Mobile No : " + bean.getMobileNo());
+			System.out.println("Email : " + bean.getEmail());
+			System.out.println("College ID : " + bean.getCollegeId());
+			System.out.println("College Name : " + bean.getCollegeName());
+			System.out.println("CreatedBy : " + bean.getCreatedBy());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
+
+		} catch (ApplicationException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void testSearch() {
 
 		try {
 			StudentBean bean = new StudentBean();
@@ -157,15 +190,15 @@ public class TestStudentModel {
 			while (it.hasNext()) {
 				bean = (StudentBean) it.next();
 				System.out.println("ID : " + bean.getId());
-	            System.out.println("First Name : " + bean.getFirstName());
-	            System.out.println("Last Name : " + bean.getLastName());
-	            System.out.println("DOB : " + bean.getDob());
-	            System.out.println("Gender : " + bean.getGender());
-	            System.out.println("Mobile No : " + bean.getMobileNo());
-	            System.out.println("Email : " + bean.getEmail());
-	            System.out.println("College ID : " + bean.getCollegeId());
-	            System.out.println("College Name : " + bean.getCollegeName());
-	            System.out.println("CreatedBy : " + bean.getCreatedBy());
+				System.out.println("First Name : " + bean.getFirstName());
+				System.out.println("Last Name : " + bean.getLastName());
+				System.out.println("DOB : " + bean.getDob());
+				System.out.println("Gender : " + bean.getGender());
+				System.out.println("Mobile No : " + bean.getMobileNo());
+				System.out.println("Email : " + bean.getEmail());
+				System.out.println("College ID : " + bean.getCollegeId());
+				System.out.println("College Name : " + bean.getCollegeName());
+				System.out.println("CreatedBy : " + bean.getCreatedBy());
 				System.out.println("ModifiedBy : " + bean.getModifiedBy());
 				System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
 				System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());

@@ -6,13 +6,13 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import in.co.rays.bean.CollegeBean;
+import in.co.rays.bean.MarksheetBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
 import in.co.rays.exception.DuplicateRecordException;
-import in.co.rays.model.CollegeModel;
+import in.co.rays.model.MarksheetModel;
 
-public class TestCollegeModel {
+public class TestMarksheetModel {
 
 	public static void main(String[] args) {
 
@@ -22,106 +22,112 @@ public class TestCollegeModel {
 //		testDelete();
 //		testFindByPk();
 //		testFindByName();
-//		testsearch();
+//		testSearch();
 	}
 
 	public static void testNextPk() {
 
-		CollegeModel model = new CollegeModel();
+		MarksheetModel model = new MarksheetModel();
 		try {
 			int i = model.nextPk();
 			System.out.println("NextPk : " + i);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public static void testAdd() {
 
-		CollegeBean bean = new CollegeBean();
+		MarksheetBean bean = new MarksheetBean();
 
-		bean.setName("SGSITS");
-		bean.setAddress("Regal Square");
-		bean.setState("Madhya Pradesh");
-		bean.setCity("Indore");
-		bean.setPhoneNo("9876543210");
+		bean.setRollNo("101");
+		bean.setStudentId(1);
+		bean.setName("Ankit Jain");
+		bean.setPhysics(74);
+		bean.setChemistry(96);
+		bean.setMaths(88);
 		bean.setCreatedBy("root@gmail.com");
 		bean.setModifiedBy("root@gmail.com");
 		bean.setCreatedDatetime(new Timestamp(new Date().getTime()));
 		bean.setModifiedDatetime(new Timestamp(new Date().getTime()));
 
-		CollegeModel model = new CollegeModel();
-		try {
-			long i;
+		
+			MarksheetModel model = new MarksheetModel();
+			
 			try {
-				i = model.add(bean);
-				System.out.println("Data Stored in st_college: " + i);
-			} catch (ApplicationException e) {
+				long i = model.add(bean);
+				System.out.println("Add method : " + i);
+			} catch (ApplicationException | DuplicateRecordException e) {
 				e.printStackTrace();
 			}
-		} catch (DuplicateRecordException e) {
-			e.printStackTrace();
-		}
+
+		
+
 	}
 
 	public static void testUpdate() {
 
-		CollegeBean bean = new CollegeBean();
+		MarksheetBean bean = new MarksheetBean();
 
-		bean.setId(1);
-		bean.setName("SGSITS");
-		bean.setAddress("Regal Square");
-		bean.setState("Madhya Pradesh");
-		bean.setCity("Indore");
-		bean.setPhoneNo("0123456789");
+		bean.setRollNo("101");
+		bean.setStudentId(1);
+		bean.setName("Vinay Rawat");
+		bean.setPhysics(74);
+		bean.setChemistry(96);
+		bean.setMaths(88);
 		bean.setCreatedBy("root@gmail.com");
 		bean.setModifiedBy("root@gmail.com");
 		bean.setCreatedDatetime(new Timestamp(new Date().getTime()));
 		bean.setModifiedDatetime(new Timestamp(new Date().getTime()));
 
-		CollegeModel model = new CollegeModel();
-
 		try {
+			MarksheetModel model = new MarksheetModel();
 			model.update(bean);
-			System.out.println("Data Updated in st_college");
+			System.out.println("Data Updated Successfully in st_marksheet");
+
 		} catch (ApplicationException e) {
+
 			e.printStackTrace();
 		}
+
 	}
 
 	public static void testDelete() {
 
-		CollegeBean bean = new CollegeBean();
-
-		bean.setId(1);
-
-		CollegeModel model = new CollegeModel();
-
+		MarksheetBean bean = new MarksheetBean();
+		bean.setId(2);
 		try {
+			MarksheetModel model = new MarksheetModel();
 			model.delete(bean);
-			System.out.println("Data Deleted in st_college");
+			System.out.println("Data Deleted Successfully in st_marksheet");
 		} catch (ApplicationException e) {
+
 			e.printStackTrace();
 		}
 	}
 
 	public static void testFindByPk() {
 
-		CollegeModel model = new CollegeModel();
+		MarksheetModel model = new MarksheetModel();
+		MarksheetBean bean = new MarksheetBean();
 
 		try {
-			CollegeBean bean = model.findByPk(1);
+
+			bean = model.findByPk(1);
 
 			System.out.println("ID : " + bean.getId());
-			System.out.println("Name: " + bean.getName());
-			System.out.println("Address: " + bean.getAddress());
-			System.out.println("State: " + bean.getState());
-			System.out.println("City: " + bean.getCity());
-			System.out.println("PhoneNo: " + bean.getPhoneNo());
+			System.out.println("Roll No. : " + bean.getRollNo());
+			System.out.println("Student ID : " + bean.getStudentId());
+			System.out.println("Name : " + bean.getName());
+			System.out.println("Physics : " + bean.getPhysics());
+			System.out.println("Chemistry : " + bean.getChemistry());
+			System.out.println("Maths : " + bean.getMaths());
 			System.out.println("CreatedBy : " + bean.getCreatedBy());
 			System.out.println("ModifiedBy : " + bean.getModifiedBy());
 			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
 			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
+
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
@@ -129,31 +135,36 @@ public class TestCollegeModel {
 
 	public static void testFindByName() {
 
-		CollegeModel model = new CollegeModel();
+		MarksheetModel model = new MarksheetModel();
+		MarksheetBean bean = new MarksheetBean();
 
 		try {
-			CollegeBean bean = model.findByName("SGSITS");
+
+			bean = model.findByName("Ankit jain");
 
 			System.out.println("ID : " + bean.getId());
-			System.out.println("Name: " + bean.getName());
-			System.out.println("Address: " + bean.getAddress());
-			System.out.println("State: " + bean.getState());
-			System.out.println("City: " + bean.getCity());
-			System.out.println("PhoneNo: " + bean.getPhoneNo());
+			System.out.println("Roll No. : " + bean.getRollNo());
+			System.out.println("Student ID : " + bean.getStudentId());
+			System.out.println("Name : " + bean.getName());
+			System.out.println("Physics : " + bean.getPhysics());
+			System.out.println("Chemistry : " + bean.getChemistry());
+			System.out.println("Maths : " + bean.getMaths());
 			System.out.println("CreatedBy : " + bean.getCreatedBy());
 			System.out.println("ModifiedBy : " + bean.getModifiedBy());
 			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
 			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
+
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void testsearch() {
-		try {
-			CollegeBean bean = new CollegeBean();
+	public static void testSearch() {
 
-			CollegeModel model = new CollegeModel();
+		try {
+			MarksheetBean bean = new MarksheetBean();
+
+			MarksheetModel model = new MarksheetModel();
 
 			List list = new ArrayList();
 
@@ -162,13 +173,14 @@ public class TestCollegeModel {
 			Iterator it = list.iterator();
 
 			while (it.hasNext()) {
-				bean = (CollegeBean) it.next();
+				bean = (MarksheetBean) it.next();
 				System.out.println("ID : " + bean.getId());
-				System.out.println("Name: " + bean.getName());
-				System.out.println("Address: " + bean.getAddress());
-				System.out.println("State: " + bean.getState());
-				System.out.println("City: " + bean.getCity());
-				System.out.println("PhoneNo: " + bean.getPhoneNo());
+				System.out.println("Roll No. : " + bean.getRollNo());
+				System.out.println("Student ID : " + bean.getStudentId());
+				System.out.println("Name : " + bean.getName());
+				System.out.println("Physics : " + bean.getPhysics());
+				System.out.println("Chemistry : " + bean.getChemistry());
+				System.out.println("Maths : " + bean.getMaths());
 				System.out.println("CreatedBy : " + bean.getCreatedBy());
 				System.out.println("ModifiedBy : " + bean.getModifiedBy());
 				System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
@@ -178,4 +190,5 @@ public class TestCollegeModel {
 			e.printStackTrace();
 		}
 	}
+
 }

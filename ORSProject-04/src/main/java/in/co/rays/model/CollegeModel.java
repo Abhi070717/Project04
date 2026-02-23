@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.co.rays.bean.CollegeBean;
+import in.co.rays.bean.RoleBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.util.JDBCDataSource;
 
 public class CollegeModel {
@@ -36,10 +38,16 @@ public class CollegeModel {
 
 	}
 
-	public long add(CollegeBean bean) throws ApplicationException {
+	public long add(CollegeBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 		int pk = 0;
+		
+		CollegeBean existBean = findByName(bean.getName());
+		
+		if(existBean != null) {
+			throw new DuplicateRecordException("College Already Exist");
+		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -174,6 +182,43 @@ public class CollegeModel {
 			JDBCDataSource.closeConnection(conn);
 		}
 		return bean;
+	}
+	
+	public CollegeBean findByName(String name) throws ApplicationException {
+
+		Connection conn = null;
+		CollegeBean bean = null;
+
+		StringBuffer sb = new StringBuffer("select * from st_college where name = ?");
+
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt;
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setString(1, name);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new CollegeBean();
+				bean.setId(rs.getLong(1));
+				bean.setName(rs.getString(2));
+				bean.setAddress(rs.getString(3));
+				bean.setState(rs.getString(4));
+				bean.setCity(rs.getString(5));
+				bean.setPhoneNo(rs.getString(6));
+				bean.setCreatedBy(rs.getString(7));
+				bean.setModifiedBy(rs.getString(8));
+				bean.setCreatedDatetime(rs.getTimestamp(9));
+				bean.setModifiedDatetime(rs.getTimestamp(10));
+			}
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			throw new ApplicationException("Exception : Exception in getting user by Name");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+		return bean;
+
 	}
 
 	public List<CollegeBean> search(CollegeBean bean) throws ApplicationException {

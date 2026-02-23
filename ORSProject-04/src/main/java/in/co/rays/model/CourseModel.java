@@ -10,6 +10,7 @@ import java.util.List;
 import in.co.rays.bean.CourseBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.util.JDBCDataSource;
 
 public class CourseModel {
@@ -39,10 +40,16 @@ public class CourseModel {
 		return pk + 1;
 	}
 
-	public long add(CourseBean bean) throws ApplicationException {
+	public long add(CourseBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 		int pk = 0;
+		
+		CourseBean existBean = findByName(bean.getName());
+		
+		if(existBean != null) {
+			throw new DuplicateRecordException("Course Already Exist");
+		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -177,6 +184,42 @@ public class CourseModel {
 
 		} catch (Exception e) {
 			throw new ApplicationException("Exception : Exception in getting Course by pk");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+
+		return bean;
+	}
+	
+	public CourseBean findByName(String name) throws ApplicationException {
+
+		StringBuffer sql = new StringBuffer("select * from st_course where name = ?");
+		CourseBean bean = null;
+		Connection conn = null;
+
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, name);
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new CourseBean();
+				bean.setId(rs.getLong(1));
+				bean.setName(rs.getString(2));
+				bean.setDuration(rs.getString(3));
+				bean.setDescription(rs.getString(4));
+				bean.setCreatedBy(rs.getString(5));
+				bean.setModifiedBy(rs.getString(6));
+				bean.setCreatedDatetime(rs.getTimestamp(7));
+				bean.setModifiedDatetime(rs.getTimestamp(8));
+			}
+
+			rs.close();
+			pstmt.close();
+
+		} catch (Exception e) {
+			throw new ApplicationException("Exception : Exception in getting Course by Name");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}

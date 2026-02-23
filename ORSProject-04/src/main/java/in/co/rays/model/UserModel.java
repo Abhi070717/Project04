@@ -9,6 +9,7 @@ import java.util.List;
 import in.co.rays.bean.UserBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.util.JDBCDataSource;
 
 public class UserModel {
@@ -38,10 +39,16 @@ public class UserModel {
 
 	}
 
-	public long add(UserBean bean) throws ApplicationException {
+	public long add(UserBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 		int pk = 0;
+
+		UserBean existBean = findByLogin(bean.getLogin());
+
+		if (existBean != null) {
+			throw new DuplicateRecordException("Login Already Exist");
+		}
 
 		try {
 			pk = nextPk();
@@ -68,8 +75,8 @@ public class UserModel {
 
 			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
 					+ "Records: Added successfully Duplicates: 0  Warnings: 0");
-
 			pstmt.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -113,8 +120,8 @@ public class UserModel {
 
 			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
 					+ "Records: Updated successfully  Duplicates: 0  Warnings: 0");
-
 			pstmt.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -190,6 +197,45 @@ public class UserModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ApplicationException("Exception : Exception in getting User by pk");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+		return bean;
+	}
+
+	public UserBean findByLogin(String login) throws ApplicationException {
+
+		UserBean bean = null;
+		Connection conn = null;
+
+		StringBuffer sql = new StringBuffer("select * from st_user where login = ?");
+
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, login);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new UserBean();
+				bean.setId(rs.getLong(1));
+				bean.setFirstName(rs.getString(2));
+				bean.setLastName(rs.getString(3));
+				bean.setLogin(rs.getString(4));
+				bean.setPassword(rs.getString(5));
+				bean.setDob(rs.getDate(6));
+				bean.setMobileNo(rs.getString(7));
+				bean.setRoleId(rs.getLong(8));
+				bean.setGender(rs.getString(9));
+				bean.setCreatedBy(rs.getString(10));
+				bean.setModifiedBy(rs.getString(11));
+				bean.setCreatedDatetime(rs.getTimestamp(12));
+				bean.setModifiedDatetime(rs.getTimestamp(13));
+			}
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ApplicationException("Exception : Exception in getting User by Login");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}

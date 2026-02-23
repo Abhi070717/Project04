@@ -10,6 +10,7 @@ import in.co.rays.bean.CourseBean;
 import in.co.rays.bean.SubjectBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.util.JDBCDataSource;
 
 public class SubjectModel {
@@ -34,13 +35,15 @@ public class SubjectModel {
 		return pk + 1;
 	}
 
-	public long add(SubjectBean bean) throws ApplicationException {
+	public long add(SubjectBean bean) throws ApplicationException, DuplicateRecordException {
 		Connection conn = null;
 		int pk = 0;
 
-		CourseModel courseModel = new CourseModel();
-		CourseBean courseBean = courseModel.findByPk(bean.getCourseId());
-		bean.setCourseName(courseBean.getName());
+		SubjectBean existBean = findByName(bean.getName());
+		
+		if(existBean != null) {
+			throw new DuplicateRecordException("Subject Already Exist");
+		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -167,6 +170,37 @@ public class SubjectModel {
 		return bean;
 	}
 
+	public SubjectBean findByName(String name) throws ApplicationException {
+		StringBuffer sql = new StringBuffer("select * from st_subject where name = ?");
+		SubjectBean bean = null;
+		Connection conn = null;
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, name);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new SubjectBean();
+				bean.setId(rs.getLong(1));
+				bean.setName(rs.getString(2));
+				bean.setCourseId(rs.getLong(3));
+				bean.setCourseName(rs.getString(4));
+				bean.setDescription(rs.getString(5));
+				bean.setCreatedBy(rs.getString(6));
+				bean.setModifiedBy(rs.getString(7));
+				bean.setCreatedDatetime(rs.getTimestamp(8));
+				bean.setModifiedDatetime(rs.getTimestamp(9));
+			}
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			throw new ApplicationException("Exception : Exception in getting Subject by Name");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+		return bean;
+	}
+	
 	public List<SubjectBean> list() throws ApplicationException {
 		return search(null);
 	}

@@ -14,10 +14,11 @@ public class TestFacultyModel {
 	public static void main(String[] args) {
 
 //		testNextPk();
-//		testAdd();
+		testAdd();
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
+		testFindByEmail();
 //		testSearch();
 
 	}
@@ -155,6 +156,36 @@ public class TestFacultyModel {
 		}
 	}
 
+	public static void testFindByEmail() {
+
+		try {
+			FacultyModel model = new FacultyModel();
+
+			FacultyBean bean = model.findByEmail("rahul@gmail.com");
+
+			System.out.println("ID : " + bean.getId());
+			System.out.println("First Name : " + bean.getFirstName());
+			System.out.println("Last Name : " + bean.getLastName());
+			System.out.println("DOB : " + bean.getDob());
+			System.out.println("Gender : " + bean.getGender());
+			System.out.println("Mobile No : " + bean.getMobileNo());
+			System.out.println("Email : " + bean.getEmail());
+			System.out.println("College ID : " + bean.getCollegeId());
+			System.out.println("College Name : " + bean.getCollegeName());
+			System.out.println("Course ID : " + bean.getCourseId());
+			System.out.println("Course Name : " + bean.getCourseName());
+			System.out.println("Subject ID : " + bean.getSubjectId());
+			System.out.println("Subject : " + bean.getSubjectName());
+			System.out.println("CreatedBy : " + bean.getCreatedBy());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void testSearch() {
 
 		try {

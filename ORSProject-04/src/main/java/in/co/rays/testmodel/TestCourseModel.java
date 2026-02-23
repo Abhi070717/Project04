@@ -9,6 +9,7 @@ import java.util.List;
 import in.co.rays.bean.CourseBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.model.CourseModel;
 
 public class TestCourseModel {
@@ -20,7 +21,8 @@ public class TestCourseModel {
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
-		testSearch();
+//		testFindByName();
+//		testSearch();
 
 	}
 
@@ -51,10 +53,14 @@ public class TestCourseModel {
 
 			CourseModel model = new CourseModel();
 
-			long i = model.add(bean);
+			try {
+				long pk = model.add(bean);
 
-			System.out.println("Course added successfully, PK = " + i);
-		} catch (ApplicationException e) {
+				System.out.println("Course added successfully, PK = " + pk);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+			}
+		} catch (DuplicateRecordException e) {
 			e.printStackTrace();
 		}
 	}
@@ -122,19 +128,41 @@ public class TestCourseModel {
 
 	}
 
+	public static void testFindByName() {
+
+		CourseModel model = new CourseModel();
+
+		try {
+			CourseBean bean = model.findByName("Java Full Stack");
+
+			System.out.println("ID : " + bean.getId());
+			System.out.println("Name : " + bean.getName());
+			System.out.println("Duration : " + bean.getDuration());
+			System.out.println("Description : " + bean.getDescription());
+			System.out.println("CreatedBy : " + bean.getCreatedBy());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
+
+		} catch (ApplicationException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	public static void testSearch() {
 
 		try {
 			CourseBean bean = new CourseBean();
 
 			CourseModel model = new CourseModel();
-			
+
 			List list = new ArrayList();
-			
+
 			list = model.search(bean);
 
 			Iterator it = list.iterator();
-			
+
 			while (it.hasNext()) {
 				bean = (CourseBean) it.next();
 				System.out.println("ID : " + bean.getId());

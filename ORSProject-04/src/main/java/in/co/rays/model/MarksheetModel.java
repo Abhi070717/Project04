@@ -9,6 +9,7 @@ import java.util.List;
 import in.co.rays.bean.MarksheetBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.util.JDBCDataSource;
 
 public class MarksheetModel {
@@ -36,10 +37,16 @@ public class MarksheetModel {
 
 	}
 
-	public long add(MarksheetBean bean) throws ApplicationException {
+	public long add(MarksheetBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 		int pk = 0;
+		
+		MarksheetBean existBean = findByName(bean.getName());
+		
+		if(existBean != null) {
+			throw new DuplicateRecordException("Name Already Exist");
+		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -179,6 +186,41 @@ public class MarksheetModel {
 		return bean;
 	}
 
+	public MarksheetBean findByName(String name) throws ApplicationException {
+		StringBuffer sql = new StringBuffer("select * from st_marksheet where name = ?");
+
+		MarksheetBean bean = null;
+		Connection conn = null;
+
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, name);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new MarksheetBean();
+				bean.setId(rs.getLong(1));
+				bean.setRollNo(rs.getString(2));
+				bean.setStudentId(rs.getLong(3));
+				bean.setName(rs.getString(4));
+				bean.setPhysics(rs.getInt(5));
+				bean.setChemistry(rs.getInt(6));
+				bean.setMaths(rs.getInt(7));
+				bean.setCreatedBy(rs.getString(8));
+				bean.setModifiedBy(rs.getString(9));
+				bean.setCreatedDatetime(rs.getTimestamp(10));
+				bean.setModifiedDatetime(rs.getTimestamp(11));
+			}
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			throw new ApplicationException("Exception in getting marksheet by Name");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+		return bean;
+	}
+	
 	public List<MarksheetBean> search(MarksheetBean bean) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_marksheet where 1=1");

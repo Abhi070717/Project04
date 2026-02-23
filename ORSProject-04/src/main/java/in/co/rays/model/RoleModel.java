@@ -9,6 +9,7 @@ import java.util.List;
 import in.co.rays.bean.RoleBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.util.JDBCDataSource;
 
 public class RoleModel {
@@ -35,7 +36,13 @@ public class RoleModel {
 		return pk + 1;
 	}
 
-	public long add(RoleBean bean) throws ApplicationException {
+	public long add(RoleBean bean) throws ApplicationException, DuplicateRecordException {
+
+		RoleBean existBean = findByName(bean.getName());
+
+		if (existBean != null) {
+			throw new DuplicateRecordException("Role Already Exist");
+		}
 
 		Connection conn = null;
 		int pk = 0;
@@ -53,9 +60,9 @@ public class RoleModel {
 			pstmt.setTimestamp(6, bean.getCreatedDatetime());
 			pstmt.setTimestamp(7, bean.getModifiedDatetime());
 			int i = pstmt.executeUpdate();
-			
+
 			conn.commit();
-			
+
 			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
 					+ "Records: Added successfully Duplicates: 0  Warnings: 0");
 
@@ -185,10 +192,44 @@ public class RoleModel {
 
 	}
 
+	public RoleBean findByName(String name) throws ApplicationException {
+
+		Connection conn = null;
+		RoleBean bean = null;
+
+		StringBuffer sb = new StringBuffer("select * from st_role where name = ?");
+
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt;
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setString(1, name);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new RoleBean();
+				bean.setId(rs.getLong(1));
+				bean.setName(rs.getString(2));
+				bean.setDescription(rs.getString(3));
+				bean.setCreatedBy(rs.getString(4));
+				bean.setModifiedBy(rs.getString(5));
+				bean.setCreatedDatetime(rs.getTimestamp(6));
+				bean.setModifiedDatetime(rs.getTimestamp(7));
+			}
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			throw new ApplicationException("Exception : Exception in getting user by Name");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+		return bean;
+
+	}
+
 	public List<RoleBean> search(RoleBean bean) throws ApplicationException {
 
 		StringBuffer sb = new StringBuffer("select * from st_role where 1=1");
-		
+
 		Connection conn = null;
 		ArrayList<RoleBean> list = new ArrayList<RoleBean>();
 

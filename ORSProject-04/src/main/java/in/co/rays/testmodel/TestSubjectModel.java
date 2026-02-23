@@ -9,6 +9,7 @@ import java.util.List;
 import in.co.rays.bean.SubjectBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.model.SubjectModel;
 
 public class TestSubjectModel {
@@ -20,6 +21,7 @@ public class TestSubjectModel {
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
+//		testFindByName();
 //		testSearch();
 
 	}
@@ -52,14 +54,19 @@ public class TestSubjectModel {
 
 			SubjectModel model = new SubjectModel();
 
-			long pk = model.add(bean);
+			try {
+				long pk = model.add(bean);
 
-			System.out.println("Subject Added Successfully, PK = " + pk);
+				System.out.println("Subject Added Successfully, PK = " + pk);
 
-		} catch (Exception e) {
+			} catch (ApplicationException e) {
+
+				e.printStackTrace();
+
+			}
+		} catch (DuplicateRecordException e) {
 
 			e.printStackTrace();
-
 		}
 
 	}
@@ -141,6 +148,32 @@ public class TestSubjectModel {
 
 	}
 
+	public static void testFindByName() {
+
+		try {
+
+			SubjectModel model = new SubjectModel();
+
+			SubjectBean bean = model.findByName("Core Java");
+
+			System.out.println("ID : " + bean.getId());
+			System.out.println("Name : " + bean.getName());
+			System.out.println("Course ID : " + bean.getCourseId());
+			System.out.println("Course Name : " + bean.getCourseName());
+			System.out.println("Description : " + bean.getDescription());
+			System.out.println("CreatedBy: " + bean.getCreatedBy());
+			System.out.println("ModifiedBy : " + bean.getModifiedBy());
+			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+	}
+	
 	public static void testSearch() {
 
 		try {

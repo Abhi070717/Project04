@@ -38,10 +38,16 @@ public class StudentModel {
 
 	}
 
-	public long add(StudentBean bean) throws ApplicationException {
+	public long add(StudentBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 		int pk = 0;
+		
+		StudentBean existBean = findByEmail(bean.getEmail());
+		
+		if(existBean != null) {
+			throw new DuplicateRecordException("Email Already Exist");
+		}
 
 		try {
 			pk = nextPk();
@@ -197,6 +203,45 @@ public class StudentModel {
 
 	}
 
+	public StudentBean findByEmail(String email) throws ApplicationException {
+
+		StringBuffer sql = new StringBuffer("select * from st_student where email = ?");
+
+		StudentBean bean = null;
+		Connection conn = null;
+
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, email);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new StudentBean();
+				bean.setId(rs.getLong(1));
+				bean.setFirstName(rs.getString(2));
+				bean.setLastName(rs.getString(3));
+				bean.setDob(rs.getDate(4));
+				bean.setGender(rs.getString(5));
+				bean.setMobileNo(rs.getString(6));
+				bean.setEmail(rs.getString(7));
+				bean.setCollegeId(rs.getLong(8));
+				bean.setCollegeName(rs.getString(9));
+				bean.setCreatedBy(rs.getString(10));
+				bean.setModifiedBy(rs.getString(11));
+				bean.setCreatedDatetime(rs.getTimestamp(12));
+				bean.setModifiedDatetime(rs.getTimestamp(13));
+			}
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			throw new ApplicationException("Exception :Exception in getting Student by Email");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+		return bean;
+
+	}
+	
 	public List<StudentBean> search(StudentBean bean) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_student where 1 = 1");
