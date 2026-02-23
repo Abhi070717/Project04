@@ -63,9 +63,11 @@ public class StudentModel {
 			pstmt.setString(11, bean.getModifiedBy());
 			pstmt.setTimestamp(12, bean.getCreatedDatetime());
 			pstmt.setTimestamp(13, bean.getModifiedDatetime());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Added successfully Duplicates: 0  Warnings: 0");
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -106,9 +108,11 @@ public class StudentModel {
 			pstmt.setString(10, bean.getModifiedBy());
 			pstmt.setTimestamp(11, bean.getCreatedDatetime());
 			pstmt.setTimestamp(12, bean.getModifiedDatetime());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Updated successfully  Duplicates: 0  Warnings: 0");
 			pstmt.close();
 		} catch (Exception e) {
 			try {
@@ -134,9 +138,11 @@ public class StudentModel {
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("delete from st_student where id = ?");
 			pstmt.setLong(1, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Deleted successfully  Duplicates: 0  Warnings: 0");
 			pstmt.close();
 		} catch (Exception e) {
 			try {

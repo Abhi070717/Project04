@@ -32,7 +32,6 @@ public class RoleModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
-
 		return pk + 1;
 	}
 
@@ -54,10 +53,12 @@ public class RoleModel {
 			pstmt.setTimestamp(6, bean.getCreatedDatetime());
 			pstmt.setTimestamp(7, bean.getModifiedDatetime());
 			int i = pstmt.executeUpdate();
-			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
-					+ "Records: Added  Duplicates: 0  Warnings: 0" + "\n" + "Data Inserted");
-
+			
 			conn.commit();
+			
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Added successfully Duplicates: 0  Warnings: 0");
+
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,10 +95,11 @@ public class RoleModel {
 			pstmt.setLong(7, bean.getId());
 			int i = pstmt.executeUpdate();
 
-			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
-					+ "Records: Update  Duplicates: 0  Warnings: 0" + "\n" + "Data Updated");
-
 			conn.commit();
+
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Updated successfully  Duplicates: 0  Warnings: 0");
+
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,10 +130,11 @@ public class RoleModel {
 
 			int i = pstmt.executeUpdate();
 
-			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
-					+ "Records: Delete  Duplicates: 0  Warnings: 0" + "\n" + "Data Deleted");
-
 			conn.commit();
+
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Deleted successfully  Duplicates: 0  Warnings: 0");
+
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -174,7 +177,7 @@ public class RoleModel {
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			throw new ApplicationException("Exception : Exception in getting User by pk");
+			throw new ApplicationException("Exception : Exception in getting user by pk");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -182,25 +185,9 @@ public class RoleModel {
 
 	}
 
-	public List<RoleBean> list() throws ApplicationException {
-		return search(null);
-	}
-
 	public List<RoleBean> search(RoleBean bean) throws ApplicationException {
 
 		StringBuffer sb = new StringBuffer("select * from st_role where 1=1");
-
-		if (bean != null) {
-			if (bean.getId() > 0) {
-				sb.append(" and id = " + bean.getId());
-			}
-			if (bean.getName() != null && bean.getName().length() > 0) {
-				sb.append(" and name like '" + bean.getName() + "%'");
-			}
-			if (bean.getDescription() != null && bean.getDescription().length() > 0) {
-				sb.append(" and description like '" + bean.getDescription() + "%'");
-			}
-		}
 		
 		Connection conn = null;
 		ArrayList<RoleBean> list = new ArrayList<RoleBean>();
@@ -223,11 +210,10 @@ public class RoleModel {
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			throw new ApplicationException("Exception : Exception in search Role");
+			throw new ApplicationException("Exception : Exception in search role");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
-		System.out.println(list.size());
 		return list;
 
 	}

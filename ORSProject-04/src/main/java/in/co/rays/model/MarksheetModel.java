@@ -12,7 +12,7 @@ import in.co.rays.exception.DatabaseException;
 import in.co.rays.util.JDBCDataSource;
 
 public class MarksheetModel {
-	
+
 	public Integer nextPk() throws DatabaseException {
 		Connection conn = null;
 		int pk = 0;
@@ -33,8 +33,9 @@ public class MarksheetModel {
 			JDBCDataSource.closeConnection(conn);
 		}
 		return pk + 1;
-		
+
 	}
+
 	public long add(MarksheetBean bean) throws ApplicationException {
 
 		Connection conn = null;
@@ -57,15 +58,17 @@ public class MarksheetModel {
 			pstmt.setString(9, bean.getModifiedBy());
 			pstmt.setTimestamp(10, bean.getCreatedDatetime());
 			pstmt.setTimestamp(11, bean.getModifiedDatetime());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Added successfully Duplicates: 0  Warnings: 0");
 			pstmt.close();
 		} catch (Exception e) {
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				throw new ApplicationException	("Exception : add rollback Exception " + ex.getMessage());
+				throw new ApplicationException("Exception : add rollback Exception " + ex.getMessage());
 			}
 			throw new ApplicationException("Exception : Exception in add Marksheet");
 		} finally {
@@ -73,9 +76,8 @@ public class MarksheetModel {
 		}
 		return pk;
 
-		
 	}
-	
+
 	public void update(MarksheetBean bean) throws ApplicationException {
 
 		Connection conn = null;
@@ -97,8 +99,10 @@ public class MarksheetModel {
 			pstmt.setTimestamp(9, bean.getCreatedDatetime());
 			pstmt.setTimestamp(10, bean.getModifiedDatetime());
 			pstmt.setLong(11, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Updated successfully  Duplicates: 0  Warnings: 0");
 			pstmt.close();
 
 		} catch (Exception e) {
@@ -112,7 +116,7 @@ public class MarksheetModel {
 			JDBCDataSource.closeConnection(conn);
 		}
 	}
-	
+
 	public void delete(MarksheetBean bean) throws ApplicationException {
 
 		Connection conn = null;
@@ -122,8 +126,10 @@ public class MarksheetModel {
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("delete from st_marksheet where id = ?");
 			pstmt.setLong(1, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Deleted successfully  Duplicates: 0  Warnings: 0");
 			pstmt.close();
 
 		} catch (Exception e) {
@@ -137,10 +143,10 @@ public class MarksheetModel {
 			JDBCDataSource.closeConnection(conn);
 		}
 	}
-	
+
 	public MarksheetBean findByPk(long Pk) throws ApplicationException {
 		StringBuffer sql = new StringBuffer("select * from st_marksheet where id = ?");
-		
+
 		MarksheetBean bean = null;
 		Connection conn = null;
 
@@ -172,9 +178,8 @@ public class MarksheetModel {
 		}
 		return bean;
 	}
-	
-	public List<MarksheetBean> search(MarksheetBean bean) throws ApplicationException {
 
+	public List<MarksheetBean> search(MarksheetBean bean) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_marksheet where 1=1");
 
@@ -207,6 +212,5 @@ public class MarksheetModel {
 		}
 		return list;
 	}
-
 
 }

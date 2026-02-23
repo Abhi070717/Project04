@@ -13,7 +13,7 @@ import in.co.rays.exception.DatabaseException;
 import in.co.rays.util.JDBCDataSource;
 
 public class SubjectModel {
-	
+
 	public Integer nextPk() throws DatabaseException {
 		Connection conn = null;
 		int pk = 0;
@@ -33,7 +33,7 @@ public class SubjectModel {
 		}
 		return pk + 1;
 	}
-	
+
 	public long add(SubjectBean bean) throws ApplicationException {
 		Connection conn = null;
 		int pk = 0;
@@ -56,8 +56,10 @@ public class SubjectModel {
 			pstmt.setString(7, bean.getModifiedBy());
 			pstmt.setTimestamp(8, bean.getCreatedDatetime());
 			pstmt.setTimestamp(9, bean.getModifiedDatetime());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Added successfully Duplicates: 0  Warnings: 0");
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,8 +95,10 @@ public class SubjectModel {
 			pstmt.setTimestamp(7, bean.getCreatedDatetime());
 			pstmt.setTimestamp(8, bean.getModifiedDatetime());
 			pstmt.setLong(9, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Updated successfully  Duplicates: 0  Warnings: 0");
 			pstmt.close();
 		} catch (Exception e) {
 			try {
@@ -115,8 +119,10 @@ public class SubjectModel {
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("delete from st_subject where id = ?");
 			pstmt.setLong(1, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Deleted successfully  Duplicates: 0  Warnings: 0");
 			pstmt.close();
 		} catch (Exception e) {
 			try {
@@ -167,7 +173,6 @@ public class SubjectModel {
 
 	public List<SubjectBean> search(SubjectBean bean) throws ApplicationException {
 		StringBuffer sql = new StringBuffer("select * from st_subject where 1=1");
-
 
 		ArrayList<SubjectBean> list = new ArrayList<SubjectBean>();
 		Connection conn = null;

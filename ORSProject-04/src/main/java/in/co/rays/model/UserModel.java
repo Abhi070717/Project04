@@ -62,9 +62,13 @@ public class UserModel {
 			pstmt.setString(11, bean.getModifiedBy());
 			pstmt.setTimestamp(12, bean.getCreatedDatetime());
 			pstmt.setTimestamp(13, bean.getModifiedDatetime());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 
 			conn.commit();
+
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Added successfully Duplicates: 0  Warnings: 0");
+
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,8 +107,13 @@ public class UserModel {
 			pstmt.setTimestamp(11, bean.getCreatedDatetime());
 			pstmt.setTimestamp(12, bean.getModifiedDatetime());
 			pstmt.setLong(13, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
+
 			conn.commit();
+
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Updated successfully  Duplicates: 0  Warnings: 0");
+
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,8 +137,13 @@ public class UserModel {
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("delete from st_user where id = ?");
 			pstmt.setLong(1, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
+
 			conn.commit();
+
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Deleted successfully  Duplicates: 0  Warnings: 0");
+
 			pstmt.close();
 		} catch (Exception e) {
 			try {

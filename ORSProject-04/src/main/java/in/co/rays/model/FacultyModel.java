@@ -64,9 +64,11 @@ public class FacultyModel {
 			pstmt.setString(15, bean.getModifiedBy());
 			pstmt.setTimestamp(16, bean.getCreatedDatetime());
 			pstmt.setTimestamp(17, bean.getModifiedDatetime());
+			int i = pstmt.executeUpdate();
 
-			pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Added successfully Duplicates: 0  Warnings: 0");
 			pstmt.close();
 
 		} catch (Exception e) {
@@ -112,9 +114,10 @@ public class FacultyModel {
 			pstmt.setTimestamp(15, bean.getCreatedDatetime());
 			pstmt.setTimestamp(16, bean.getModifiedDatetime());
 			pstmt.setLong(17, bean.getId());
-
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Updated successfully  Duplicates: 0  Warnings: 0");
 			pstmt.close();
 
 		} catch (Exception e) {
@@ -139,9 +142,10 @@ public class FacultyModel {
 
 			PreparedStatement pstmt = conn.prepareStatement("delete from st_faculty where id = ?");
 			pstmt.setLong(1, bean.getId());
-			pstmt.executeUpdate();
-
+			int i = pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Deleted successfully  Duplicates: 0  Warnings: 0");
 			pstmt.close();
 
 		} catch (Exception e) {

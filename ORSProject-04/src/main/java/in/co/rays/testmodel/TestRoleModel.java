@@ -17,10 +17,10 @@ public class TestRoleModel {
 
 //		testFindByPk();
 //		testAdd();
-//		testUpdate();
+		testUpdate();
 //		testDelete();
 //		testFindByPk();
-		testSearch();
+//		testSearch();
 	}
 
 	public static void testNextPk() throws Exception {

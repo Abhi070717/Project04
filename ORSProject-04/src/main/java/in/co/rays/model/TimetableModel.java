@@ -12,10 +12,11 @@ import in.co.rays.exception.DatabaseException;
 import in.co.rays.util.JDBCDataSource;
 
 public class TimetableModel {
-	
+
 	public Integer nextPk() throws DatabaseException {
 		Connection conn = null;
 		int pk = 0;
+
 		try {
 			conn = JDBCDataSource.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("select max(id) from st_timetable");
@@ -56,15 +57,17 @@ public class TimetableModel {
 			pstmt.setString(11, bean.getModifiedBy());
 			pstmt.setTimestamp(12, bean.getCreatedDatetime());
 			pstmt.setTimestamp(13, bean.getModifiedDatetime());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Added successfully Duplicates: 0  Warnings: 0");
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : add rollback exception " + ex.getMessage());
+				throw new ApplicationException("Exception : Add rollback exception " + ex.getMessage());
 			}
 			throw new ApplicationException("Exception : Exception in add Timetable");
 		} finally {
@@ -97,16 +100,18 @@ public class TimetableModel {
 			pstmt.setTimestamp(11, bean.getCreatedDatetime());
 			pstmt.setTimestamp(12, bean.getModifiedDatetime());
 			pstmt.setLong(13, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Updated successfully  Duplicates: 0  Warnings: 0");
 			pstmt.close();
 		} catch (Exception e) {
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
+				throw new ApplicationException("Exception : Update rollback exception " + ex.getMessage());
 			}
-			throw new ApplicationException("Exception in updating Timetable ");
+			throw new ApplicationException("Exception in updating timetable ");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -119,8 +124,11 @@ public class TimetableModel {
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("delete from st_timetable where id = ?");
 			pstmt.setLong(1, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 			conn.commit();
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Deleted successfully  Duplicates: 0  Warnings: 0");
+
 			pstmt.close();
 
 		} catch (Exception e) {
@@ -129,7 +137,7 @@ public class TimetableModel {
 			} catch (Exception ex) {
 				throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
 			}
-			throw new ApplicationException("Exception : Exception in delete Timetable");
+			throw new ApplicationException("Exception : Exception in delete timetable");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -163,7 +171,7 @@ public class TimetableModel {
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			throw new ApplicationException("Exception : Exception in getting Timetable by pk");
+			throw new ApplicationException("Exception : Exception in getting timetable by pk");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -171,9 +179,8 @@ public class TimetableModel {
 	}
 
 	public List<TimetableBean> search(TimetableBean bean) throws ApplicationException {
-		
-		StringBuffer sql = new StringBuffer("select * from st_timetable where 1=1");
 
+		StringBuffer sql = new StringBuffer("select * from st_timetable where 1=1");
 
 		ArrayList<TimetableBean> list = new ArrayList<TimetableBean>();
 		Connection conn = null;
@@ -201,7 +208,7 @@ public class TimetableModel {
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			throw new ApplicationException("Exception : Exception in search Timetable");
+			throw new ApplicationException("Exception : Exception in search timetable");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
