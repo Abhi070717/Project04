@@ -42,10 +42,10 @@ public class StudentModel {
 
 		Connection conn = null;
 		int pk = 0;
-		
+
 		StudentBean existBean = findByEmail(bean.getEmail());
-		
-		if(existBean != null) {
+
+		if (existBean != null) {
 			throw new DuplicateRecordException("Email Already Exist");
 		}
 
@@ -91,9 +91,14 @@ public class StudentModel {
 		return pk;
 	}
 
-	public void update(StudentBean bean) throws ApplicationException {
+	public void update(StudentBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
+		StudentBean existBean = findByEmail(bean.getEmail());
+
+		if (existBean != null && existBean.getId() != bean.getId()) {
+			throw new DuplicateRecordException("Email Already Exist");
+		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -241,11 +246,44 @@ public class StudentModel {
 		return bean;
 
 	}
-	
-	public List<StudentBean> search(StudentBean bean) throws ApplicationException {
+
+	public List<StudentBean> search(StudentBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_student where 1 = 1");
 
+
+		if (bean != null) {
+			if (bean.getId() > 0) {
+				sql.append(" and id = " + bean.getId());
+			}
+			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
+				sql.append(" and first_name like '" + bean.getFirstName() + "%'");
+			}
+			if (bean.getLastName() != null && bean.getLastName().length() > 0) {
+				sql.append(" and last_name like '" + bean.getLastName() + "%'");
+			}
+			if (bean.getDob() != null && bean.getDob().getDate() > 0) {
+				sql.append(" and dob = " + bean.getDob());
+			}
+			if (bean.getGender() != null && bean.getGender().length() > 0) {
+				sql.append(" and gender like '" + bean.getGender() + "%'");
+			}
+			if (bean.getMobileNo() != null && bean.getMobileNo().length() > 0) {
+				sql.append(" and mobile_no like '" + bean.getMobileNo() + "%'");
+			}
+			if (bean.getEmail() != null && bean.getEmail().length() > 0) {
+				sql.append(" and email like '" + bean.getEmail() + "%'");
+			}
+			if (bean.getCollegeName() != null && bean.getCollegeName().length() > 0) {
+				sql.append(" and college_name = " + bean.getCollegeName());
+			}
+		}
+
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + ", " + pageSize);
+		}
+		
 		List list = new ArrayList();
 		Connection conn = null;
 

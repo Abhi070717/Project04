@@ -1,26 +1,29 @@
 package in.co.rays.testmodel;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import in.co.rays.bean.FacultyBean;
+import in.co.rays.exception.ApplicationException;
+import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.model.FacultyModel;
 
 public class TestFacultyModel {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 
 //		testNextPk();
-		testAdd();
-//		testUpdate();
+//		testAdd();
+		testUpdate();
 //		testDelete();
 //		testFindByPk();
-		testFindByEmail();
+//		testFindByEmail();
 //		testSearch();
-
 	}
 
 	public static void testNextPk() {
@@ -32,12 +35,12 @@ public class TestFacultyModel {
 
 			System.out.println("Next PK = " + i);
 
-		} catch (Exception e) {
+		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void testAdd() {
+	public static void testAdd() throws ParseException {
 
 		try {
 			FacultyBean bean = new FacultyBean();
@@ -63,16 +66,19 @@ public class TestFacultyModel {
 
 			FacultyModel model = new FacultyModel();
 
-			long pk = model.add(bean);
-
-			System.out.println("Faculty Added Successfully, PK = " + pk);
-
-		} catch (Exception e) {
+			long pk;
+			try {
+				pk = model.add(bean);
+				System.out.println("Faculty Added Successfully, PK = " + pk);
+			} catch (DuplicateRecordException e) {
+				e.printStackTrace();
+			}
+		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void testUpdate() {
+	public static void testUpdate() throws ParseException {
 
 		try {
 			FacultyBean bean = new FacultyBean();
@@ -99,11 +105,14 @@ public class TestFacultyModel {
 
 			FacultyModel model = new FacultyModel();
 
-			model.update(bean);
+			try {
+				model.update(bean);
+				System.out.println("Faculty Updated Successfully");
+			} catch (DuplicateRecordException e) {
+				e.printStackTrace();
+			}
 
-			System.out.println("Faculty Updated Successfully");
-
-		} catch (Exception e) {
+		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
 	}
@@ -121,7 +130,7 @@ public class TestFacultyModel {
 
 			System.out.println("Faculty Deleted Successfully");
 
-		} catch (Exception e) {
+		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
 	}
@@ -151,7 +160,7 @@ public class TestFacultyModel {
 			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
 			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
-		} catch (Exception e) {
+		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
 	}
@@ -181,11 +190,11 @@ public class TestFacultyModel {
 			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
 			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
-		} catch (Exception e) {
+		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void testSearch() {
 
 		try {
@@ -193,7 +202,7 @@ public class TestFacultyModel {
 
 			FacultyModel model = new FacultyModel();
 
-			List list = model.search(bean);
+			List list = model.search(bean, 0, 0);
 
 			Iterator it = list.iterator();
 
@@ -217,7 +226,7 @@ public class TestFacultyModel {
 				System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
 				System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 			}
-		} catch (Exception e) {
+		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
 	}

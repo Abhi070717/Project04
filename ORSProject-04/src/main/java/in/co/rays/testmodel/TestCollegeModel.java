@@ -18,7 +18,7 @@ public class TestCollegeModel {
 
 //		testNextPk();
 //		testAdd();
-//		testUpdate();
+		testUpdate();
 //		testDelete();
 //		testFindByPk();
 //		testFindByName();
@@ -68,7 +68,7 @@ public class TestCollegeModel {
 
 		CollegeBean bean = new CollegeBean();
 
-		bean.setId(1);
+		bean.setId(2);
 		bean.setName("SGSITS");
 		bean.setAddress("Regal Square");
 		bean.setState("Madhya Pradesh");
@@ -82,8 +82,12 @@ public class TestCollegeModel {
 		CollegeModel model = new CollegeModel();
 
 		try {
-			model.update(bean);
-			System.out.println("Data Updated in st_college");
+			try {
+				model.update(bean);
+				System.out.println("Data Updated in st_college");
+			} catch (DuplicateRecordException e) {
+				e.printStackTrace();
+			}
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
@@ -157,7 +161,7 @@ public class TestCollegeModel {
 
 			List list = new ArrayList();
 
-			list = model.search(bean);
+			list = model.search(bean, 0, 0);
 
 			Iterator it = list.iterator();
 

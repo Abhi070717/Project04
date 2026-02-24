@@ -70,7 +70,7 @@ public class TestCourseModel {
 		try {
 			CourseBean bean = new CourseBean();
 
-			bean.setId(1);
+			bean.setId(2);
 			bean.setName("Java Advanced");
 			bean.setDuration("8 Months");
 			bean.setDescription("Advanced Java Course");
@@ -81,12 +81,16 @@ public class TestCourseModel {
 
 			CourseModel model = new CourseModel();
 
-			model.update(bean);
+			try {
+				model.update(bean);
+				System.out.println("Course Updated Successfully");
+			} catch (DuplicateRecordException e) {
+				e.printStackTrace();
+			}
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("Course Updated Successfully");
 	}
 
 	public static void testDelete() {
@@ -149,7 +153,7 @@ public class TestCourseModel {
 		}
 
 	}
-	
+
 	public static void testSearch() {
 
 		try {
@@ -159,7 +163,7 @@ public class TestCourseModel {
 
 			List list = new ArrayList();
 
-			list = model.search(bean);
+			list = model.search(bean, 0, 0);
 
 			Iterator it = list.iterator();
 

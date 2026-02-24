@@ -19,7 +19,7 @@ public class TestRoleModel {
 
 //		testNextPk();
 //		testAdd();
-//		testUpdate();
+		testUpdate();
 //		testDelete();
 //		testFindByPk();
 //		testFindByName();
@@ -74,8 +74,12 @@ public class TestRoleModel {
 		RoleModel model = new RoleModel();
 
 		try {
-			model.update(bean);
-			System.out.println("Data Updated in st_role");
+			try {
+				model.update(bean);
+				System.out.println("Data Updated in st_role");
+			} catch (DuplicateRecordException e) {
+				e.printStackTrace();
+			}
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
@@ -147,7 +151,7 @@ public class TestRoleModel {
 
 			List list = new ArrayList();
 
-			list = model.search(bean);
+			list = model.search(bean, 0, 0);
 
 			Iterator it = list.iterator();
 

@@ -44,10 +44,10 @@ public class CourseModel {
 
 		Connection conn = null;
 		int pk = 0;
-		
+
 		CourseBean existBean = findByName(bean.getName());
-		
-		if(existBean != null) {
+
+		if (existBean != null) {
 			throw new DuplicateRecordException("Course Already Exist");
 		}
 
@@ -87,9 +87,15 @@ public class CourseModel {
 		return pk;
 	}
 
-	public void update(CourseBean bean) throws ApplicationException {
+	public void update(CourseBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
+
+		CourseBean existBean = findByName(bean.getName());
+
+		if (existBean != null && existBean.getId() != bean.getId()) {
+			throw new DuplicateRecordException("Course Already Exist");
+		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -118,7 +124,7 @@ public class CourseModel {
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
+				throw new ApplicationException("Exception : Update rollback exception " + ex.getMessage());
 			}
 			throw new ApplicationException("Exception in updating Course");
 		} finally {
@@ -190,7 +196,7 @@ public class CourseModel {
 
 		return bean;
 	}
-	
+
 	public CourseBean findByName(String name) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_course where name = ?");
@@ -227,15 +233,31 @@ public class CourseModel {
 		return bean;
 	}
 
-	public List<CourseBean> list() throws ApplicationException {
-		return search(null);
-	}
-
-	public List<CourseBean> search(CourseBean bean) throws ApplicationException {
+	public List<CourseBean> search(CourseBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_course where 1=1");
 
-		List<CourseBean> list = new ArrayList<>();
+		if (bean != null) {
+			if (bean.getId() > 0) {
+				sql.append(" and id = " + bean.getId());
+			}
+			if (bean.getName() != null && bean.getName().length() > 0) {
+				sql.append(" and name like '" + bean.getName() + "%'");
+			}
+			if (bean.getDuration() != null && bean.getDuration().length() > 0) {
+				sql.append(" and duration like '" + bean.getDuration() + "%'");
+			}
+			if (bean.getDescription() != null && bean.getDescription().length() > 0) {
+				sql.append(" and description like '" + bean.getDescription() + "%'");
+			}
+		}
+
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + ", " + pageSize);
+		}
+		
+		List<CourseBean> list = new ArrayList();
 		Connection conn = null;
 
 		try {

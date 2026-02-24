@@ -41,10 +41,10 @@ public class MarksheetModel {
 
 		Connection conn = null;
 		int pk = 0;
-		
+
 		MarksheetBean existBean = findByName(bean.getName());
-		
-		if(existBean != null) {
+
+		if (existBean != null) {
 			throw new DuplicateRecordException("Name Already Exist");
 		}
 
@@ -85,9 +85,14 @@ public class MarksheetModel {
 
 	}
 
-	public void update(MarksheetBean bean) throws ApplicationException {
+	public void update(MarksheetBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
+		MarksheetBean existBean = findByName(bean.getName());
+
+		if (existBean != null && existBean.getId() != bean.getId()) {
+			throw new DuplicateRecordException("Name Already Exist");
+		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -220,10 +225,36 @@ public class MarksheetModel {
 		}
 		return bean;
 	}
-	
-	public List<MarksheetBean> search(MarksheetBean bean) throws ApplicationException {
+
+	public List<MarksheetBean> search(MarksheetBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_marksheet where 1=1");
+		
+		if (bean != null) {
+			if (bean.getId() > 0) {
+				sql.append(" and id = " + bean.getId());
+			}
+			if (bean.getRollNo() != null && bean.getRollNo().length() > 0) {
+				sql.append(" and roll_no like '" + bean.getRollNo() + "%'");
+			}
+			if (bean.getName() != null && bean.getName().length() > 0) {
+				sql.append(" and name like '" + bean.getName() + "%'");
+			}
+			if (bean.getPhysics() != null && bean.getPhysics() > 0) {
+				sql.append(" and physics = " + bean.getPhysics());
+			}
+			if (bean.getChemistry() != null && bean.getChemistry() > 0) {
+				sql.append(" and chemistry = " + bean.getChemistry());
+			}
+			if (bean.getMaths() != null && bean.getMaths() > 0) {
+				sql.append(" and maths = '" + bean.getMaths());
+			}
+		}
+
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + ", " + pageSize);
+		}
 
 		ArrayList<MarksheetBean> list = new ArrayList<MarksheetBean>();
 		Connection conn = null;

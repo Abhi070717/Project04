@@ -18,7 +18,7 @@ public class TestUserModel {
 	public static void main(String[] args) throws ParseException {
 
 //		testNextPk();
-		testAdd();
+//		testAdd();
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
@@ -74,25 +74,34 @@ public class TestUserModel {
 
 	}
 
-	public static void testUpdate() {
+	public static void testUpdate() throws ParseException {
 
 		try {
-			UserModel model = new UserModel();
-
-			UserBean bean = model.findByPk(1L);
-
+			UserBean bean = new UserBean();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 			bean.setFirstName("Abhishek");
-
+			bean.setLastName("Bhawsar");
 			bean.setLogin("abhi@gmail.com");
+			bean.setPassword("123");
+			bean.setDob(sdf.parse("1999-11-19"));
+			bean.setMobileNo("9876543210");
+			bean.setRoleId(1);
+			bean.setGender("Male");
+			bean.setCreatedBy("root");
+			bean.setModifiedBy("root");
+			bean.setCreatedDatetime(new Timestamp(new Date().getTime()));
+			bean.setModifiedDatetime(new Timestamp(new Date().getTime()));
+
+			UserModel model = new UserModel();
 
 			model.update(bean);
-		} catch (ApplicationException e) {
+			System.out.println("User Updated in st_user");
+
+		} catch (ApplicationException | DuplicateRecordException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("User Updated in st_user");
 	}
 
 	public static void testDelete() throws Exception {
@@ -162,7 +171,7 @@ public class TestUserModel {
 
 		UserBean bean = new UserBean();
 
-		List list = model.search(bean);
+		List list = model.search(bean, 0, 0);
 
 		Iterator it = list.iterator();
 

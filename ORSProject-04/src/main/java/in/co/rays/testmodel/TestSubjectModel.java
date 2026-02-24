@@ -41,7 +41,6 @@ public class TestSubjectModel {
 	public static void testAdd() {
 
 		try {
-
 			SubjectBean bean = new SubjectBean();
 
 			bean.setName("Core Java");
@@ -54,18 +53,11 @@ public class TestSubjectModel {
 
 			SubjectModel model = new SubjectModel();
 
-			try {
-				long pk = model.add(bean);
+			long pk = model.add(bean);
 
-				System.out.println("Subject Added Successfully, PK = " + pk);
+			System.out.println("Subject Added Successfully, PK = " + pk);
 
-			} catch (ApplicationException e) {
-
-				e.printStackTrace();
-
-			}
-		} catch (DuplicateRecordException e) {
-
+		} catch (ApplicationException | DuplicateRecordException e) {
 			e.printStackTrace();
 		}
 
@@ -77,7 +69,7 @@ public class TestSubjectModel {
 
 			SubjectBean bean = new SubjectBean();
 
-			bean.setId(2);
+			bean.setId(1);
 			bean.setName("Advanced Java");
 			bean.setCourseId(1);
 			bean.setDescription("Advanced Topics");
@@ -92,10 +84,8 @@ public class TestSubjectModel {
 
 			System.out.println("Subject Updated Successfully");
 
-		} catch (Exception e) {
-
+		} catch (ApplicationException | DuplicateRecordException e) {
 			e.printStackTrace();
-
 		}
 
 	}
@@ -114,7 +104,7 @@ public class TestSubjectModel {
 
 			System.out.println("Subject Deleted Successfully");
 
-		} catch (Exception e) {
+		} catch (ApplicationException e) {
 
 			e.printStackTrace();
 
@@ -140,7 +130,7 @@ public class TestSubjectModel {
 			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
 			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
-		} catch (Exception e) {
+		} catch (ApplicationException e) {
 
 			e.printStackTrace();
 
@@ -166,14 +156,12 @@ public class TestSubjectModel {
 			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
 			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
-		} catch (Exception e) {
+		} catch (ApplicationException e) {
 
 			e.printStackTrace();
-
 		}
-
 	}
-	
+
 	public static void testSearch() {
 
 		try {
@@ -183,7 +171,7 @@ public class TestSubjectModel {
 
 			List list = new ArrayList();
 
-			list = model.search(bean);
+			list = model.search(bean, 0, 0);
 
 			Iterator it = list.iterator();
 

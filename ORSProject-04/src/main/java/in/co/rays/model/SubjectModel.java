@@ -40,8 +40,8 @@ public class SubjectModel {
 		int pk = 0;
 
 		SubjectBean existBean = findByName(bean.getName());
-		
-		if(existBean != null) {
+
+		if (existBean != null) {
 			throw new DuplicateRecordException("Subject Already Exist");
 		}
 
@@ -78,11 +78,14 @@ public class SubjectModel {
 		return pk;
 	}
 
-	public void update(SubjectBean bean) throws ApplicationException {
+	public void update(SubjectBean bean) throws ApplicationException, DuplicateRecordException {
 		Connection conn = null;
-		CourseModel courseModel = new CourseModel();
-		CourseBean courseBean = courseModel.findByPk(bean.getCourseId());
-		bean.setCourseName(courseBean.getName());
+		SubjectBean existBean = findByName(bean.getName());
+
+		if (existBean != null && existBean.getId() != bean.getId()) {
+			throw new DuplicateRecordException("Subject Already Exist");
+		}
+
 		try {
 			conn = JDBCDataSource.getConnection();
 
@@ -200,13 +203,32 @@ public class SubjectModel {
 		}
 		return bean;
 	}
-	
-	public List<SubjectBean> list() throws ApplicationException {
-		return search(null);
-	}
 
-	public List<SubjectBean> search(SubjectBean bean) throws ApplicationException {
+	public List<SubjectBean> search(SubjectBean bean, int pageNo, int pageSize) throws ApplicationException {
 		StringBuffer sql = new StringBuffer("select * from st_subject where 1=1");
+
+		if (bean != null) {
+			if (bean.getId() > 0) {
+				sql.append(" and id = " + bean.getId());
+			}
+			if (bean.getName() != null && bean.getName().length() > 0) {
+				sql.append(" and name like '" + bean.getName() + "%'");
+			}
+			if (bean.getCourseId() > 0) {
+				sql.append(" and course_id = " + bean.getCourseId());
+			}
+			if (bean.getCourseName() != null && bean.getCourseName().length() > 0) {
+				sql.append(" and course_name like '" + bean.getCourseName() + "%'");
+			}
+			if (bean.getDescription() != null && bean.getDescription().length() > 0) {
+				sql.append(" and description like '" + bean.getDescription() + "%'");
+			}
+		}
+
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + ", " + pageSize);
+		}
 
 		ArrayList<SubjectBean> list = new ArrayList<SubjectBean>();
 		Connection conn = null;

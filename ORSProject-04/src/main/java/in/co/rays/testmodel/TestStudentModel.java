@@ -97,7 +97,7 @@ public class TestStudentModel {
 			model.update(bean);
 
 			System.out.println("Data Stored in st_student");
-		} catch (ApplicationException e) {
+		} catch (ApplicationException | DuplicateRecordException e) {
 			e.printStackTrace();
 		}
 
@@ -184,7 +184,7 @@ public class TestStudentModel {
 
 			StudentModel model = new StudentModel();
 			List list = new ArrayList();
-			list = model.search(bean);
+			list = model.search(bean, 0, 0);
 
 			Iterator it = list.iterator();
 			while (it.hasNext()) {

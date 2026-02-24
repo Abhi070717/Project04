@@ -91,8 +91,13 @@ public class FacultyModel {
 		return pk;
 	}
 
-	public void update(FacultyBean bean) throws ApplicationException {
+	public void update(FacultyBean bean) throws ApplicationException, DuplicateRecordException {
 
+		FacultyBean existBean = findByEmail(bean.getEmail());
+
+		if (existBean != null && existBean.getId() != bean.getId()) {
+			throw new DuplicateRecordException("Email Already Exist");
+		}
 		Connection conn = null;
 
 		try {
@@ -254,11 +259,58 @@ public class FacultyModel {
 		return bean;
 	}
 
-	public List<FacultyBean> search(FacultyBean bean) throws ApplicationException {
+	public List<FacultyBean> search(FacultyBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_faculty where 1=1");
+		
+		if (bean != null) {
+			if (bean.getId() > 0) {
+				sql.append(" and id = " + bean.getId());
+			}
+			if (bean.getCollegeId() > 0) {
+				sql.append(" and college_id = " + bean.getCollegeId());
+			}
+			if (bean.getSubjectId() > 0) {
+				sql.append(" and subject_id = " + bean.getSubjectId());
+			}
+			if (bean.getCourseId() > 0) {
+				sql.append(" and course_id = " + bean.getCourseId());
+			}
+			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
+				sql.append(" and first_name like '" + bean.getFirstName() + "%'");
+			}
+			if (bean.getLastName() != null && bean.getLastName().length() > 0) {
+				sql.append(" and last_name like '" + bean.getLastName() + "%'");
+			}
+			if (bean.getGender() != null && bean.getGender().length() > 0) {
+				sql.append(" and gender like '" + bean.getGender() + "%'");
+			}
+			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
+				sql.append(" and dob = " + bean.getDob());
+			}
+			if (bean.getEmail() != null && bean.getEmail().length() > 0) {
+				sql.append(" and email like '" + bean.getEmail() + "%'");
+			}
+			if (bean.getMobileNo() != null && bean.getMobileNo().length() > 0) {
+				sql.append(" and mobile_no = " + bean.getMobileNo());
+			}
+			if (bean.getCourseName() != null && bean.getCourseName().length() > 0) {
+				sql.append(" and course_name like '" + bean.getCourseName() + "%'");
+			}
+			if (bean.getCollegeName() != null && bean.getCollegeName().length() > 0) {
+				sql.append(" and college_name like '" + bean.getCollegeName() + "%'");
+			}
+			if (bean.getSubjectName() != null && bean.getSubjectName().length() > 0) {
+				sql.append(" and subject_name like '" + bean.getSubjectName() + "%'");
+			}
+		}
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + ", " + pageSize);
+		}
 
-		ArrayList<FacultyBean> list = new ArrayList<>();
+
+		ArrayList<FacultyBean> list = new ArrayList();
 		Connection conn = null;
 
 		try {

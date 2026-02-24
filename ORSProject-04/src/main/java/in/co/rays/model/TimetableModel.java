@@ -178,9 +178,44 @@ public class TimetableModel {
 		return bean;
 	}
 
-	public List<TimetableBean> search(TimetableBean bean) throws ApplicationException {
+	public List<TimetableBean> search(TimetableBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_timetable where 1=1");
+
+		if (bean != null) {
+			if (bean.getId() > 0) {
+				sql.append(" and id = " + bean.getId());
+			}
+			if (bean.getCourseId() > 0) {
+				sql.append(" and course_id = " + bean.getCourseId());
+			}
+			if (bean.getCourseName() != null && bean.getCourseName().length() > 0) {
+				sql.append(" and course_name like '" + bean.getCourseName() + "%'");
+			}
+			if (bean.getSubjectId() > 0) {
+				sql.append(" and subject_id = " + bean.getSubjectId());
+			}
+			if (bean.getSubjectName() != null && bean.getSubjectName().length() > 0) {
+				sql.append(" and subject_name like '" + bean.getSubjectName() + "%'");
+			}
+			if (bean.getSemester() != null && bean.getSemester().length() > 0) {
+				sql.append(" and semester like '" + bean.getSemester() + "%'");
+			}
+			if (bean.getDescription() != null && bean.getDescription().length() > 0) {
+				sql.append(" and description like '" + bean.getDescription() + "%'");
+			}
+			if (bean.getExamDate() != null && bean.getExamDate().getDate() > 0) {
+				sql.append(" and exam_date like '" + new java.sql.Date(bean.getExamDate().getTime()) + "%'");
+			}
+			if (bean.getExamTime() != null && bean.getExamTime().length() > 0) {
+				sql.append(" and exam_time like '" + bean.getExamTime() + "%'");
+			}
+		}
+
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + ", " + pageSize);
+		}
 
 		ArrayList<TimetableBean> list = new ArrayList<TimetableBean>();
 		Connection conn = null;

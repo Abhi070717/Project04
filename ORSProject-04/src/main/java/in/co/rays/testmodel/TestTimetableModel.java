@@ -152,7 +152,7 @@ public class TestTimetableModel {
 
 			TimetableBean bean = new TimetableBean();
 
-			List list = model.search(bean);
+			List list = model.search(bean, 0, 0);
 
 			Iterator it = list.iterator();
 

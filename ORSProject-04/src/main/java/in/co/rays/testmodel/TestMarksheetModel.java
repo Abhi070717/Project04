@@ -18,7 +18,7 @@ public class TestMarksheetModel {
 
 //		testNextPk();
 //		testAdd();
-//		testUpdate();
+		testUpdate();
 //		testDelete();
 //		testFindByPk();
 //		testFindByName();
@@ -83,9 +83,12 @@ public class TestMarksheetModel {
 
 		try {
 			MarksheetModel model = new MarksheetModel();
-			model.update(bean);
-			System.out.println("Data Updated Successfully in st_marksheet");
-
+			try {
+				model.update(bean);
+				System.out.println("Data Updated Successfully in st_marksheet");
+			} catch (DuplicateRecordException e) {
+				e.printStackTrace();
+			}
 		} catch (ApplicationException e) {
 
 			e.printStackTrace();
@@ -102,7 +105,6 @@ public class TestMarksheetModel {
 			model.delete(bean);
 			System.out.println("Data Deleted Successfully in st_marksheet");
 		} catch (ApplicationException e) {
-
 			e.printStackTrace();
 		}
 	}
@@ -168,7 +170,7 @@ public class TestMarksheetModel {
 
 			List list = new ArrayList();
 
-			list = model.search(bean);
+			list = model.search(bean, 0, 0);
 
 			Iterator it = list.iterator();
 

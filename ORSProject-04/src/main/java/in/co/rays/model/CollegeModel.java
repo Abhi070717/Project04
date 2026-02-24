@@ -42,10 +42,10 @@ public class CollegeModel {
 
 		Connection conn = null;
 		int pk = 0;
-		
+
 		CollegeBean existBean = findByName(bean.getName());
-		
-		if(existBean != null) {
+
+		if (existBean != null) {
 			throw new DuplicateRecordException("College Already Exist");
 		}
 
@@ -85,9 +85,15 @@ public class CollegeModel {
 
 	}
 
-	public void update(CollegeBean bean) throws ApplicationException {
+	public void update(CollegeBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
+
+		CollegeBean existBean = findByName(bean.getName());
+
+		if (existBean != null && existBean.getId() != bean.getId()) {
+			throw new DuplicateRecordException("College Already Exist");
+		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -183,7 +189,7 @@ public class CollegeModel {
 		}
 		return bean;
 	}
-	
+
 	public CollegeBean findByName(String name) throws ApplicationException {
 
 		Connection conn = null;
@@ -221,9 +227,35 @@ public class CollegeModel {
 
 	}
 
-	public List<CollegeBean> search(CollegeBean bean) throws ApplicationException {
+	public List<CollegeBean> search(CollegeBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_college where 1 = 1");
+
+		if (bean != null) {
+			if (bean.getId() > 0) {
+				sql.append(" and id = " + bean.getId());
+			}
+			if (bean.getName() != null && bean.getName().length() > 0) {
+				sql.append(" and name like '" + bean.getName() + "%'");
+			}
+			if (bean.getAddress() != null && bean.getAddress().length() > 0) {
+				sql.append(" and address like '" + bean.getAddress() + "%'");
+			}
+			if (bean.getState() != null && bean.getState().length() > 0) {
+				sql.append(" and state like '" + bean.getState() + "%'");
+			}
+			if (bean.getCity() != null && bean.getCity().length() > 0) {
+				sql.append(" and city like '" + bean.getCity() + "%'");
+			}
+			if (bean.getPhoneNo() != null && bean.getPhoneNo().length() > 0) {
+				sql.append(" and phone_no = " + bean.getPhoneNo());
+			}
+		}
+
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + ", " + pageSize);
+		}
 
 		ArrayList<CollegeBean> list = new ArrayList<CollegeBean>();
 		Connection conn = null;

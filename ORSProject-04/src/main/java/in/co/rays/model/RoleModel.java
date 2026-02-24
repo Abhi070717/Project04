@@ -82,7 +82,13 @@ public class RoleModel {
 
 	}
 
-	public void update(RoleBean bean) throws ApplicationException {
+	public void update(RoleBean bean) throws ApplicationException, DuplicateRecordException {
+
+		RoleBean existBean = findByName(bean.getName());
+
+		if (existBean != null && existBean.getId() != bean.getId()) {
+			throw new DuplicateRecordException("Role Already Exist");
+		}
 
 		Connection conn = null;
 
@@ -167,8 +173,7 @@ public class RoleModel {
 
 		try {
 			conn = JDBCDataSource.getConnection();
-			PreparedStatement pstmt;
-			pstmt = conn.prepareStatement(sb.toString());
+			PreparedStatement pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setLong(1, Pk);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -226,16 +231,33 @@ public class RoleModel {
 
 	}
 
-	public List<RoleBean> search(RoleBean bean) throws ApplicationException {
+	public List<RoleBean> search(RoleBean bean, int pageNo, int pageSize) throws ApplicationException {
 
-		StringBuffer sb = new StringBuffer("select * from st_role where 1=1");
+		StringBuffer sql = new StringBuffer("select * from st_role where 1=1");
+
+		if (bean != null) {
+			if (bean.getId() > 0) {
+				sql.append(" and id = " + bean.getId());
+			}
+			if (bean.getName() != null && bean.getName().length() > 0) {
+				sql.append(" and name like '" + bean.getName() + "%'");
+			}
+			if (bean.getDescription() != null && bean.getDescription().length() > 0) {
+				sql.append(" and description like '" + bean.getDescription() + "%'");
+			}
+		}
+
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + ", " + pageSize);
+		}
 
 		Connection conn = null;
 		ArrayList<RoleBean> list = new ArrayList<RoleBean>();
 
 		try {
 			conn = JDBCDataSource.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sb.toString());
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				bean = new RoleBean();
