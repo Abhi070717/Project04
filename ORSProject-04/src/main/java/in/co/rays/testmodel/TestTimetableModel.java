@@ -20,7 +20,7 @@ public class TestTimetableModel {
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
-//		testSearch();
+		testSearch();
 
 	}
 
@@ -148,9 +148,11 @@ public class TestTimetableModel {
 	public static void testSearch() {
 
 		try {
-			TimetableModel model = new TimetableModel();
-
 			TimetableBean bean = new TimetableBean();
+			
+			bean.setSemester("3rd");
+
+			TimetableModel model = new TimetableModel();
 
 			List list = model.search(bean, 0, 0);
 

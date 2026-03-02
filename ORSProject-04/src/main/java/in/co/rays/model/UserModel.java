@@ -61,7 +61,7 @@ public class UserModel {
 			pstmt.setString(3, bean.getLastName());
 			pstmt.setString(4, bean.getLogin());
 			pstmt.setString(5, bean.getPassword());
-				
+			pstmt.setDate(6, new java.sql.Date(bean.getDob().getTime()));
 			pstmt.setString(7, bean.getMobileNo());
 			pstmt.setLong(8, bean.getRoleId());
 			pstmt.setString(9, bean.getGender());

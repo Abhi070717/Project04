@@ -19,11 +19,11 @@ public class TestFacultyModel {
 
 //		testNextPk();
 //		testAdd();
-		testUpdate();
+//		testUpdate();
 //		testDelete();
 //		testFindByPk();
 //		testFindByEmail();
-//		testSearch();
+		testSearch();
 	}
 
 	public static void testNextPk() {
@@ -199,6 +199,8 @@ public class TestFacultyModel {
 
 		try {
 			FacultyBean bean = new FacultyBean();
+			
+			bean.setFirstName("Rahul");
 
 			FacultyModel model = new FacultyModel();
 

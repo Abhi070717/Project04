@@ -22,7 +22,7 @@ public class TestSubjectModel {
 //		testDelete();
 //		testFindByPk();
 //		testFindByName();
-//		testSearch();
+		testSearch();
 
 	}
 
@@ -166,6 +166,8 @@ public class TestSubjectModel {
 
 		try {
 			SubjectBean bean = new SubjectBean();
+			
+			bean.setName("Core Java");
 
 			SubjectModel model = new SubjectModel();
 

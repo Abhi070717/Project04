@@ -19,14 +19,14 @@ public class TestRoleModel {
 
 //		testNextPk();
 //		testAdd();
-		testUpdate();
+//		testUpdate();
 //		testDelete();
 //		testFindByPk();
 //		testFindByName();
-//		testSearch();
+		testSearch();
 	}
 
-	public static void testNextPk()  {
+	public static void testNextPk() {
 
 		RoleModel model = new RoleModel();
 		try {
@@ -144,11 +144,13 @@ public class TestRoleModel {
 
 	public static void testSearch() {
 
+		RoleBean bean = new RoleBean();
+		
+		bean.setName("Student");
+
 		RoleModel model = new RoleModel();
 
 		try {
-			RoleBean bean = new RoleBean();
-
 			List list = new ArrayList();
 
 			list = model.search(bean, 0, 0);

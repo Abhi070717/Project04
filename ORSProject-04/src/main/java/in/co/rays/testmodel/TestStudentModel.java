@@ -27,7 +27,7 @@ public class TestStudentModel {
 //		testDelete();
 //		testFindByPk();
 //		testFindByEmail();
-//		testSearch();
+		testSearch();
 	}
 
 	public static void testNextPk() {
@@ -175,18 +175,23 @@ public class TestStudentModel {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void testSearch() {
 
+		StudentBean bean = new StudentBean();
+
+		bean.setFirstName("Viraj");
+
 		try {
-			StudentBean bean = new StudentBean();
-			bean.setFirstName("Aniket");
+
+			List list = new ArrayList();
 
 			StudentModel model = new StudentModel();
-			List list = new ArrayList();
+
 			list = model.search(bean, 0, 0);
 
 			Iterator it = list.iterator();
+
 			while (it.hasNext()) {
 				bean = (StudentBean) it.next();
 				System.out.println("ID : " + bean.getId());

@@ -37,10 +37,10 @@ public class PropertyReader {
 		System.out.println("Single key example:");
 		System.out.println(PropertyReader.getValue("error.require"));
 
-		System.out.println("\nSingle parameter replacement example:");
+		System.out.println("Single parameter replacement example:");
 		System.out.println(PropertyReader.getValue("error.require", "loginId"));
 
-		System.out.println("\nMultiple parameter replacement example:");
+		System.out.println("Multiple parameter replacement example:");
 		String[] params = { "Roll No", "Student Name" };
 		System.out.println(PropertyReader.getValue("error.multipleFields", params));
 	}

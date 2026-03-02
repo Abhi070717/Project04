@@ -22,7 +22,7 @@ public class TestCourseModel {
 //		testDelete();
 //		testFindByPk();
 //		testFindByName();
-//		testSearch();
+		testSearch();
 
 	}
 
@@ -158,6 +158,8 @@ public class TestCourseModel {
 
 		try {
 			CourseBean bean = new CourseBean();
+			
+			bean.setName("Java Advanced");
 
 			CourseModel model = new CourseModel();
 

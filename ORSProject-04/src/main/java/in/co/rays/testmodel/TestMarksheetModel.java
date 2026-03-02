@@ -18,11 +18,11 @@ public class TestMarksheetModel {
 
 //		testNextPk();
 //		testAdd();
-		testUpdate();
+//		testUpdate();
 //		testDelete();
 //		testFindByPk();
 //		testFindByName();
-//		testSearch();
+		testSearch();
 	}
 
 	public static void testNextPk() {
@@ -165,6 +165,8 @@ public class TestMarksheetModel {
 
 		try {
 			MarksheetBean bean = new MarksheetBean();
+			
+			bean.setName("Ankit Jain");
 
 			MarksheetModel model = new MarksheetModel();
 

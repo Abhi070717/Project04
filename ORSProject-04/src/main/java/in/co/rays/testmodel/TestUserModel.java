@@ -22,7 +22,7 @@ public class TestUserModel {
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
-//		testSearch();
+		testSearch();
 
 	}
 
@@ -165,13 +165,17 @@ public class TestUserModel {
 		}
 	}
 
-	public static void testSearch() throws Exception {
+	public static void testSearch() {
+
+		UserBean bean = new UserBean();
+		
+		bean.setFirstName("Abhishish");
 
 		UserModel model = new UserModel();
 
-		UserBean bean = new UserBean();
-
-		List list = model.search(bean, 0, 0);
+		List list;
+		try {
+			list = model.search(bean, 0, 0);
 
 		Iterator it = list.iterator();
 
@@ -192,6 +196,9 @@ public class TestUserModel {
 			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
 		}
+	} catch (ApplicationException e) {
+		e.printStackTrace();
+	}
 
 	}
 

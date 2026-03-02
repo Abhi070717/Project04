@@ -18,11 +18,11 @@ public class TestCollegeModel {
 
 //		testNextPk();
 //		testAdd();
-		testUpdate();
+//		testUpdate();
 //		testDelete();
 //		testFindByPk();
 //		testFindByName();
-//		testsearch();
+		testsearch();
 	}
 
 	public static void testNextPk() {
@@ -156,6 +156,8 @@ public class TestCollegeModel {
 	public static void testsearch() {
 		try {
 			CollegeBean bean = new CollegeBean();
+			
+			bean.setName("SGSITS");
 
 			CollegeModel model = new CollegeModel();
 
