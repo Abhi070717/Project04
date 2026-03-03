@@ -163,11 +163,11 @@ public class TestCourseModel {
 
 			CourseModel model = new CourseModel();
 
-			List list = new ArrayList();
+			List<CourseBean> list = new ArrayList<CourseBean>();
 
 			list = model.search(bean, 0, 0);
 
-			Iterator it = list.iterator();
+			Iterator<CourseBean> it = list.iterator();
 
 			while (it.hasNext()) {
 				bean = (CourseBean) it.next();

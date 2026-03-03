@@ -8,13 +8,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import in.co.rays.bean.MarksheetBean;
 import in.co.rays.bean.StudentBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
 import in.co.rays.exception.DuplicateRecordException;
-import in.co.rays.exception.RecordNotFoundException;
-import in.co.rays.model.MarksheetModel;
 import in.co.rays.model.StudentModel;
 
 public class TestStudentModel {
@@ -176,21 +173,22 @@ public class TestStudentModel {
 		}
 	}
 
-	public static void testSearch() {
+	public static void testSearch() throws ParseException {
 
 		StudentBean bean = new StudentBean();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-		bean.setFirstName("Viraj");
+		bean.setDob(sdf.parse("2001-11-14"));
 
 		try {
 
-			List list = new ArrayList();
+			List<StudentBean> list = new ArrayList<StudentBean>();
 
 			StudentModel model = new StudentModel();
 
 			list = model.search(bean, 0, 0);
 
-			Iterator it = list.iterator();
+			Iterator<StudentBean> it = list.iterator();
 
 			while (it.hasNext()) {
 				bean = (StudentBean) it.next();

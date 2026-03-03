@@ -11,7 +11,6 @@ import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
 import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.model.RoleModel;
-import in.co.rays.model.UserModel;
 
 public class TestRoleModel {
 
@@ -151,11 +150,11 @@ public class TestRoleModel {
 		RoleModel model = new RoleModel();
 
 		try {
-			List list = new ArrayList();
+			List<RoleBean> list = new ArrayList<RoleBean>();
 
 			list = model.search(bean, 0, 0);
 
-			Iterator it = list.iterator();
+			Iterator<RoleBean> it = list.iterator();
 
 			while (it.hasNext()) {
 				bean = (RoleBean) it.next();

@@ -170,11 +170,11 @@ public class TestMarksheetModel {
 
 			MarksheetModel model = new MarksheetModel();
 
-			List list = new ArrayList();
+			List<MarksheetBean> list = new ArrayList<MarksheetBean>();
 
 			list = model.search(bean, 0, 0);
 
-			Iterator it = list.iterator();
+			Iterator<MarksheetBean> it = list.iterator();
 
 			while (it.hasNext()) {
 				bean = (MarksheetBean) it.next();

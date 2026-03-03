@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.co.rays.bean.CollegeBean;
-import in.co.rays.bean.RoleBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
 import in.co.rays.exception.DuplicateRecordException;

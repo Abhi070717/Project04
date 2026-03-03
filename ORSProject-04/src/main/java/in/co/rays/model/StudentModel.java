@@ -251,7 +251,6 @@ public class StudentModel {
 
 		StringBuffer sql = new StringBuffer("select * from st_student where 1 = 1");
 
-
 		if (bean != null) {
 			if (bean.getId() > 0) {
 				sql.append(" and id = " + bean.getId());
@@ -262,8 +261,8 @@ public class StudentModel {
 			if (bean.getLastName() != null && bean.getLastName().length() > 0) {
 				sql.append(" and last_name like '" + bean.getLastName() + "%'");
 			}
-			if (bean.getDob() != null && bean.getDob().getDate() > 0) {
-				sql.append(" and dob = " + bean.getDob());
+			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
+				sql.append(" and dob like '" + new java.sql.Date(bean.getDob().getTime()) + "%'");
 			}
 			if (bean.getGender() != null && bean.getGender().length() > 0) {
 				sql.append(" and gender like '" + bean.getGender() + "%'");
@@ -283,8 +282,8 @@ public class StudentModel {
 			pageNo = (pageNo - 1) * pageSize;
 			sql.append(" limit " + pageNo + ", " + pageSize);
 		}
-		
-		List list = new ArrayList();
+
+		List<StudentBean> list = new ArrayList<StudentBean>();
 		Connection conn = null;
 
 		try {
@@ -306,12 +305,15 @@ public class StudentModel {
 				bean.setModifiedBy(rs.getString(11));
 				bean.setCreatedDatetime(rs.getTimestamp(12));
 				bean.setModifiedDatetime(rs.getTimestamp(13));
+
 				list.add(bean);
 			}
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ApplicationException("Exception :Exception in Search Student");
+
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}

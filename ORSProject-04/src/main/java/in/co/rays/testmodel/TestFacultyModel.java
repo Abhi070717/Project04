@@ -204,9 +204,9 @@ public class TestFacultyModel {
 
 			FacultyModel model = new FacultyModel();
 
-			List list = model.search(bean, 0, 0);
+			List<FacultyBean> list = model.search(bean, 0, 0);
 
-			Iterator it = list.iterator();
+			Iterator<FacultyBean> it = list.iterator();
 
 			while (it.hasNext()) {
 				bean = (FacultyBean) it.next();

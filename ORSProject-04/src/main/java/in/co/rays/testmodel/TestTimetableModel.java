@@ -8,7 +8,6 @@ import java.util.List;
 
 import in.co.rays.bean.TimetableBean;
 import in.co.rays.exception.DatabaseException;
-import in.co.rays.model.SubjectModel;
 import in.co.rays.model.TimetableModel;
 
 public class TestTimetableModel {
@@ -149,14 +148,16 @@ public class TestTimetableModel {
 
 		try {
 			TimetableBean bean = new TimetableBean();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			
-			bean.setSemester("3rd");
+//			bean.setSemester("3rd");
+			bean.setExamDate(sdf.parse("2026-04-20"));
 
 			TimetableModel model = new TimetableModel();
 
-			List list = model.search(bean, 0, 0);
+			List<TimetableBean> list = model.search(bean, 0, 0);
 
-			Iterator it = list.iterator();
+			Iterator<TimetableBean> it = list.iterator();
 
 			while (it.hasNext()) {
 

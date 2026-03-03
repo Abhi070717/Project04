@@ -171,11 +171,11 @@ public class TestSubjectModel {
 
 			SubjectModel model = new SubjectModel();
 
-			List list = new ArrayList();
+			List<SubjectBean> list = new ArrayList<SubjectBean>();
 
 			list = model.search(bean, 0, 0);
 
-			Iterator it = list.iterator();
+			Iterator<SubjectBean> it = list.iterator();
 
 			while (it.hasNext()) {
 				bean = (SubjectBean) it.next();

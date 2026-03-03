@@ -168,37 +168,36 @@ public class TestUserModel {
 	public static void testSearch() {
 
 		UserBean bean = new UserBean();
-		
+
 		bean.setFirstName("Abhishish");
 
 		UserModel model = new UserModel();
 
-		List list;
 		try {
-			list = model.search(bean, 0, 0);
+			List<UserBean> list = model.search(bean, 0, 0);
 
-		Iterator it = list.iterator();
+			Iterator<UserBean> it = list.iterator();
 
-		while (it.hasNext()) {
-			bean = (UserBean) it.next();
-			System.out.println("ID : " + bean.getId());
-			System.out.println("First Name : " + bean.getFirstName());
-			System.out.println("Last Name : " + bean.getLastName());
-			System.out.println("Login : " + bean.getLogin());
-			System.out.println("Password : " + bean.getPassword());
-			System.out.println("DOB : " + bean.getDob());
-			System.out.println("Mobile No : " + bean.getMobileNo());
-			System.out.println("Role ID : " + bean.getRoleId());
-			System.out.println("Gender : " + bean.getGender());
-			System.out.println("CreatedBy : " + bean.getCreatedBy());
-			System.out.println("ModifiedBy : " + bean.getModifiedBy());
-			System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
-			System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
+			while (it.hasNext()) {
+				bean = (UserBean) it.next();
+				System.out.println("ID : " + bean.getId());
+				System.out.println("First Name : " + bean.getFirstName());
+				System.out.println("Last Name : " + bean.getLastName());
+				System.out.println("Login : " + bean.getLogin());
+				System.out.println("Password : " + bean.getPassword());
+				System.out.println("DOB : " + bean.getDob());
+				System.out.println("Mobile No : " + bean.getMobileNo());
+				System.out.println("Role ID : " + bean.getRoleId());
+				System.out.println("Gender : " + bean.getGender());
+				System.out.println("CreatedBy : " + bean.getCreatedBy());
+				System.out.println("ModifiedBy : " + bean.getModifiedBy());
+				System.out.println("CreatedDatetime : " + bean.getCreatedDatetime());
+				System.out.println("ModifiedDatetime : " + bean.getModifiedDatetime());
 
+			}
+		} catch (ApplicationException e) {
+			e.printStackTrace();
 		}
-	} catch (ApplicationException e) {
-		e.printStackTrace();
-	}
 
 	}
 

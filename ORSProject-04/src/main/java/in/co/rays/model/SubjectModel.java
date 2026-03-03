@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.co.rays.bean.CourseBean;
 import in.co.rays.bean.SubjectBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DatabaseException;
@@ -44,7 +43,6 @@ public class SubjectModel {
 		if (existBean != null) {
 			throw new DuplicateRecordException("Subject Already Exist");
 		}
-
 		try {
 			conn = JDBCDataSource.getConnection();
 			pk = nextPk();

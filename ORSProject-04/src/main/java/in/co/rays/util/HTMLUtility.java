@@ -1,10 +1,12 @@
 package in.co.rays.util;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 import in.co.rays.model.RoleModel;
+import in.co.rays.model.UserModel;
 
 public class HTMLUtility {
 
@@ -30,33 +32,33 @@ public class HTMLUtility {
 		return sb.toString();
 	}
 
-//	public static String getList(String name, String selectedVal, List list) {
+	public static String getList(String name, String selectedVal, List list) {
 
-	// Collections.sort(list);
+		Collections.sort(list);
 
-//		List<DropdownListBean> dd = (List<DropdownListBean>) list;
+		List<DropdownListBean> dd = (List<DropdownListBean>) list;
 
-//		StringBuffer sb = new StringBuffer("<select style=\"width: 169px;text-align-last: center;\"; "
-//				+ "class='form-control' name='" + name + "'>");
+		StringBuffer sb = new StringBuffer("<select style=\"width: 169px;text-align-last: center;\"; "
+				+ "class='form-control' name='" + name + "'>");
 
-//		sb.append("\n<option selected value=''>-------------Select-------------</option>");
+		sb.append("\n<option selected value=''>-------------Select-------------</option>");
 
-//		String key = null;
-//		String val = null;
+		String key = null;
+		String val = null;
 
-//		for (DropdownListBean obj : dd) {
-//			key = obj.getKey();
-//			val = obj.getValue();
+		for (DropdownListBean obj : dd) {
+			key = obj.getKey();
+			val = obj.getValue();
 
-//		if (key.trim().equals(selectedVal)) {
-//			sb.append("\n<option selected value='" + key + "'>" + val + "</option>");
-//		} else {
-//			sb.append("\n<option value='" + key + "'>" + val + "</option>");
-//		}
-//	}
-//		sb.append("\n</select>");
-//		return sb.toString();
-//	}
+			if (key.trim().equals(selectedVal)) {
+				sb.append("\n<option selected value='" + key + "'>" + val + "</option>");
+			} else {
+				sb.append("\n<option value='" + key + "'>" + val + "</option>");
+			}
+		}
+		sb.append("\n</select>");
+		return sb.toString();
+	}
 
 	public static void testGetListByMap() {
 
@@ -72,22 +74,22 @@ public class HTMLUtility {
 
 	public static void testGetListByList() throws Exception {
 
-		RoleModel model = new RoleModel(); 
+		RoleModel model = new RoleModel();
 
-		// UserModel model = new UserModel();
+		UserModel model1 = new UserModel();
 
-//		List list = model.list();
+		List list = model1.list();
 
 		String selectedValue = "1";
 
-//		String htmlSelectFromList = HTMLUtility.getList("role", selectedValue, list);
+		String htmlSelectFromList = HTMLUtility.getList("role", selectedValue, list);
 
-//		System.out.println(htmlSelectFromList);
+		System.out.println(htmlSelectFromList);
 	}
 
 	public static void main(String[] args) throws Exception {
 
-		// testGetListByMap();
+		testGetListByMap();
 
 		testGetListByList();
 

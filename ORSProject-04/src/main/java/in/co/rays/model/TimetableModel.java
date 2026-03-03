@@ -204,7 +204,7 @@ public class TimetableModel {
 			if (bean.getDescription() != null && bean.getDescription().length() > 0) {
 				sql.append(" and description like '" + bean.getDescription() + "%'");
 			}
-			if (bean.getExamDate() != null && bean.getExamDate().getDate() > 0) {
+			if (bean.getExamDate() != null && bean.getExamDate().getTime() > 0) {
 				sql.append(" and exam_date like '" + new java.sql.Date(bean.getExamDate().getTime()) + "%'");
 			}
 			if (bean.getExamTime() != null && bean.getExamTime().length() > 0) {

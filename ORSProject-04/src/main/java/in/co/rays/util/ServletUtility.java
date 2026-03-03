@@ -85,12 +85,12 @@ public class ServletUtility {
 		}
 	}
 
-	public static void setList(List list, HttpServletRequest request) {
+	public static void setList(List<?> list, HttpServletRequest request) {
 		request.setAttribute("list", list);
 	}
 
-	public static List getList(HttpServletRequest request) {
-		return (List) request.getAttribute("list");
+	public static List<?> getList(HttpServletRequest request) {
+		return (List<?>) request.getAttribute("list");
 	}
 
 	public static void setPageNo(int pageNo, HttpServletRequest request) {

@@ -310,7 +310,7 @@ public class FacultyModel {
 		}
 
 
-		ArrayList<FacultyBean> list = new ArrayList();
+		ArrayList<FacultyBean> list = new ArrayList<FacultyBean>();
 		Connection conn = null;
 
 		try {

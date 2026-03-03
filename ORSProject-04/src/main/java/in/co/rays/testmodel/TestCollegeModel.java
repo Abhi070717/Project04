@@ -156,16 +156,16 @@ public class TestCollegeModel {
 	public static void testsearch() {
 		try {
 			CollegeBean bean = new CollegeBean();
-			
+
 			bean.setName("SGSITS");
 
 			CollegeModel model = new CollegeModel();
 
-			List list = new ArrayList();
+			List<CollegeBean> list = new ArrayList<CollegeBean>();
 
 			list = model.search(bean, 0, 0);
 
-			Iterator it = list.iterator();
+			Iterator<CollegeBean> it = list.iterator();
 
 			while (it.hasNext()) {
 				bean = (CollegeBean) it.next();

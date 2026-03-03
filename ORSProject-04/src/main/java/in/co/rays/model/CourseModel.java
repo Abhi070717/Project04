@@ -257,7 +257,7 @@ public class CourseModel {
 			sql.append(" limit " + pageNo + ", " + pageSize);
 		}
 		
-		List<CourseBean> list = new ArrayList();
+		List<CourseBean> list = new ArrayList<CourseBean>();
 		Connection conn = null;
 
 		try {
