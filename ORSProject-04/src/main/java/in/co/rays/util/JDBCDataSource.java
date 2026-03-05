@@ -10,7 +10,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public final class JDBCDataSource {
 
-	private static JDBCDataSource jds = null; // static attribute have only one copy in there life time
+	private static JDBCDataSource jds = null; // Static attribute have only one copy in there life time
 
 	private ComboPooledDataSource cpds = null;
 
