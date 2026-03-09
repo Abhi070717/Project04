@@ -178,6 +178,10 @@ public class TimetableModel {
 		return bean;
 	}
 
+	public List<TimetableBean> list() throws ApplicationException {
+		return search(null, 0, 0);
+	}
+	
 	public List<TimetableBean> search(TimetableBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_timetable where 1=1");

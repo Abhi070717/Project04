@@ -247,6 +247,10 @@ public class UserModel {
 		}
 		return bean;
 	}
+	
+	public List<UserBean> list() throws ApplicationException {
+		return search(null, 0, 0);
+	}
 
 	public List<UserBean> search(UserBean bean, int pageNo, int pageSize) throws ApplicationException {
 

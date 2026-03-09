@@ -232,6 +232,10 @@ public class CourseModel {
 
 		return bean;
 	}
+	
+	public List<CourseBean> list() throws ApplicationException {
+		return search(null, 0, 0);
+	}
 
 	public List<CourseBean> search(CourseBean bean, int pageNo, int pageSize) throws ApplicationException {
 

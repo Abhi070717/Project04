@@ -1,12 +1,12 @@
 package in.co.rays.util;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import in.co.rays.bean.DropdownListBean;
+import in.co.rays.bean.RoleBean;
 import in.co.rays.model.RoleModel;
-import in.co.rays.model.UserModel;
 
 public class HTMLUtility {
 
@@ -32,9 +32,9 @@ public class HTMLUtility {
 		return sb.toString();
 	}
 
-	public static String getList(String name, String selectedVal, List list) {
+	public static String getList(String name, String selectedVal, List<?> list) {
 
-		Collections.sort(list);
+//		Collections.sort(list);
 
 		List<DropdownListBean> dd = (List<DropdownListBean>) list;
 
@@ -75,21 +75,36 @@ public class HTMLUtility {
 	public static void testGetListByList() throws Exception {
 
 		RoleModel model = new RoleModel();
+		
+//		FacultyModel model = new FacultyModel();
 
-		UserModel model1 = new UserModel();
+//		CourseModel model = new CourseModel();
+		
+//		StudentModel model = new StudentModel();
 
-		List list = model1.list();
+//		SubjectModel model = new SubjectModel();
 
-		String selectedValue = "1";
+		
+//		TimetableModel model = new TimetableModel();
+		
+//		MarksheetModel model = new MarksheetModel();
+		
+//		StudentModel model = new StudentModel();
 
-		String htmlSelectFromList = HTMLUtility.getList("role", selectedValue, list);
+//		CollegeModel model = new CollegeModel();
+
+		List<RoleBean> list = model.list();
+
+		String selectedValue = null;
+
+		String htmlSelectFromList = HTMLUtility.getList("Faculty", selectedValue, list);
 
 		System.out.println(htmlSelectFromList);
 	}
 
 	public static void main(String[] args) throws Exception {
 
-		testGetListByMap();
+//		testGetListByMap();
 
 		testGetListByList();
 

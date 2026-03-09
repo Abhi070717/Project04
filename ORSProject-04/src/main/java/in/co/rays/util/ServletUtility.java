@@ -112,6 +112,6 @@ public class ServletUtility {
 	public static void handleException(Exception e, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		request.setAttribute("exception", e);
-//		response.sendRedirect(ORSView.ERROR_CTL);
+		response.sendRedirect(ORSView.ERROR_CTL);
 	}
 }

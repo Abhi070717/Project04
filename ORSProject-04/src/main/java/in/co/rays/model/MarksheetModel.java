@@ -225,6 +225,10 @@ public class MarksheetModel {
 		}
 		return bean;
 	}
+	
+	public List<MarksheetBean> list() throws ApplicationException {
+		return search(null, 0, 0);
+	}
 
 	public List<MarksheetBean> search(MarksheetBean bean, int pageNo, int pageSize) throws ApplicationException {
 

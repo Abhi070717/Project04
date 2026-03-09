@@ -246,6 +246,10 @@ public class StudentModel {
 		return bean;
 
 	}
+	
+	public List<StudentBean> list() throws ApplicationException {
+		return search(null, 0, 0);
+	}
 
 	public List<StudentBean> search(StudentBean bean, int pageNo, int pageSize) throws ApplicationException {
 

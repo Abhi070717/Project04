@@ -258,6 +258,10 @@ public class FacultyModel {
 		}
 		return bean;
 	}
+	
+	public List<FacultyBean> list() throws ApplicationException {
+		return search(null, 0, 0);
+	}
 
 	public List<FacultyBean> search(FacultyBean bean, int pageNo, int pageSize) throws ApplicationException {
 
