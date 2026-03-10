@@ -75,4 +75,14 @@ public class TimetableBean extends BaseBean{
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
+	
+	@Override
+	public String getKey() {
+		return id + "";
+	}
+
+	@Override
+	public String getValue() {
+		return semester;
+	}
 }

@@ -21,7 +21,7 @@ public class UserModel {
 		conn = JDBCDataSource.getConnection();
 
 		try {
-			PreparedStatement pstmt = conn.prepareStatement("select max(id) from st_role");
+			PreparedStatement pstmt = conn.prepareStatement("select max(id) from st_user");
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -44,10 +44,10 @@ public class UserModel {
 		Connection conn = null;
 		int pk = 0;
 
-		UserBean existbean = findByLogin(bean.getLogin());
+		UserBean existBean = findByLogin(bean.getLogin());
 
-		if (existbean != null) {
-			throw new DuplicateRecordException("Login Id already exists");
+		if (existBean != null) {
+			throw new DuplicateRecordException("Login Already Exist");
 		}
 
 		try {
@@ -69,10 +69,14 @@ public class UserModel {
 			pstmt.setString(11, bean.getModifiedBy());
 			pstmt.setTimestamp(12, bean.getCreatedDatetime());
 			pstmt.setTimestamp(13, bean.getModifiedDatetime());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
 
 			conn.commit();
+
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Added successfully Duplicates: 0  Warnings: 0");
 			pstmt.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -88,15 +92,15 @@ public class UserModel {
 		return pk;
 	}
 
-	public void update(UserBean bean) throws DuplicateRecordException, ApplicationException {
+	public void update(UserBean bean) throws ApplicationException, DuplicateRecordException {
+
+		UserBean existBean = findByLogin(bean.getLogin());
+
+		if (existBean != null && existBean.getId() != bean.getId()) {
+			throw new DuplicateRecordException("Login Already Exist");
+		}
 
 		Connection conn = null;
-
-		UserBean beanExist = findByLogin(bean.getLogin());
-
-		if (beanExist != null && (beanExist.getId() != bean.getId())) {
-			throw new DuplicateRecordException("Login Id is already exist");
-		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -116,9 +120,14 @@ public class UserModel {
 			pstmt.setTimestamp(11, bean.getCreatedDatetime());
 			pstmt.setTimestamp(12, bean.getModifiedDatetime());
 			pstmt.setLong(13, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
+
 			conn.commit();
+
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Updated successfully  Duplicates: 0  Warnings: 0");
 			pstmt.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -141,8 +150,13 @@ public class UserModel {
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("delete from st_user where id = ?");
 			pstmt.setLong(1, bean.getId());
-			pstmt.executeUpdate();
+			int i = pstmt.executeUpdate();
+
 			conn.commit();
+
+			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
+					+ "Records: Deleted successfully  Duplicates: 0  Warnings: 0");
+
 			pstmt.close();
 		} catch (Exception e) {
 			try {
@@ -197,10 +211,10 @@ public class UserModel {
 
 	public UserBean findByLogin(String login) throws ApplicationException {
 
-		StringBuffer sql = new StringBuffer("select * from st_user where login = ?");
-
 		UserBean bean = null;
 		Connection conn = null;
+
+		StringBuffer sql = new StringBuffer("select * from st_user where login = ?");
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -227,53 +241,18 @@ public class UserModel {
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in getting User by login");
+			throw new ApplicationException("Exception : Exception in getting User by Login");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
 		return bean;
 	}
-
-	public UserBean authenticate(String login, String password) throws ApplicationException {
-
-		UserBean bean = null;
-		Connection conn = null;
-
-		StringBuffer sql = new StringBuffer("select * from st_user where login = ? and password = ?");
-
-		try {
-			conn = JDBCDataSource.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-			pstmt.setString(1, login);
-			pstmt.setString(2, password);
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				bean = new UserBean();
-				bean.setId(rs.getLong(1));
-				bean.setFirstName(rs.getString(2));
-				bean.setLastName(rs.getString(3));
-				bean.setLogin(rs.getString(4));
-				bean.setPassword(rs.getString(5));
-				bean.setDob(rs.getDate(6));
-				bean.setMobileNo(rs.getString(7));
-				bean.setRoleId(rs.getLong(8));
-				bean.setGender(rs.getString(9));
-				bean.setCreatedBy(rs.getString(10));
-				bean.setModifiedBy(rs.getString(11));
-				bean.setCreatedDatetime(rs.getTimestamp(12));
-				bean.setModifiedDatetime(rs.getTimestamp(13));
-			}
-			rs.close();
-			pstmt.close();
-		} catch (Exception e) {
-			throw new ApplicationException("Exception : Exception in get roles");
-		} finally {
-			JDBCDataSource.closeConnection(conn);
-		}
-		return bean;
+	
+	public List<UserBean> list() throws ApplicationException {
+		return search(null, 0, 0);
 	}
 
-	public List<UserBean> search(UserBean bean) throws ApplicationException {
+	public List<UserBean> search(UserBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		Connection conn = null;
 		ArrayList<UserBean> list = new ArrayList<UserBean>();
@@ -297,7 +276,7 @@ public class UserModel {
 				sql.append(" and password like '" + bean.getPassword() + "%'");
 			}
 			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
-				sql.append(" and dob like '" + new java.sql.Date(bean.getDob().getTime()) + "%'");
+				sql.append(" and dob = " + new java.sql.Date(bean.getDob().getTime()));
 			}
 			if (bean.getMobileNo() != null && bean.getMobileNo().length() > 0) {
 				sql.append(" and mobile_no = " + bean.getMobileNo());
@@ -310,7 +289,10 @@ public class UserModel {
 			}
 		}
 
-		System.out.println("sql ===== > " + sql.toString());
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + ", " + pageSize);
+		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -318,22 +300,22 @@ public class UserModel {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				UserBean user = new UserBean();
-				user.setId(rs.getLong(1));
-				user.setFirstName(rs.getString(2));
-				user.setLastName(rs.getString(3));
-				user.setLogin(rs.getString(4));
-				user.setPassword(rs.getString(5));
-				user.setDob(rs.getDate(6));
-				user.setMobileNo(rs.getString(7));
-				user.setRoleId(rs.getLong(8));
-				user.setGender(rs.getString(9));
-				user.setCreatedBy(rs.getString(10));
-				user.setModifiedBy(rs.getString(11));
-				user.setCreatedDatetime(rs.getTimestamp(12));
-				user.setModifiedDatetime(rs.getTimestamp(13));
+				bean = new UserBean();
+				bean.setId(rs.getLong(1));
+				bean.setFirstName(rs.getString(2));
+				bean.setLastName(rs.getString(3));
+				bean.setLogin(rs.getString(4));
+				bean.setPassword(rs.getString(5));
+				bean.setDob(rs.getDate(6));
+				bean.setMobileNo(rs.getString(7));
+				bean.setRoleId(rs.getLong(8));
+				bean.setGender(rs.getString(9));
+				bean.setCreatedBy(rs.getString(10));
+				bean.setModifiedBy(rs.getString(11));
+				bean.setCreatedDatetime(rs.getTimestamp(12));
+				bean.setModifiedDatetime(rs.getTimestamp(13));
 
-				list.add(user);
+				list.add(bean);
 			}
 
 			rs.close();
@@ -341,7 +323,7 @@ public class UserModel {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in search user");
+			throw new ApplicationException("Exception : Exception in search bean");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
