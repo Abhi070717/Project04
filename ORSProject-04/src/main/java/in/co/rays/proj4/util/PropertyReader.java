@@ -44,5 +44,4 @@ public class PropertyReader {
 		String[] params = { "Roll No", "Student Name" };
 		System.out.println(PropertyReader.getValue("error.multipleFields", params));
 	}
-
 }

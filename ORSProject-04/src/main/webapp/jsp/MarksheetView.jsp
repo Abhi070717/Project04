@@ -23,7 +23,7 @@
 				scope="request"></jsp:useBean>
 
 			<%
-			List<StudentBean> studentList = (List) request.getAttribute("studentList");
+			List studentList = (List) request.getAttribute("studentList");
 			%>
 
 			<h1 align="center" style="margin-bottom: -15; color: navy">
