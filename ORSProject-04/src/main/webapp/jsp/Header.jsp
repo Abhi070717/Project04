@@ -24,6 +24,8 @@
 	<a href="SubjectCtl"><b>Add Subject</b></a>
 	<b>|</b>
 	<a href="FacultyCtl"><b>Add Faculty</b></a>
+	<b>|</b>
+	<a href="RecipeCtl"><b>Add Recipe</b></a>
 	<hr>
 </body>
 </html>
