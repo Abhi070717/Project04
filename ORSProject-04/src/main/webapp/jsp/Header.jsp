@@ -26,6 +26,8 @@
 	<a href="FacultyCtl"><b>Add Faculty</b></a>
 	<b>|</b>
 	<a href="RecipeCtl"><b>Add Recipe</b></a>
+	<b>|</b>
+	<a href=<%=ORSView.MAINTENANCE_CTL%>><b>Add Maintenance</b></a>
 	<hr>
 </body>
 </html>

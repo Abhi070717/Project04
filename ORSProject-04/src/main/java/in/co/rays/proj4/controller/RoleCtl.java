@@ -7,6 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import in.co.rays.proj4.bean.BaseBean;
+import in.co.rays.proj4.bean.RoleBean;
+import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.DataValidator;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
@@ -33,6 +36,18 @@ public class RoleCtl extends BaseCtl {
 		}
 
 		return pass;
+	}
+	
+	@Override
+	protected BaseBean populateBean(HttpServletRequest request) {
+
+		RoleBean bean = new RoleBean();
+
+		bean.setId(DataUtility.getLong(request.getParameter("id")));
+		bean.setName(DataUtility.getString(request.getParameter("name")));
+		bean.setDescription(DataUtility.getString(request.getParameter("description")));
+
+		return bean;
 	}
 
 	@Override

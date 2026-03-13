@@ -8,9 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import in.co.rays.proj4.bean.BaseBean;
 import in.co.rays.proj4.bean.RoleBean;
+import in.co.rays.proj4.bean.UserBean;
 import in.co.rays.proj4.exception.ApplicationException;
 import in.co.rays.proj4.model.RoleModel;
+import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.DataValidator;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
@@ -110,6 +113,24 @@ public class UserCtl extends BaseCtl {
 		}
 
 		return pass;
+	}
+
+	@Override
+	protected BaseBean populateBean(HttpServletRequest request) {
+		UserBean bean = new UserBean();
+		bean.setId(DataUtility.getLong(request.getParameter("id")));
+		bean.setFirstName(DataUtility.getString(request.getParameter("firstName")));
+		bean.setLastName(DataUtility.getString(request.getParameter("lastName")));
+		bean.setLogin(DataUtility.getString(request.getParameter("login")));
+		bean.setPassword(DataUtility.getString(request.getParameter("password")));
+		bean.setConfirmPassword(DataUtility.getString(request.getParameter("confirmPassword")));
+		bean.setGender(DataUtility.getString(request.getParameter("gender")));
+		bean.setDob(DataUtility.getDate(request.getParameter("dob")));
+		bean.setRoleId(DataUtility.getLong(request.getParameter("roleId")));
+		bean.setMobileNo(DataUtility.getString(request.getParameter("mobileNo")));
+
+		return bean;
+
 	}
 
 	@Override

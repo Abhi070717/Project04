@@ -33,9 +33,11 @@ public interface ORSView {
 	public String FACULTY_VIEW = PAGE_FOLDER + "/FacultyView.jsp";
 	public String FACULTY_CTL = APP_CONTEXT + "/FacultyCtl";
 
-
 	public String RECIPE_VIEW = PAGE_FOLDER + "/RecipeView.jsp";
 	public String RECIPE_CTL = APP_CONTEXT + "/RecipeCtl";
+
+	public String MAINTENANCE_VIEW = PAGE_FOLDER + "/MaintenanceView.jsp";
+	public String MAINTENANCE_CTL = APP_CONTEXT + "/MaintenanceCtl";
 
 	public String ERROR_VIEW = PAGE_FOLDER + "/ErrorView.jsp";
 	public String ERROR_CTL = APP_CONTEXT + "/ErrorCtl";

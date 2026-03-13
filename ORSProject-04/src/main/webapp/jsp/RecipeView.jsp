@@ -72,7 +72,7 @@
 				<tr>
 					<th align="left">Ingredients<span style="color: red">*</span></th>
 					<td><%=HTMLUtility.getList("Ingredients", String.valueOf(bean.getIngredients()), ingredientsList)%></td>
-					<td style="position: fixed;"><font color="red"><%=ServletUtility.getErrorMessage("ingredients", request)%></font>
+					<td style="position: fixed;"><font color="red"><%=ServletUtility.getErrorMessage("ingredient", request)%></font>
 					</td>
 				</tr>
 				<tr>
