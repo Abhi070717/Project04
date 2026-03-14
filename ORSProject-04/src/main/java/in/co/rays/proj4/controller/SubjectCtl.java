@@ -8,8 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import in.co.rays.proj4.bean.BaseBean;
+import in.co.rays.proj4.bean.SubjectBean;
 import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.exception.DuplicateRecordException;
 import in.co.rays.proj4.model.CourseModel;
+import in.co.rays.proj4.model.SubjectModel;
+import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.DataValidator;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
@@ -51,6 +56,19 @@ public class SubjectCtl extends BaseCtl {
 		return pass;
 	}
 
+	@Override
+	protected BaseBean populateBean(HttpServletRequest request) {
+
+		SubjectBean bean = new SubjectBean();
+
+		bean.setId(DataUtility.getLong(request.getParameter("id")));
+		bean.setName(DataUtility.getString(request.getParameter("name")));
+		bean.setCourseId(DataUtility.getLong(request.getParameter("courseId")));
+		bean.setDescription(DataUtility.getString(request.getParameter("description")));
+
+		return bean;
+	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -59,6 +77,31 @@ public class SubjectCtl extends BaseCtl {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		String op = DataUtility.getString(request.getParameter("operation"));
+
+		SubjectModel model = new SubjectModel();
+
+		long id = DataUtility.getLong(request.getParameter("id"));
+
+		if (OP_SAVE.equalsIgnoreCase(op)) {
+			SubjectBean bean = (SubjectBean) populateBean(request);
+			try {
+				long pk = model.add(bean);
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setSuccessMessage("Data is successfully saved", request);
+			} catch (DuplicateRecordException e) {
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setErrorMessage("Subject Name already exists", request);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+				ServletUtility.handleException(e, request, response);
+				return;
+			}
+		} else if (OP_RESET.equalsIgnoreCase(op)) {
+			ServletUtility.redirect(ORSView.SUBJECT_CTL, request, response);
+			return;
+		}
 
 		ServletUtility.forward(getView(), request, response);
 	}

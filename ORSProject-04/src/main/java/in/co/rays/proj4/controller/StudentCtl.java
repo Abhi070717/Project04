@@ -8,9 +8,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import in.co.rays.proj4.bean.BaseBean;
 import in.co.rays.proj4.bean.CollegeBean;
+import in.co.rays.proj4.bean.StudentBean;
 import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.exception.DuplicateRecordException;
 import in.co.rays.proj4.model.CollegeModel;
+import in.co.rays.proj4.model.StudentModel;
+import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.DataValidator;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
@@ -89,13 +94,57 @@ public class StudentCtl extends BaseCtl {
 	}
 
 	@Override
+	protected BaseBean populateBean(HttpServletRequest request) {
+
+		StudentBean bean = new StudentBean();
+
+		bean.setId(DataUtility.getLong(request.getParameter("id")));
+		bean.setFirstName(DataUtility.getString(request.getParameter("firstName")));
+		bean.setLastName(DataUtility.getString(request.getParameter("lastName")));
+		bean.setDob(DataUtility.getDate(request.getParameter("dob")));
+		bean.setGender(DataUtility.getString(request.getParameter("gender")));
+		bean.setMobileNo(DataUtility.getString(request.getParameter("mobileNo")));
+		bean.setEmail(DataUtility.getString(request.getParameter("email")));
+		bean.setCollegeId(DataUtility.getLong(request.getParameter("collegeId")));
+
+		return bean;
+	}
+
+	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ServletUtility.forward(getView(), req, resp);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ServletUtility.forward(getView(), req, resp);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String op = DataUtility.getString(request.getParameter("operation"));
+
+		StudentModel model = new StudentModel();
+
+		long id = DataUtility.getLong(request.getParameter("id"));
+
+		if (OP_SAVE.equalsIgnoreCase(op)) {
+			StudentBean bean = (StudentBean) populateBean(request);
+			try {
+				long pk = model.add(bean);
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setSuccessMessage("Data is successfully saved", request);
+			} catch (DuplicateRecordException e) {
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setErrorMessage("Student Name already exists", request);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+				ServletUtility.handleException(e, request, response);
+				return;
+			}
+		} else if (OP_RESET.equalsIgnoreCase(op)) {
+			ServletUtility.redirect(ORSView.STUDENT_CTL, request, response);
+			return;
+		}
+
+		ServletUtility.forward(getView(), request, response);
 	}
 
 	@Override

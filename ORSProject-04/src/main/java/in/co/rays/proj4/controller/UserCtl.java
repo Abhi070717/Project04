@@ -12,7 +12,9 @@ import in.co.rays.proj4.bean.BaseBean;
 import in.co.rays.proj4.bean.RoleBean;
 import in.co.rays.proj4.bean.UserBean;
 import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.exception.DuplicateRecordException;
 import in.co.rays.proj4.model.RoleModel;
+import in.co.rays.proj4.model.UserModel;
 import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.DataValidator;
 import in.co.rays.proj4.util.PropertyReader;
@@ -139,8 +141,35 @@ public class UserCtl extends BaseCtl {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ServletUtility.forward(getView(), req, resp);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String op = DataUtility.getString(request.getParameter("operation"));
+
+		UserModel model = new UserModel();
+
+		long id = DataUtility.getLong(request.getParameter("id"));
+
+		if (OP_SAVE.equalsIgnoreCase(op)) {
+			UserBean bean = (UserBean) populateBean(request);
+			try {
+				long pk = model.add(bean);
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setSuccessMessage("User added successfully", request);
+			} catch (DuplicateRecordException e) {
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setErrorMessage("Login Id already exists", request);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+				ServletUtility.handleException(e, request, response);
+				return;
+			}
+		} else if (OP_RESET.equalsIgnoreCase(op)) {
+			ServletUtility.redirect(ORSView.USER_CTL, request, response);
+			return;
+		}
+
+		ServletUtility.forward(getView(), request, response);
 	}
 
 	@Override

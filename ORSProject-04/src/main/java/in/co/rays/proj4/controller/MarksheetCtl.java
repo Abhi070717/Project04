@@ -8,7 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import in.co.rays.proj4.bean.BaseBean;
+import in.co.rays.proj4.bean.MarksheetBean;
 import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.exception.DuplicateRecordException;
+import in.co.rays.proj4.model.MarksheetModel;
 import in.co.rays.proj4.model.StudentModel;
 import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.DataValidator;
@@ -94,6 +98,30 @@ public class MarksheetCtl extends BaseCtl {
 		return pass;
 	}
 
+	@Override
+	protected BaseBean populateBean(HttpServletRequest request) {
+
+		MarksheetBean bean = new MarksheetBean();
+
+		bean.setId(DataUtility.getLong(request.getParameter("id")));
+		bean.setRollNo(DataUtility.getString(request.getParameter("rollNo")));
+		bean.setName(DataUtility.getString(request.getParameter("name")));
+
+		if (request.getParameter("physics") != null && request.getParameter("physics").length() != 0) {
+			bean.setPhysics(DataUtility.getInt(request.getParameter("physics")));
+		}
+		if (request.getParameter("chemistry") != null && request.getParameter("chemistry").length() != 0) {
+			bean.setChemistry(DataUtility.getInt(request.getParameter("chemistry")));
+		}
+		if (request.getParameter("maths") != null && request.getParameter("maths").length() != 0) {
+			bean.setMaths(DataUtility.getInt(request.getParameter("maths")));
+		}
+
+		bean.setStudentId(DataUtility.getLong(request.getParameter("studentId")));
+
+		return bean;
+	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -103,6 +131,30 @@ public class MarksheetCtl extends BaseCtl {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		String op = DataUtility.getString(request.getParameter("operation"));
+
+		MarksheetModel model = new MarksheetModel();
+
+		long id = DataUtility.getLong(request.getParameter("id"));
+
+		if (OP_SAVE.equalsIgnoreCase(op)) {
+			MarksheetBean bean = (MarksheetBean) populateBean(request);
+			try {
+				long pk = model.add(bean);
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setSuccessMessage("Data is successfully saved", request);
+			} catch (DuplicateRecordException e) {
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setErrorMessage("Marksheet Name already exists", request);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+				ServletUtility.handleException(e, request, response);
+				return;
+			}
+		} else if (OP_RESET.equalsIgnoreCase(op)) {
+			ServletUtility.redirect(ORSView.MARKSHEET_CTL, request, response);
+			return;
+		}
 		ServletUtility.forward(getView(), request, response);
 	}
 

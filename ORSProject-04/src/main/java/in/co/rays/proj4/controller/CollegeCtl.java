@@ -7,6 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import in.co.rays.proj4.bean.BaseBean;
+import in.co.rays.proj4.bean.CollegeBean;
+import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.exception.DuplicateRecordException;
+import in.co.rays.proj4.model.CollegeModel;
+import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.DataValidator;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
@@ -57,13 +63,55 @@ public class CollegeCtl extends BaseCtl {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ServletUtility.forward(getView(), req, resp);
+	protected BaseBean populateBean(HttpServletRequest request) {
+		CollegeBean bean = new CollegeBean();
+		bean.setId(DataUtility.getLong(request.getParameter("id")));
+		bean.setName(DataUtility.getString(request.getParameter("name")));
+		bean.setAddress(DataUtility.getString(request.getParameter("address")));
+		bean.setState(DataUtility.getString(request.getParameter("state")));
+		bean.setCity(DataUtility.getString(request.getParameter("city")));
+		bean.setPhoneNo(DataUtility.getString(request.getParameter("phoneNo")));
+
+		return bean;
+
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ServletUtility.forward(getView(), req, resp);
+
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String op = DataUtility.getString(request.getParameter("operation"));
+
+		CollegeModel model = new CollegeModel();
+
+		long id = DataUtility.getLong(request.getParameter("id"));
+
+		if (OP_SAVE.equalsIgnoreCase(op)) {
+			CollegeBean bean = (CollegeBean) populateBean(request);
+			try {
+				long pk = model.add(bean);
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setSuccessMessage("Data is successfully saved", request);
+			} catch (DuplicateRecordException e) {
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setErrorMessage("College Name already exists", request);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+				ServletUtility.handleException(e, request, response);
+				return;
+			}
+		} else if (OP_RESET.equalsIgnoreCase(op)) {
+			ServletUtility.redirect(ORSView.COLLEGE_CTL, request, response);
+			return;
+		}
+
+		ServletUtility.forward(getView(), request, response);
 	}
 
 	@Override
