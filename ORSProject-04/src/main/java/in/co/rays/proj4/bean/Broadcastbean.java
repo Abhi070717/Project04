@@ -4,19 +4,11 @@ import java.util.Date;
 
 public class Broadcastbean extends BaseBean {
 
-	private String broadcastCode;
 	private String messageTitle;
+	private String broadcastCode;
 	private String messageContent;
 	private Date broadcastTime;
 	private String broadcastStatus;
-
-	public String getBroadcastCode() {
-		return broadcastCode;
-	}
-
-	public void setBroadcastCode(String broadcastCode) {
-		this.broadcastCode = broadcastCode;
-	}
 
 	public String getMessageTitle() {
 		return messageTitle;
@@ -24,6 +16,14 @@ public class Broadcastbean extends BaseBean {
 
 	public void setMessageTitle(String messageTitle) {
 		this.messageTitle = messageTitle;
+	}
+
+	public String getBroadcastCode() {
+		return broadcastCode;
+	}
+
+	public void setBroadcastCode(String broadcastCode) {
+		this.broadcastCode = broadcastCode;
 	}
 
 	public String getMessageContent() {
@@ -52,14 +52,12 @@ public class Broadcastbean extends BaseBean {
 
 	@Override
 	public String getKey() {
-		// TODO Auto-generated method stub
-		return null;
+		return id + "";
 	}
 
 	@Override
 	public String getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return messageTitle;
 	}
 
 }

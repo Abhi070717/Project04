@@ -27,6 +27,8 @@
 	<b>|</b>
 	<a href="RecipeCtl"><b>Add Recipe</b></a>
 	<b>|</b>
+	<a href="BroadcastCtl"><b>Add Broadcast</b></a>
+	<b>|</b>
 	<a href=<%=ORSView.MAINTENANCE_CTL%>><b>Add Maintenance</b></a>
 	<hr>
 </body>

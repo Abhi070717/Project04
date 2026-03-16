@@ -35,18 +35,18 @@ public class BroadcastModel {
 		}
 		return pk + 1;
 	}
-	
+
 	public long add(Broadcastbean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 		long pk = 0;
-		
-//		Broadcastbean existBean = findByCode(bean.getBroadcastCode());
-//
-//		if (existBean != null) {
-//			throw new DuplicateRecordException("Broadcast Already Exist");
-//		}
-		
+
+		Broadcastbean existBean = findByCode(bean.getBroadcastCode());
+
+		if (existBean != null) {
+			throw new DuplicateRecordException("Broadcast Already Exist");
+		}
+
 		try {
 			conn = JDBCDataSource.getConnection();
 			pk = nextPk();
@@ -84,7 +84,7 @@ public class BroadcastModel {
 		return pk;
 
 	}
-	
+
 	public void update(Broadcastbean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
@@ -94,13 +94,13 @@ public class BroadcastModel {
 		if (existBean != null && existBean.getId() != bean.getId()) {
 			throw new DuplicateRecordException("Broadcast Already Exist");
 		}
-		
+
 		try {
 			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 
-			PreparedStatement pstmt = conn
-					.prepareStatement("update st_broadcast set code = ?, title = ?, content = ?, time = ?, status = ?, created_by = ?, modified_by = ?, created_datetime = ?, modified_datetime = ? where id = ?");
+			PreparedStatement pstmt = conn.prepareStatement(
+					"update st_broadcast set code = ?, title = ?, content = ?, time = ?, status = ?, created_by = ?, modified_by = ?, created_datetime = ?, modified_datetime = ? where id = ?");
 
 			pstmt.setLong(10, bean.getId());
 			pstmt.setString(1, bean.getBroadcastCode());
@@ -129,7 +129,7 @@ public class BroadcastModel {
 		}
 
 	}
-	
+
 	public void delete(Broadcastbean bean) throws ApplicationException {
 
 		Connection conn = null;
@@ -138,8 +138,7 @@ public class BroadcastModel {
 			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 
-			PreparedStatement pstmt = conn
-					.prepareStatement("delete from st_broadcast where id = ?");
+			PreparedStatement pstmt = conn.prepareStatement("delete from st_broadcast where id = ?");
 
 			pstmt.setLong(1, bean.getId());
 			pstmt.executeUpdate();
@@ -159,7 +158,7 @@ public class BroadcastModel {
 		}
 
 	}
-	
+
 	public Broadcastbean findByPK(long pk) throws ApplicationException {
 
 		Broadcastbean bean = null;
@@ -231,7 +230,11 @@ public class BroadcastModel {
 		return bean;
 
 	}
-	
+
+	public List<Broadcastbean> list() throws ApplicationException {
+		return Search(null, 0, 0);
+	}
+
 	public List<Broadcastbean> Search(Broadcastbean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		Connection conn = null;

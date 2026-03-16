@@ -39,6 +39,9 @@ public interface ORSView {
 	public String MAINTENANCE_VIEW = PAGE_FOLDER + "/MaintenanceView.jsp";
 	public String MAINTENANCE_CTL = APP_CONTEXT + "/MaintenanceCtl";
 
+	public String BROADCAST_VIEW = PAGE_FOLDER + "/BroadcastView.jsp";
+	public String BROADCAST_CTL = APP_CONTEXT + "/BroadcastCtl";
+
 	public String ERROR_VIEW = PAGE_FOLDER + "/ErrorView.jsp";
 	public String ERROR_CTL = APP_CONTEXT + "/ErrorCtl";
 
