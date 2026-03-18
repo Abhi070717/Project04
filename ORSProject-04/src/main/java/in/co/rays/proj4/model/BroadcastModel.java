@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.co.rays.proj4.bean.Broadcastbean;
+import in.co.rays.proj4.bean.BroadcastBean;
 import in.co.rays.proj4.exception.ApplicationException;
 import in.co.rays.proj4.exception.DatabaseException;
 import in.co.rays.proj4.exception.DuplicateRecordException;
@@ -36,12 +36,12 @@ public class BroadcastModel {
 		return pk + 1;
 	}
 
-	public long add(Broadcastbean bean) throws ApplicationException, DuplicateRecordException {
+	public long add(BroadcastBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 		long pk = 0;
 
-		Broadcastbean existBean = findByCode(bean.getBroadcastCode());
+		BroadcastBean existBean = findByCode(bean.getBroadcastCode());
 
 		if (existBean != null) {
 			throw new DuplicateRecordException("Broadcast Already Exist");
@@ -85,11 +85,11 @@ public class BroadcastModel {
 
 	}
 
-	public void update(Broadcastbean bean) throws ApplicationException, DuplicateRecordException {
+	public void update(BroadcastBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 
-		Broadcastbean existBean = findByCode(bean.getBroadcastCode());
+		BroadcastBean existBean = findByCode(bean.getBroadcastCode());
 
 		if (existBean != null && existBean.getId() != bean.getId()) {
 			throw new DuplicateRecordException("Broadcast Already Exist");
@@ -130,7 +130,7 @@ public class BroadcastModel {
 
 	}
 
-	public void delete(Broadcastbean bean) throws ApplicationException {
+	public void delete(BroadcastBean bean) throws ApplicationException {
 
 		Connection conn = null;
 
@@ -159,9 +159,9 @@ public class BroadcastModel {
 
 	}
 
-	public Broadcastbean findByPK(long pk) throws ApplicationException {
+	public BroadcastBean findByPK(long pk) throws ApplicationException {
 
-		Broadcastbean bean = null;
+		BroadcastBean bean = null;
 		Connection conn = null;
 
 		try {
@@ -172,7 +172,7 @@ public class BroadcastModel {
 			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				bean = new Broadcastbean();
+				bean = new BroadcastBean();
 
 				bean.setId(rs.getLong(1));
 				bean.setBroadcastCode(rs.getString(2));
@@ -195,9 +195,9 @@ public class BroadcastModel {
 
 	}
 
-	public Broadcastbean findByCode(String BroadcastCode) throws ApplicationException {
+	public BroadcastBean findByCode(String BroadcastCode) throws ApplicationException {
 
-		Broadcastbean bean = null;
+		BroadcastBean bean = null;
 		Connection conn = null;
 
 		try {
@@ -208,7 +208,7 @@ public class BroadcastModel {
 			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				bean = new Broadcastbean();
+				bean = new BroadcastBean();
 
 				bean.setId(rs.getLong(1));
 				bean.setBroadcastCode(rs.getString(2));
@@ -231,14 +231,14 @@ public class BroadcastModel {
 
 	}
 
-	public List<Broadcastbean> list() throws ApplicationException {
+	public List<BroadcastBean> list() throws ApplicationException {
 		return Search(null, 0, 0);
 	}
 
-	public List<Broadcastbean> Search(Broadcastbean bean, int pageNo, int pageSize) throws ApplicationException {
+	public List<BroadcastBean> Search(BroadcastBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		Connection conn = null;
-		List<Broadcastbean> list = new ArrayList<Broadcastbean>();
+		List<BroadcastBean> list = new ArrayList<BroadcastBean>();
 
 		StringBuffer sql = new StringBuffer("select * from st_broadcast where 1 = 1");
 
@@ -267,7 +267,7 @@ public class BroadcastModel {
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				bean = new Broadcastbean();
+				bean = new BroadcastBean();
 				bean.setId(rs.getLong(1));
 				bean.setBroadcastCode(rs.getString(2));
 				bean.setMessageTitle(rs.getString(3));

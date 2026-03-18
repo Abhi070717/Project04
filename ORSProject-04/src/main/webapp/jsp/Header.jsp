@@ -11,6 +11,8 @@
 	<h3>Hi, Guest</h3>
 	<a href="RoleCtl"><b>Add Role</b></a>
 	<b>|</b>
+	<a href="RoleListCtl"><b>Role List</b></a>
+	<b>|</b>
 	<a href="UserCtl"><b>Add User</b></a>
 	<b>|</b>
 	<a href="CollegeCtl"><b>Add College</b></a>
@@ -28,6 +30,8 @@
 	<a href="RecipeCtl"><b>Add Recipe</b></a>
 	<b>|</b>
 	<a href="BroadcastCtl"><b>Add Broadcast</b></a>
+	<b>|</b>
+	<a href="WalletCtl"><b>Add Wallet</b></a>
 	<b>|</b>
 	<a href=<%=ORSView.MAINTENANCE_CTL%>><b>Add Maintenance</b></a>
 	<hr>

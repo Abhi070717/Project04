@@ -1,4 +1,4 @@
-<%@page import="in.co.rays.proj4.bean.Broadcastbean"%>
+<%@page import="in.co.rays.proj4.bean.BroadcastBean"%>
 <%@page import="java.util.List"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
 <%@page import="java.util.HashMap"%>
@@ -21,11 +21,11 @@
 
 		<%@ include file="Header.jsp"%>
 
-		<jsp:useBean id="bean" class="in.co.rays.proj4.bean.Broadcastbean"
+		<jsp:useBean id="bean" class="in.co.rays.proj4.bean.BroadcastBean"
 			scope="request"></jsp:useBean>
 
 		<%
-		List<Broadcastbean> roleList = (List<Broadcastbean>) request.getAttribute("broadcastList");
+		List<BroadcastBean> roleList = (List<BroadcastBean>) request.getAttribute("broadcastList");
 		%>
 
 		<div align="center">
@@ -84,9 +84,9 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("messageContent", request)%></font></td>
 				</tr>
 				<tr>
-					<th align="left">broadcastTime<span style="color: red">*</span></th>
+					<th align="left">Broadcast Time<span style="color: red">*</span></th>
 					<td><input type="text" name="broadcastTime"
-						placeholder="Broadcast Time"
+						placeholder="Enter Broadcast Time"
 						value="<%=DataUtility.getStringData(bean.getBroadcastTime())%>"></td>
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("broadcastTime", request)%></font></td>
 				</tr>

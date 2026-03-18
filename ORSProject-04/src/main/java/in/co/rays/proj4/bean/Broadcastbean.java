@@ -2,7 +2,7 @@ package in.co.rays.proj4.bean;
 
 import java.util.Date;
 
-public class Broadcastbean extends BaseBean {
+public class BroadcastBean extends BaseBean {
 
 	private String messageTitle;
 	private String broadcastCode;

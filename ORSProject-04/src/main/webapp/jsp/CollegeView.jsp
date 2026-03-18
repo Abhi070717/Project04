@@ -20,11 +20,12 @@
 
 		<%@ include file="Header.jsp"%>
 
-		<jsp:useBean id="bean" class="in.co.rays.proj4.bean.CollegeBean" scope="request"></jsp:useBean>
+		<jsp:useBean id="bean" class="in.co.rays.proj4.bean.CollegeBean"
+			scope="request"></jsp:useBean>
 
-		<%--<% 
+		<%
 		List<CollegeBean> roleList = (List<CollegeBean>) request.getAttribute("roleList");
-		%> --%>
+		%>
 
 		<div align="center">
 			<h1 align="center" style="margin-bottom: -15; color: navy">

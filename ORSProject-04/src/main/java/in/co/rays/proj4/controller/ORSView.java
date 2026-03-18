@@ -9,8 +9,14 @@ public interface ORSView {
 	public String ROLE_VIEW = PAGE_FOLDER + "/RoleView.jsp";
 	public String ROLE_CTL = APP_CONTEXT + "/RoleCtl";
 
+	public String ROLE_LIST_VIEW = PAGE_FOLDER + "/RoleListView.jsp";
+	public String ROLE_LIST_CTL = APP_CONTEXT + "/RoleListCtl";
+
 	public String USER_VIEW = PAGE_FOLDER + "/UserView.jsp";
 	public String USER_CTL = APP_CONTEXT + "/UserCtl";
+
+	public String USER_LIST_VIEW = PAGE_FOLDER + "/UserListView.jsp";
+	public String USER_LIST_CTL = APP_CONTEXT + "/UserListCtl";
 
 	public String COLLEGE_VIEW = PAGE_FOLDER + "/CollegeView.jsp";
 	public String COLLEGE_CTL = APP_CONTEXT + "/CollegeCtl";
@@ -42,6 +48,9 @@ public interface ORSView {
 	public String BROADCAST_VIEW = PAGE_FOLDER + "/BroadcastView.jsp";
 	public String BROADCAST_CTL = APP_CONTEXT + "/BroadcastCtl";
 
+	public String WALLET_VIEW = PAGE_FOLDER + "/WalletView.jsp";
+	public String WALLET_CTL = APP_CONTEXT + "/WalletCtl";
+	
 	public String ERROR_VIEW = PAGE_FOLDER + "/ErrorView.jsp";
 	public String ERROR_CTL = APP_CONTEXT + "/ErrorCtl";
 

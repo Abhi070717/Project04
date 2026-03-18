@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import in.co.rays.proj4.bean.Broadcastbean;
+import in.co.rays.proj4.bean.BroadcastBean;
 import in.co.rays.proj4.model.BroadcastModel;
 
 public class TestBroadcastModel {
@@ -20,7 +20,7 @@ public class TestBroadcastModel {
 
 	public static void testAdd() throws Exception {
 
-		Broadcastbean bean = new Broadcastbean();
+		BroadcastBean bean = new BroadcastBean();
 
 		bean.setBroadcastCode("BC101");
 		bean.setMessageTitle("Important Notice");
@@ -40,7 +40,7 @@ public class TestBroadcastModel {
 
 	public static void testUpdate() throws Exception {
 
-		Broadcastbean bean = new Broadcastbean();
+		BroadcastBean bean = new BroadcastBean();
 
 		bean.setId(2);
 		bean.setBroadcastCode("BC102");
@@ -61,7 +61,7 @@ public class TestBroadcastModel {
 
 	public static void testDelete() throws Exception {
 
-		Broadcastbean bean = new Broadcastbean();
+		BroadcastBean bean = new BroadcastBean();
 		bean.setId(3);
 
 		BroadcastModel model = new BroadcastModel();
@@ -73,7 +73,7 @@ public class TestBroadcastModel {
 	public static void testFindByPK() throws Exception {
 
 		BroadcastModel model = new BroadcastModel();
-		Broadcastbean bean = model.findByPK(1);
+		BroadcastBean bean = model.findByPK(1);
 
 		if (bean != null) {
 			System.out.println(bean.getId());
@@ -92,7 +92,7 @@ public class TestBroadcastModel {
 	public static void testFindByCode() throws Exception {
 
 		BroadcastModel model = new BroadcastModel();
-		Broadcastbean bean = model.findByCode("BC101");
+		BroadcastBean bean = model.findByCode("BC101");
 
 		if (bean != null) {
 			System.out.println(bean.getId());
@@ -111,7 +111,7 @@ public class TestBroadcastModel {
 	public static void testSearch() throws Exception {
 
 		BroadcastModel model = new BroadcastModel();
-		Broadcastbean bean = new Broadcastbean();
+		BroadcastBean bean = new BroadcastBean();
 
 		bean.setBroadcastStatus("Inactive");
 
@@ -120,7 +120,7 @@ public class TestBroadcastModel {
 		Iterator it = list.iterator();
 
 		while (it.hasNext()) {
-			bean = (Broadcastbean) it.next();
+			bean = (BroadcastBean) it.next();
 
 			System.out.println(bean.getId());
 			System.out.println(bean.getBroadcastCode());
