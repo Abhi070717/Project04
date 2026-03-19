@@ -1,31 +1,21 @@
-<%@page import="in.co.rays.proj4.bean.UserBean"%>
-<%@page import="in.co.rays.proj4.bean.RoleBean"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
-<%@page import="in.co.rays.proj4.util.HTMLUtility"%>
-<%@page import="in.co.rays.proj4.model.RoleModel"%>
-<%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
-<%@page import="in.co.rays.proj4.bean.BaseBean"%>
-<%@page import="in.co.rays.proj4.controller.UserListCtl"%>
+<%@page import="in.co.rays.proj4.controller.StudentListCtl"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
+<%@page import="in.co.rays.proj4.bean.StudentBean"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
-
 <html>
 <head>
-<title>User List</title>
+<title>Student List</title>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
 	<%@include file="Header.jsp"%>
-
-	<jsp:useBean id="bean" class="in.co.rays.proj4.bean.UserBean"
-		scope="request"></jsp:useBean>
-
 	<div align="center">
-		<h1 align="center" style="margin-bottom: -15; color: navy;">User
+		<h1 align="center" style="margin-bottom: -15; color: navy;">Student
 			List</h1>
 
 		<div style="height: 15px; margin-bottom: 12px">
@@ -37,16 +27,16 @@
 			</h3>
 		</div>
 
-		<form action="<%=ORSView.USER_LIST_CTL%>" method="post">
+		<form action="<%=ORSView.STUDENT_LIST_CTL%>" method="post">
 			<%
 			int pageNo = ServletUtility.getPageNo(request);
 			int pageSize = ServletUtility.getPageSize(request);
 			int index = ((pageNo - 1) * pageSize) + 1;
-			int nextListSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
+			int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-			List<RoleBean> roleList = (List<RoleBean>) request.getAttribute("roleList");
-			List<UserBean> list = (List<UserBean>) ServletUtility.getList(request);
-			Iterator<UserBean> it = list.iterator();
+			@SuppressWarnings("unchecked")
+			List<StudentBean> list = (List<StudentBean>) ServletUtility.getList(request);
+			Iterator<StudentBean> it = list.iterator();
 
 			if (list.size() != 0) {
 			%>
@@ -59,21 +49,16 @@
 					<td align="center"><label><b>First Name :</b></label> <input
 						type="text" name="firstName" placeholder="Enter First Name"
 						value="<%=ServletUtility.getParameter("firstName", request)%>">&emsp;
-
-						<label><b>Login Id:</b></label> <input type="text" name="login"
-						placeholder="Enter Email ID"
-						value="<%=ServletUtility.getParameter("login", request)%>">&emsp;
-
-						<label><b>Date of Birth:</b></label> <input type="text" name="dob"
-						placeholder="Enter date of birth"
-						value="<%=ServletUtility.getParameter("dob", request)%>">&emsp;
-
-						<label><b>Role : </b></label> <%=HTMLUtility.getList("roleId", String.valueOf(bean.getRoleId()), roleList)%>&emsp;
-
+						<label><b>Last Name :</b></label> <input type="text"
+						name="lastName" placeholder="Enter Last Name"
+						value="<%=ServletUtility.getParameter("lastName", request)%>">&emsp;
+						<label><b>Email Id :</b></label> <input type="text" name="email"
+						placeholder="Enter Email Id"
+						value="<%=ServletUtility.getParameter("email", request)%>">&emsp;
 						<input type="submit" name="operation"
-						value="<%=UserListCtl.OP_SEARCH%>"> &nbsp; <input
-						type="submit" name="operation" value="<%=UserListCtl.OP_RESET%>">
-					</td>
+						value="<%=StudentListCtl.OP_SEARCH%>">&nbsp; <input
+						type="submit" name="operation"
+						value="<%=StudentListCtl.OP_RESET%>"></td>
 				</tr>
 			</table>
 			<br>
@@ -84,43 +69,36 @@
 					<th width="5%">S.No</th>
 					<th width="13%">First Name</th>
 					<th width="13%">Last Name</th>
-					<th width="23%">Login Id</th>
+					<th width="20%">Email Id</th>
+					<th width="13%">College Name</th>
+					<th width="7%">Gender</th>
 					<th width="10%">Mobile No</th>
-					<th width="8%">Gender</th>
-					<th width="10%">Date of Birth</th>
-					<th width="8%">Role</th>
+					<th width="9%">Date of Birth</th>
 					<th width="5%">Edit</th>
 				</tr>
 
 				<%
 				while (it.hasNext()) {
-					bean = (UserBean) it.next();
-					RoleModel model = new RoleModel();
-					RoleBean roleBean = model.findByPk(bean.getRoleId());
-
-					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-					String date = sdf.format(bean.getDob());
+					StudentBean bean = it.next();
 				%>
-
 				<tr>
 					<td style="text-align: center;"><input type="checkbox"
-						class="case" name="ids" value="<%=bean.getId()%>"
-						<%=(bean.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN) ? "disabled" : ""%>>
-					</td>
+						class="case" name="ids" value="<%=bean.getId()%>"></td>
 					<td style="text-align: center;"><%=index++%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getFirstName()%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getLastName()%></td>
-					<td style="text-align: center; text-transform: lowercase;"><%=bean.getLogin()%></td>
-					<td style="text-align: center;"><%=bean.getMobileNo()%></td>
+					<td style="text-align: center; text-transform: lowercase;"><%=bean.getEmail()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getCollegeName()%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getGender()%></td>
+					<td style="text-align: center;"><%=bean.getMobileNo()%></td>
+					<%
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+					String date = sdf.format(bean.getDob());
+					%>
 					<td style="text-align: center;"><%=date%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=roleBean.getName()%></td>
 					<td style="text-align: center;"><a
-						href="UserCtl?id=<%=bean.getId()%>"
-						<%=(bean.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN) ? "onclick='return false;'" : ""%>>Edit</a>
-					</td>
+						href="StudentCtl?id=<%=bean.getId()%>">Edit</a></td>
 				</tr>
-
 				<%
 				}
 				%>
@@ -129,29 +107,28 @@
 			<table style="width: 100%">
 				<tr>
 					<td style="width: 25%"><input type="submit" name="operation"
-						value="<%=UserListCtl.OP_PREVIOUS%>"
+						value="<%=StudentListCtl.OP_PREVIOUS%>"
 						<%=pageNo > 1 ? "" : "disabled"%>></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=UserListCtl.OP_NEW%>"></td>
+						name="operation" value="<%=StudentListCtl.OP_NEW%>"></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=UserListCtl.OP_DELETE%>"></td>
+						name="operation" value="<%=StudentListCtl.OP_DELETE%>"></td>
 					<td style="width: 25%" align="right"><input type="submit"
-						name="operation" value="<%=UserListCtl.OP_NEXT%>"
-						<%=nextListSize != 0 ? "" : "disabled"%>></td>
+						name="operation" value="<%=StudentListCtl.OP_NEXT%>"
+						<%=(nextPageSize != 0) ? "" : "disabled"%>></td>
 				</tr>
 			</table>
 
 			<%
-			} else {
+			}
+			if (list.size() == 0) {
 			%>
-
 			<table>
 				<tr>
 					<td align="right"><input type="submit" name="operation"
-						value="<%=UserListCtl.OP_BACK%>"></td>
+						value="<%=StudentListCtl.OP_BACK%>"></td>
 				</tr>
 			</table>
-
 			<%
 			}
 			%>

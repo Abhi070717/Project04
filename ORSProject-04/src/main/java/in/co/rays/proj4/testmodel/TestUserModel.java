@@ -22,7 +22,7 @@ public class TestUserModel {
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
-		testSearch();
+//		testSearch();
 
 	}
 
@@ -45,16 +45,13 @@ public class TestUserModel {
 
 		bean.setFirstName("Abhishish");
 		bean.setLastName("Bhawsar");
-		bean.setLogin("ram@gmail.com");
+		bean.setLogin("ramg@gmail.com");
 		bean.setPassword("123");
 		bean.setDob(sdf.parse("1999-11-19"));
 		bean.setMobileNo("9876543210");
 		bean.setRoleId(1);
 		bean.setGender("Male");
-		bean.setCreatedBy("root");
-		bean.setModifiedBy("root");
-		bean.setCreatedDatetime(new Timestamp(new Date().getTime()));
-		bean.setModifiedDatetime(new Timestamp(new Date().getTime()));
+		
 
 		UserModel model = new UserModel();
 
@@ -104,17 +101,21 @@ public class TestUserModel {
 
 	}
 
-	public static void testDelete() throws Exception {
+	public static void testDelete() {
 
 		UserBean bean = new UserBean();
 
-		bean.setId(1);
+		bean.setId(3);
 
 		UserModel model = new UserModel();
 
-		model.delete(bean);
+		try {
+			model.delete(bean);
+			System.out.println("User Deleted in st_user");
+		} catch (ApplicationException e) {
+			e.printStackTrace();
+		}
 
-		System.out.println("User Deleted in st_user");
 	}
 
 	public static void testFindByPk() throws Exception {

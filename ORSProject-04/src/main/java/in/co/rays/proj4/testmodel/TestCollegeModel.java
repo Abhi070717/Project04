@@ -157,7 +157,7 @@ public class TestCollegeModel {
 		try {
 			CollegeBean bean = new CollegeBean();
 
-			bean.setName("SGSITS");
+			bean.setCity("indore");
 
 			CollegeModel model = new CollegeModel();
 

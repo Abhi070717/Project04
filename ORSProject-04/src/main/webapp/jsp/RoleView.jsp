@@ -9,7 +9,7 @@
 <meta charset="ISO-8859-1">
 <title>Add Role</title>
 <link rel="icon" type="image/png"
-href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
+	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
 
@@ -73,6 +73,7 @@ href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 					<th></th>
 					<td></td>
 				</tr>
+
 				<tr>
 					<th></th>
 					<%

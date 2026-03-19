@@ -9,23 +9,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import in.co.rays.proj4.bean.BaseBean;
-import in.co.rays.proj4.bean.RoleBean;
+import in.co.rays.proj4.bean.SubjectBean;
 import in.co.rays.proj4.exception.ApplicationException;
-import in.co.rays.proj4.model.RoleModel;
+import in.co.rays.proj4.model.CourseModel;
+import in.co.rays.proj4.model.SubjectModel;
 import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
 
-@WebServlet(name = "RoleListCtl", urlPatterns = { "/RoleListCtl" })
-public class RoleListCtl extends BaseCtl {
+@WebServlet(name = "SubjectListCtl", urlPatterns = { "/SubjectListCtl" })
+public class SubjectListCtl extends BaseCtl {
 
 	@Override
 	protected void preload(HttpServletRequest request) {
-		RoleModel roleModel = new RoleModel();
+
+		SubjectModel subjectModel = new SubjectModel();
+		CourseModel courseModel = new CourseModel();
 
 		try {
-			List roleList = roleModel.list();
-			request.setAttribute("roleList", roleList);
+			List subjectList = subjectModel.list();
+			request.setAttribute("subjectList", subjectList);
+
+			List courseList = courseModel.list();
+			request.setAttribute("courseList", courseList);
+
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
@@ -34,27 +41,29 @@ public class RoleListCtl extends BaseCtl {
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
 
-		RoleBean bean = new RoleBean();
+		SubjectBean bean = new SubjectBean();
 
 		bean.setName(DataUtility.getString(request.getParameter("name")));
-		bean.setId(DataUtility.getLong(request.getParameter("roleId")));
+		bean.setCourseName(DataUtility.getString(request.getParameter("courseName")));
+		bean.setDescription(DataUtility.getString(request.getParameter("description")));
+		bean.setCourseId(DataUtility.getLong(request.getParameter("courseId")));
+		bean.setId(DataUtility.getLong(request.getParameter("subjectId")));
 
 		return bean;
 	}
 
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
 
-		RoleBean bean = (RoleBean) populateBean(request);
-		RoleModel model = new RoleModel();
+		SubjectBean bean = (SubjectBean) populateBean(request);
+		SubjectModel model = new SubjectModel();
 
 		try {
-			List<RoleBean> list = model.search(bean, pageNo, pageSize);
-			List<RoleBean> next = model.search(bean, pageNo + 1, pageSize);
+			List<SubjectBean> list = model.search(bean, pageNo, pageSize);
+			List<SubjectBean> next = model.search(bean, pageNo + 1, pageSize);
 
 			if (list == null || list.isEmpty()) {
 				ServletUtility.setErrorMessage("No record found", request);
@@ -67,6 +76,7 @@ public class RoleListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 			ServletUtility.forward(getView(), request, response);
+
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			ServletUtility.handleException(e, request, response);
@@ -87,8 +97,8 @@ public class RoleListCtl extends BaseCtl {
 		pageNo = (pageNo == 0) ? 1 : pageNo;
 		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 
-		RoleBean bean = (RoleBean) populateBean(request);
-		RoleModel model = new RoleModel();
+		SubjectBean bean = (SubjectBean) populateBean(request);
+		SubjectModel model = new SubjectModel();
 
 		String op = DataUtility.getString(request.getParameter("operation"));
 		String[] ids = request.getParameterValues("ids");
@@ -103,13 +113,14 @@ public class RoleListCtl extends BaseCtl {
 					pageNo++;
 				} else if (OP_PREVIOUS.equalsIgnoreCase(op) && pageNo > 1) {
 					pageNo--;
-				}	 
+				}
 
 			} else if (OP_RESET.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.ROLE_LIST_CTL, request, response);
+				ServletUtility.redirect(ORSView.SUBJECT_LIST_CTL, request, response);
 				return;
 
 			}
+
 			list = model.search(bean, pageNo, pageSize);
 			next = model.search(bean, pageNo + 1, pageSize);
 
@@ -133,6 +144,6 @@ public class RoleListCtl extends BaseCtl {
 
 	@Override
 	protected String getView() {
-		return ORSView.ROLE_LIST_VIEW;
+		return ORSView.SUBJECT_LIST_VIEW;
 	}
 }

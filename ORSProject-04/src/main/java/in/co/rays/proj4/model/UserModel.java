@@ -247,7 +247,7 @@ public class UserModel {
 		}
 		return bean;
 	}
-	
+
 	public List<UserBean> list() throws ApplicationException {
 		return search(null, 0, 0);
 	}
@@ -260,33 +260,38 @@ public class UserModel {
 		StringBuffer sql = new StringBuffer("select * from st_user where 1=1");
 
 		if (bean != null) {
-			if (bean.getId() > 0) {
-				sql.append(" and id = " + bean.getId());
-			}
-			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
-				sql.append(" and first_name like '" + bean.getFirstName() + "%'");
-			}
-			if (bean.getLastName() != null && bean.getLastName().length() > 0) {
-				sql.append(" and last_name like '" + bean.getLastName() + "%'");
-			}
-			if (bean.getLogin() != null && bean.getLogin().length() > 0) {
-				sql.append(" and login like '" + bean.getLogin() + "%'");
-			}
-			if (bean.getPassword() != null && bean.getPassword().length() > 0) {
-				sql.append(" and password like '" + bean.getPassword() + "%'");
-			}
-			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
-				sql.append(" and dob = " + new java.sql.Date(bean.getDob().getTime()));
-			}
-			if (bean.getMobileNo() != null && bean.getMobileNo().length() > 0) {
-				sql.append(" and mobile_no = " + bean.getMobileNo());
-			}
-			if (bean.getRoleId() > 0) {
-				sql.append(" and role_id = " + bean.getRoleId());
-			}
-			if (bean.getGender() != null && bean.getGender().length() > 0) {
-				sql.append(" and gender like '" + bean.getGender() + "%'");
-			}
+
+		    if (bean.getId() > 0) {
+		        sql.append(" and id = " + bean.getId());
+		    }
+
+		    if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
+		        sql.append(" and first_name like '" + bean.getFirstName() + "%'");
+		    }
+
+		    if (bean.getLastName() != null && bean.getLastName().length() > 0) {
+		        sql.append(" and last_name like '" + bean.getLastName() + "%'");
+		    }
+
+		    if (bean.getLogin() != null && bean.getLogin().length() > 0) {
+		        sql.append(" and login like '" + bean.getLogin() + "%'");
+		    }
+
+		    if (bean.getDob() != null) {
+		        sql.append(" and dob = '" + new java.sql.Date(bean.getDob().getTime()) + "'");
+		    }
+
+		    if (bean.getMobileNo() != null && bean.getMobileNo().length() > 0) {
+		        sql.append(" and mobile_no = '" + bean.getMobileNo() + "'");
+		    }
+
+		    if (bean.getRoleId() > 0) {
+		        sql.append(" and role_id = " + bean.getRoleId());
+		    }
+
+		    if (bean.getGender() != null && bean.getGender().length() > 0) {
+		        sql.append(" and gender like '" + bean.getGender() + "%'");
+		    }
 		}
 
 		if (pageSize > 0) {
