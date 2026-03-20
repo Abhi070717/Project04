@@ -9,23 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import in.co.rays.proj4.bean.BaseBean;
-import in.co.rays.proj4.bean.UserBean;
+import in.co.rays.proj4.bean.PetBean;
 import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.model.PetModel;
 import in.co.rays.proj4.model.RoleModel;
-import in.co.rays.proj4.model.UserModel;
 import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
 
-@WebServlet(name = "UserListCtl", urlPatterns = { "/UserListCtl" })
-public class UserListCtl extends BaseCtl {
+@WebServlet(name = "PetListCtl", urlPatterns = { "/PetListCtl" })
+public class PetListCtl extends BaseCtl {
 
 	@Override
 	protected void preload(HttpServletRequest request) {
-		RoleModel roleModel = new RoleModel();
+		PetModel nameModel = new PetModel();
 		try {
-			List roleList = roleModel.list();
-			request.setAttribute("roleList", roleList);
+			List nameList = nameModel.list();
+			request.setAttribute("nameList", nameList);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
@@ -34,12 +34,11 @@ public class UserListCtl extends BaseCtl {
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
 
-		UserBean bean = new UserBean();
+		PetBean bean = new PetBean();
 
-		bean.setFirstName(DataUtility.getString(request.getParameter("firstName")));
-		bean.setLogin(DataUtility.getString(request.getParameter("login")));
-		bean.setDob(DataUtility.getDate(request.getParameter("dob")));
-		bean.setRoleId(DataUtility.getLong(request.getParameter("roleId")));
+		bean.setId(DataUtility.getLong(request.getParameter("id")));
+		bean.setPetName(DataUtility.getString(request.getParameter("name")));
+		bean.setAnimalType(DataUtility.getString(request.getParameter("type")));
 
 		return bean;
 	}
@@ -51,12 +50,13 @@ public class UserListCtl extends BaseCtl {
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
 
-		UserBean bean = (UserBean) populateBean(request);
-		UserModel model = new UserModel();
+		PetBean bean = (PetBean) populateBean(request);
+		PetModel model = new PetModel();
 
 		try {
-			List<UserBean> list = model.search(bean, pageNo, pageSize);
-			List<UserBean> next = model.search(bean, pageNo + 1, pageSize);
+
+			List<PetBean> list = model.search(bean, pageNo, pageSize);
+			List<PetBean> next = model.search(bean, pageNo + 1, pageSize);
 
 			if (list == null || list.isEmpty()) {
 				ServletUtility.setErrorMessage("No record found", request);
@@ -65,7 +65,6 @@ public class UserListCtl extends BaseCtl {
 			ServletUtility.setList(list, request);
 			ServletUtility.setPageNo(pageNo, request);
 			ServletUtility.setPageSize(pageSize, request);
-			ServletUtility.setBean(bean, request);
 			request.setAttribute("nextListSize", next.size());
 
 			ServletUtility.forward(getView(), request, response);
@@ -73,7 +72,6 @@ public class UserListCtl extends BaseCtl {
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			ServletUtility.handleException(e, request, response);
-			return;
 		}
 	}
 
@@ -81,69 +79,72 @@ public class UserListCtl extends BaseCtl {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		List list = null;
-		List next = null;
-
 		int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
 		int pageSize = DataUtility.getInt(request.getParameter("pageSize"));
 
 		pageNo = (pageNo == 0) ? 1 : pageNo;
 		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 
-		UserBean bean = (UserBean) populateBean(request);
-		UserModel model = new UserModel();
+		PetBean bean = (PetBean) populateBean(request);
+		PetModel model = new PetModel();
 
-		String op = DataUtility.getString(request.getParameter("operation"));
-		String[] ids = request.getParameterValues("ids");
+		String op = request.getParameter("operation");
 
 		try {
 
-			if (OP_SEARCH.equalsIgnoreCase(op) || "Next".equalsIgnoreCase(op) || "Previous".equalsIgnoreCase(op)) {
+			if (OP_SEARCH.equalsIgnoreCase(op)) {
+				pageNo = 1;
 
-				if (OP_SEARCH.equalsIgnoreCase(op)) {
-					pageNo = 1;
-				} else if (OP_NEXT.equalsIgnoreCase(op)) {
-					pageNo++;
-				} else if (OP_PREVIOUS.equalsIgnoreCase(op) && pageNo > 1) {
-					pageNo--;
-				}
+			} else if (OP_NEXT.equalsIgnoreCase(op)) {
+				pageNo++;
+
+			} else if (OP_PREVIOUS.equalsIgnoreCase(op)) {
+				pageNo--;
 
 			} else if (OP_NEW.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.USER_CTL, request, response);
+				ServletUtility.redirect(ORSView.PET_CTL, request, response);
 				return;
 
 			} else if (OP_RESET.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.USER_LIST_CTL, request, response);
+				ServletUtility.redirect(ORSView.PET_LIST_CTL, request, response);
 				return;
 
-			} else if (OP_BACK.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.USER_LIST_CTL, request, response);
-				return;
+			} else if (OP_DELETE.equalsIgnoreCase(op)) {
+
+				String[] ids = request.getParameterValues("ids");
+
+				if (ids != null) {
+					for (String id : ids) {
+						model.delete(DataUtility.getLong(id));
+					}
+					ServletUtility.setSuccessMessage("Data deleted successfully", request);
+				} else {
+					ServletUtility.setErrorMessage("Select at least one record", request);
+				}
 			}
-			list = model.search(bean, pageNo, pageSize);
-			next = model.search(bean, pageNo + 1, pageSize);
+
+			List<PetBean> list = model.search(bean, pageNo, pageSize);
+			List<PetBean> next = model.search(bean, pageNo + 1, pageSize);
 
 			if (list == null || list.size() == 0) {
 				ServletUtility.setErrorMessage("No Record Found ", request);
 			}
 
+			request.setAttribute("nextListSize", next.size());
 			ServletUtility.setList(list, request);
 			ServletUtility.setPageNo(pageNo, request);
 			ServletUtility.setPageSize(pageSize, request);
-			ServletUtility.setBean(bean, request);
-			request.setAttribute("nextListSize", next.size());
 
 			ServletUtility.forward(getView(), request, response);
 
-		} catch (ApplicationException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			ServletUtility.handleException(e, request, response);
-			return;
 		}
 	}
 
 	@Override
 	protected String getView() {
-		return ORSView.USER_LIST_VIEW;
+		return ORSView.PET_LIST_VIEW;
 	}
 }

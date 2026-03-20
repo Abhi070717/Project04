@@ -68,7 +68,8 @@
 						placeholder="Enter date of birth"
 						value="<%=ServletUtility.getParameter("dob", request)%>">&emsp;
 
-						<label><b>Role : </b></label> <%=HTMLUtility.getList("roleId", String.valueOf(bean.getRoleId()), roleList)%>&emsp;
+						<label><b>Role : </b></label> 
+						<%=HTMLUtility.getList("roleId", String.valueOf(bean.getRoleId()), roleList)%>&emsp;
 
 						<input type="submit" name="operation"
 						value="<%=UserListCtl.OP_SEARCH%>"> &nbsp; <input
