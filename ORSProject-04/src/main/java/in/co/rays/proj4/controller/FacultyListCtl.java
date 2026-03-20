@@ -93,11 +93,32 @@ public class FacultyListCtl extends BaseCtl {
 					pageNo--;
 				}
 
+			} else if (OP_NEW.equalsIgnoreCase(op)) {
+				ServletUtility.redirect(ORSView.FACULTY_CTL, request, response);
+				return;
+
+			} else if (OP_DELETE.equalsIgnoreCase(op)) {
+				pageNo = 1;
+				if (ids != null && ids.length > 0) {
+					FacultyBean deletebean = new FacultyBean();
+					for (String id : ids) {
+						deletebean.setId(DataUtility.getInt(id));
+						model.delete(deletebean);
+						ServletUtility.setSuccessMessage("Faculty is deleted successfully", request);
+					}
+				} else {
+					ServletUtility.setErrorMessage("Select at least one record", request);
+				}
+
 			} else if (OP_RESET.equalsIgnoreCase(op)) {
 				ServletUtility.redirect(ORSView.FACULTY_LIST_CTL, request, response);
 				return;
 
+			} else if (OP_BACK.equalsIgnoreCase(op)) {
+				ServletUtility.redirect(ORSView.FACULTY_LIST_CTL, request, response);
+				return;
 			}
+
 			list = model.search(bean, pageNo, pageSize);
 			next = model.search(bean, pageNo + 1, pageSize);
 

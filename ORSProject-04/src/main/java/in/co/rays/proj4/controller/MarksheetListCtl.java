@@ -93,10 +93,30 @@ public class MarksheetListCtl extends BaseCtl {
 					pageNo--;
 				}
 
+			} else if (OP_NEW.equalsIgnoreCase(op)) {
+				ServletUtility.redirect(ORSView.MARKSHEET_CTL, request, response);
+				return;
+
+			} else if (OP_DELETE.equalsIgnoreCase(op)) {
+				pageNo = 1;
+				if (ids != null && ids.length > 0) {
+					MarksheetBean deletebean = new MarksheetBean();
+					for (String id : ids) {
+						deletebean.setId(DataUtility.getInt(id));
+						model.delete(deletebean);
+						ServletUtility.setSuccessMessage("Marksheet is deleted successfully", request);
+					}
+				} else {
+					ServletUtility.setErrorMessage("Select at least one record", request);
+				}
+
 			} else if (OP_RESET.equalsIgnoreCase(op)) {
 				ServletUtility.redirect(ORSView.MARKSHEET_LIST_CTL, request, response);
 				return;
 
+			} else if (OP_BACK.equalsIgnoreCase(op)) {
+				ServletUtility.redirect(ORSView.MARKSHEET_LIST_CTL, request, response);
+				return;
 			}
 
 			list = model.search(bean, pageNo, pageSize);

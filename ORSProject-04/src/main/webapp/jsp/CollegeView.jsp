@@ -38,7 +38,6 @@
 				%>
 				College
 			</h1>
-
 			<div style="height: 15px; margin-bottom: 12px">
 				<h3 align="center">
 					<font color="green"> <%=ServletUtility.getSuccessMessage(request)%>
@@ -68,7 +67,6 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("name", request)%>
 					</font></td>
 				</tr>
-
 				<tr>
 					<th align="left">Address<span style="color: red">*</span></th>
 					<td><input type="text" name="address"
@@ -77,7 +75,6 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("address", request)%>
 					</font></td>
 				</tr>
-
 				<tr>
 					<th align="left">State<span style="color: red">*</span></th>
 					<td><input type="text" name="state" placeholder="Enter State"
@@ -85,7 +82,6 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("state", request)%>
 					</font></td>
 				</tr>
-
 				<tr>
 					<th align="left">City<span style="color: red">*</span></th>
 					<td><input type="text" name="city" placeholder="Enter City"
@@ -93,7 +89,6 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("city", request)%>
 					</font></td>
 				</tr>
-
 				<tr>
 					<th align="left">Phone No<span style="color: red">*</span></th>
 					<td><input type="text" name="phoneNo" maxlength="10"
@@ -102,12 +97,10 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("phoneNo", request)%>
 					</font></td>
 				</tr>
-
 				<tr>
 					<th></th>
 					<td></td>
 				</tr>
-
 				<tr>
 					<th></th>
 					<%
@@ -129,6 +122,5 @@
 			</table>
 		</div>
 	</form>
-
 </body>
 </html>

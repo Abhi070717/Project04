@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import in.co.rays.proj4.bean.BaseBean;
+import in.co.rays.proj4.bean.StudentBean;
 import in.co.rays.proj4.bean.SubjectBean;
 import in.co.rays.proj4.exception.ApplicationException;
 import in.co.rays.proj4.model.CourseModel;
+import in.co.rays.proj4.model.StudentModel;
 import in.co.rays.proj4.model.SubjectModel;
 import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.PropertyReader;
@@ -88,6 +90,7 @@ public class SubjectListCtl extends BaseCtl {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+
 		List list = null;
 		List next = null;
 
@@ -97,8 +100,8 @@ public class SubjectListCtl extends BaseCtl {
 		pageNo = (pageNo == 0) ? 1 : pageNo;
 		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 
-		SubjectBean bean = (SubjectBean) populateBean(request);
-		SubjectModel model = new SubjectModel();
+		StudentBean bean = (StudentBean) populateBean(request);
+		StudentModel model = new StudentModel();
 
 		String op = DataUtility.getString(request.getParameter("operation"));
 		String[] ids = request.getParameterValues("ids");
@@ -115,10 +118,30 @@ public class SubjectListCtl extends BaseCtl {
 					pageNo--;
 				}
 
-			} else if (OP_RESET.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.SUBJECT_LIST_CTL, request, response);
+			} else if (OP_NEW.equalsIgnoreCase(op)) {
+				ServletUtility.redirect(ORSView.STUDENT_CTL, request, response);
 				return;
 
+			} else if (OP_DELETE.equalsIgnoreCase(op)) {
+				pageNo = 1;
+				if (ids != null && ids.length > 0) {
+					StudentBean deletebean = new StudentBean();
+					for (String id : ids) {
+						deletebean.setId(DataUtility.getInt(id));
+						model.delete(deletebean);
+						ServletUtility.setSuccessMessage("Student is deleted successfully", request);
+					}
+				} else {
+					ServletUtility.setErrorMessage("Select at least one record", request);
+				}
+
+			} else if (OP_RESET.equalsIgnoreCase(op)) {
+				ServletUtility.redirect(ORSView.STUDENT_LIST_CTL, request, response);
+				return;
+
+			} else if (OP_BACK.equalsIgnoreCase(op)) {
+				ServletUtility.redirect(ORSView.STUDENT_LIST_CTL, request, response);
+				return;
 			}
 
 			list = model.search(bean, pageNo, pageSize);

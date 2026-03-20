@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.co.rays.proj4.bean.BaseBean;
 import in.co.rays.proj4.bean.PetBean;
+import in.co.rays.proj4.bean.PetBean;
 import in.co.rays.proj4.exception.ApplicationException;
 import in.co.rays.proj4.exception.DuplicateRecordException;
 import in.co.rays.proj4.model.PetModel;
@@ -62,7 +63,6 @@ public class PetCtl extends BaseCtl {
 		bean.setAge(DataUtility.getString(request.getParameter("age")));
 		bean.setAdoptionStatus(DataUtility.getString(request.getParameter("status")));
 
-		// IMPORTANT
 		populateDTO(bean, request);
 
 		return bean;
@@ -124,6 +124,26 @@ public class PetCtl extends BaseCtl {
 				ServletUtility.handleException(e, request, response);
 				return;
 			}
+
+		} else if (OP_UPDATE.equalsIgnoreCase(op)) {
+			PetBean bean = (PetBean) populateBean(request);
+			try {
+				if (id > 0) {
+					model.update(bean);
+				}
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setSuccessMessage("Data is successfully updated", request);
+			} catch (DuplicateRecordException e) {
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setErrorMessage("Pet Name already exists", request);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+				ServletUtility.handleException(e, request, response);
+				return;
+			}
+		} else if (OP_CANCEL.equalsIgnoreCase(op)) {
+			ServletUtility.redirect(ORSView.PET_LIST_CTL, request, response);
+			return;
 
 		} else if (OP_RESET.equalsIgnoreCase(op)) {
 			ServletUtility.redirect(ORSView.PET_CTL, request, response);

@@ -55,12 +55,11 @@
 
 			<table style="width: 100%">
 				<tr>
-					<td><label><b>Animal Type:</b></label> <input type="text"
-						name="type" placeholder="Enter Animal Type"
+					<td align="center"><label><b>Animal Type:</b></label> <input
+						type="text" name="type" placeholder="Enter Animal Type"
 						value="<%=ServletUtility.getParameter("type", request)%>">&emsp;
 
 						<label><b>Pet Name: </b></label> <%=HTMLUtility.getList("name", String.valueOf(bean.getPetName()), list)%>
-
 						&nbsp; <input type="submit" name="operation"
 						value="<%=PetListCtl.OP_SEARCH%>">&nbsp; <input
 						type="submit" name="operation" value="<%=PetListCtl.OP_RESET%>">
@@ -77,6 +76,7 @@
 					<th width="30%">Animal Type</th>
 					<th width="25%">Age</th>
 					<th width="25%">Adoption Status</th>
+					<th width="10%">Edit</th>
 				</tr>
 
 				<%
@@ -91,6 +91,8 @@
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getAnimalType()%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getAge()%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getAdoptionStatus()%></td>
+					<td style="text-align: center;"><a
+						href="CollegeCtl?id=<%=bean.getId()%>">Edit</a></td>
 					<%
 					}
 					%>

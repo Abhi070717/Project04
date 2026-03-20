@@ -78,6 +78,21 @@ public class CollegeCtl extends BaseCtl {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		long id = DataUtility.getLong(req.getParameter("id"));
+
+		CollegeModel model = new CollegeModel();
+
+		if (id > 0) {
+			CollegeBean bean;
+			try {
+				bean = model.findByPk(id);
+				ServletUtility.setBean(bean, req);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+				return;
+			}
+		}
 		ServletUtility.forward(getView(), req, resp);
 
 	}
@@ -106,6 +121,26 @@ public class CollegeCtl extends BaseCtl {
 				ServletUtility.handleException(e, request, response);
 				return;
 			}
+		} else if (OP_UPDATE.equalsIgnoreCase(op)) {
+				CollegeBean bean = (CollegeBean) populateBean(request);
+				try {
+					if (id > 0) {
+						model.update(bean);
+					}
+					ServletUtility.setBean(bean, request);
+					ServletUtility.setSuccessMessage("Data is successfully updated", request);
+				} catch (DuplicateRecordException e) {
+					ServletUtility.setBean(bean, request);
+					ServletUtility.setErrorMessage("College Name already exists", request);
+				} catch (ApplicationException e) {
+					e.printStackTrace();
+					ServletUtility.handleException(e, request, response);
+					return;
+				}
+			} else if (OP_CANCEL.equalsIgnoreCase(op)) {
+				ServletUtility.redirect(ORSView.COLLEGE_LIST_CTL, request, response);
+				return;
+			
 		} else if (OP_RESET.equalsIgnoreCase(op)) {
 			ServletUtility.redirect(ORSView.COLLEGE_CTL, request, response);
 			return;
