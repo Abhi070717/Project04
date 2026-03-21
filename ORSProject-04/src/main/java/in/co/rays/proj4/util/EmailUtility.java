@@ -1,4 +1,4 @@
-package in.co.rays.util;
+package in.co.rays.proj4.util;
 
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -11,7 +11,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import in.co.rays.exception.ApplicationException;
+import in.co.rays.proj4.exception.ApplicationException;
 
 public class EmailUtility {
 

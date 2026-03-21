@@ -1,4 +1,4 @@
-package in.co.rays.util;
+package in.co.rays.proj4.util;
 
 import java.util.ResourceBundle;
 
@@ -44,5 +44,4 @@ public class PropertyReader {
 		String[] params = { "Roll No", "Student Name" };
 		System.out.println(PropertyReader.getValue("error.multipleFields", params));
 	}
-
 }

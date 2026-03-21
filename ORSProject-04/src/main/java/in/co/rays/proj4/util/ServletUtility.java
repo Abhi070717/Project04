@@ -1,4 +1,4 @@
-package in.co.rays.util;
+package in.co.rays.proj4.util;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,7 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import in.co.rays.bean.BaseBean;
+import in.co.rays.proj4.bean.BaseBean;
+import in.co.rays.proj4.controller.BaseCtl;
+import in.co.rays.proj4.controller.ORSView;
 
 public class ServletUtility {
 
@@ -62,7 +64,7 @@ public class ServletUtility {
 	public static String getSuccessMessage(HttpServletRequest request) {
 		String val = (String) request.getAttribute(BaseCtl.MSG_SUCCESS);
 		if (val == null) {
-		return "";
+			return "";
 		} else {
 			return val;
 		}

@@ -1,12 +1,12 @@
-package in.co.rays.util;
+package in.co.rays.proj4.util;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import in.co.rays.bean.DropdownListBean;
-import in.co.rays.bean.RoleBean;
-import in.co.rays.model.RoleModel;
+import in.co.rays.proj4.bean.DropdownListBean;
+import in.co.rays.proj4.bean.FacultyBean;
+import in.co.rays.proj4.model.FacultyModel;
 
 public class HTMLUtility {
 
@@ -74,16 +74,15 @@ public class HTMLUtility {
 
 	public static void testGetListByList() throws Exception {
 
-		RoleModel model = new RoleModel();
+//		RoleModel model = new RoleModel();
 		
-//		FacultyModel model = new FacultyModel();
+		FacultyModel model = new FacultyModel();
 
 //		CourseModel model = new CourseModel();
 		
 //		StudentModel model = new StudentModel();
 
 //		SubjectModel model = new SubjectModel();
-
 		
 //		TimetableModel model = new TimetableModel();
 		
@@ -93,7 +92,7 @@ public class HTMLUtility {
 
 //		CollegeModel model = new CollegeModel();
 
-		List<RoleBean> list = model.list();
+		List<FacultyBean> list = model.list();
 
 		String selectedValue = null;
 

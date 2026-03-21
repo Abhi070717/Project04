@@ -1,4 +1,4 @@
-package in.co.rays.bean;
+package in.co.rays.proj4.bean;
 
 public class SubjectBean extends BaseBean {
 	private String name;

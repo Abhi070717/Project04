@@ -1,4 +1,4 @@
-package in.co.rays.exception;
+package in.co.rays.proj4.exception;
 
 public class DatabaseException extends Exception {
 

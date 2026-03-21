@@ -1,4 +1,4 @@
-package in.co.rays.model;
+package in.co.rays.proj4.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +6,14 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.co.rays.bean.FacultyBean;
-import in.co.rays.exception.ApplicationException;
-import in.co.rays.exception.DatabaseException;
-import in.co.rays.exception.DuplicateRecordException;
-import in.co.rays.util.JDBCDataSource;
+import in.co.rays.proj4.bean.CollegeBean;
+import in.co.rays.proj4.bean.CourseBean;
+import in.co.rays.proj4.bean.FacultyBean;
+import in.co.rays.proj4.bean.SubjectBean;
+import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.exception.DatabaseException;
+import in.co.rays.proj4.exception.DuplicateRecordException;
+import in.co.rays.proj4.util.JDBCDataSource;
 
 public class FacultyModel {
 
@@ -38,6 +41,19 @@ public class FacultyModel {
 	public long add(FacultyBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
+
+		CollegeModel collegeModel = new CollegeModel();
+		CollegeBean collegeBean = collegeModel.findByPk(bean.getCollegeId());
+		bean.setCollegeName(collegeBean.getName());
+
+		CourseModel courseModel = new CourseModel();
+		CourseBean courseBean = courseModel.findByPk(bean.getCourseId());
+		bean.setCourseName(courseBean.getName());
+
+		SubjectModel subjectModel = new SubjectModel();
+		SubjectBean subjectBean = subjectModel.findByPk(bean.getSubjectId());
+		bean.setSubjectName(subjectBean.getName());
+
 		int pk = 0;
 
 		FacultyBean existBean = findByEmail(bean.getEmail());
@@ -99,6 +115,18 @@ public class FacultyModel {
 			throw new DuplicateRecordException("Email Already Exist");
 		}
 		Connection conn = null;
+
+		CollegeModel collegeModel = new CollegeModel();
+		CollegeBean collegeBean = collegeModel.findByPk(bean.getCollegeId());
+		bean.setCollegeName(collegeBean.getName());
+
+		CourseModel courseModel = new CourseModel();
+		CourseBean courseBean = courseModel.findByPk(bean.getCourseId());
+		bean.setCourseName(courseBean.getName());
+
+		SubjectModel subjectModel = new SubjectModel();
+		SubjectBean subjectBean = subjectModel.findByPk(bean.getSubjectId());
+		bean.setSubjectName(subjectBean.getName());
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -258,7 +286,7 @@ public class FacultyModel {
 		}
 		return bean;
 	}
-	
+
 	public List<FacultyBean> list() throws ApplicationException {
 		return search(null, 0, 0);
 	}
@@ -266,7 +294,7 @@ public class FacultyModel {
 	public List<FacultyBean> search(FacultyBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_faculty where 1=1");
-		
+
 		if (bean != null) {
 			if (bean.getId() > 0) {
 				sql.append(" and id = " + bean.getId());
@@ -312,7 +340,6 @@ public class FacultyModel {
 			pageNo = (pageNo - 1) * pageSize;
 			sql.append(" limit " + pageNo + ", " + pageSize);
 		}
-
 
 		ArrayList<FacultyBean> list = new ArrayList<FacultyBean>();
 		Connection conn = null;

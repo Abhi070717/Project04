@@ -1,4 +1,4 @@
-package in.co.rays.model;
+package in.co.rays.proj4.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +6,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.co.rays.bean.MarksheetBean;
-import in.co.rays.exception.ApplicationException;
-import in.co.rays.exception.DatabaseException;
-import in.co.rays.exception.DuplicateRecordException;
-import in.co.rays.util.JDBCDataSource;
+import in.co.rays.proj4.bean.MarksheetBean;
+import in.co.rays.proj4.bean.StudentBean;
+import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.exception.DatabaseException;
+import in.co.rays.proj4.exception.DuplicateRecordException;
+import in.co.rays.proj4.util.JDBCDataSource;
 
 public class MarksheetModel {
 
@@ -40,6 +41,11 @@ public class MarksheetModel {
 	public long add(MarksheetBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
+
+		StudentModel studentModel = new StudentModel();
+		StudentBean studentbean = studentModel.findByPk(bean.getStudentId());
+		bean.setName(studentbean.getFirstName() + " " + studentbean.getLastName());
+
 		int pk = 0;
 
 		MarksheetBean existBean = findByName(bean.getName());
@@ -93,6 +99,10 @@ public class MarksheetModel {
 		if (existBean != null && existBean.getId() != bean.getId()) {
 			throw new DuplicateRecordException("Name Already Exist");
 		}
+
+		StudentModel studentModel = new StudentModel();
+		StudentBean studentbean = studentModel.findByPk(bean.getStudentId());
+		bean.setName(studentbean.getFirstName() + " " + studentbean.getLastName());
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -225,7 +235,7 @@ public class MarksheetModel {
 		}
 		return bean;
 	}
-	
+
 	public List<MarksheetBean> list() throws ApplicationException {
 		return search(null, 0, 0);
 	}
@@ -233,7 +243,7 @@ public class MarksheetModel {
 	public List<MarksheetBean> search(MarksheetBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_marksheet where 1=1");
-		
+
 		if (bean != null) {
 			if (bean.getId() > 0) {
 				sql.append(" and id = " + bean.getId());

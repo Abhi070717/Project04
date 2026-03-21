@@ -1,4 +1,4 @@
-package in.co.rays.model;
+package in.co.rays.proj4.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +6,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.co.rays.bean.SubjectBean;
-import in.co.rays.exception.ApplicationException;
-import in.co.rays.exception.DatabaseException;
-import in.co.rays.exception.DuplicateRecordException;
-import in.co.rays.util.JDBCDataSource;
+import in.co.rays.proj4.bean.CourseBean;
+import in.co.rays.proj4.bean.SubjectBean;
+import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.exception.DatabaseException;
+import in.co.rays.proj4.exception.DuplicateRecordException;
+import in.co.rays.proj4.util.JDBCDataSource;
 
 public class SubjectModel {
 
@@ -36,6 +37,11 @@ public class SubjectModel {
 
 	public long add(SubjectBean bean) throws ApplicationException, DuplicateRecordException {
 		Connection conn = null;
+
+		CourseModel courseModel = new CourseModel();
+		CourseBean courseBean = courseModel.findByPk(bean.getCourseId());
+		bean.setCourseName(courseBean.getName());
+
 		int pk = 0;
 
 		SubjectBean existBean = findByName(bean.getName());
@@ -78,6 +84,11 @@ public class SubjectModel {
 
 	public void update(SubjectBean bean) throws ApplicationException, DuplicateRecordException {
 		Connection conn = null;
+
+		CourseModel courseModel = new CourseModel();
+		CourseBean courseBean = courseModel.findByPk(bean.getCourseId());
+		bean.setCourseName(courseBean.getName());
+
 		SubjectBean existBean = findByName(bean.getName());
 
 		if (existBean != null && existBean.getId() != bean.getId()) {
@@ -201,7 +212,7 @@ public class SubjectModel {
 		}
 		return bean;
 	}
-	
+
 	public List<SubjectBean> list() throws ApplicationException {
 		return search(null, 0, 0);
 	}

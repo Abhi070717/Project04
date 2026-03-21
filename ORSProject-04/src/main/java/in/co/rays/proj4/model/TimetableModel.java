@@ -1,4 +1,4 @@
-package in.co.rays.model;
+package in.co.rays.proj4.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,10 +6,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.co.rays.bean.TimetableBean;
-import in.co.rays.exception.ApplicationException;
-import in.co.rays.exception.DatabaseException;
-import in.co.rays.util.JDBCDataSource;
+import in.co.rays.proj4.bean.CourseBean;
+import in.co.rays.proj4.bean.SubjectBean;
+import in.co.rays.proj4.bean.TimetableBean;
+import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.exception.DatabaseException;
+import in.co.rays.proj4.util.JDBCDataSource;
 
 public class TimetableModel {
 
@@ -36,6 +38,15 @@ public class TimetableModel {
 
 	public long add(TimetableBean bean) throws ApplicationException {
 		Connection conn = null;
+
+		CourseModel courseModel = new CourseModel();
+		CourseBean courseBean = courseModel.findByPk(bean.getCourseId());
+		bean.setCourseName(courseBean.getName());
+
+		SubjectModel subjectModel = new SubjectModel();
+		SubjectBean subjectBean = subjectModel.findByPk(bean.getSubjectId());
+		bean.setSubjectName(subjectBean.getName());
+
 		int pk = 0;
 
 		try {
@@ -79,6 +90,14 @@ public class TimetableModel {
 	public void update(TimetableBean bean) throws ApplicationException {
 
 		Connection conn = null;
+
+		CourseModel courseModel = new CourseModel();
+		CourseBean courseBean = courseModel.findByPk(bean.getCourseId());
+		bean.setCourseName(courseBean.getName());
+
+		SubjectModel subjectModel = new SubjectModel();
+		SubjectBean subjectBean = subjectModel.findByPk(bean.getSubjectId());
+		bean.setSubjectName(subjectBean.getName());
 
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -181,7 +200,7 @@ public class TimetableModel {
 	public List<TimetableBean> list() throws ApplicationException {
 		return search(null, 0, 0);
 	}
-	
+
 	public List<TimetableBean> search(TimetableBean bean, int pageNo, int pageSize) throws ApplicationException {
 
 		StringBuffer sql = new StringBuffer("select * from st_timetable where 1=1");
