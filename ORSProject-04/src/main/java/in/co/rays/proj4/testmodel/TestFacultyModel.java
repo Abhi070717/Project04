@@ -1,4 +1,4 @@
-package in.co.rays.proj4.testmodel;
+package in.co.rays.testmodel;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import in.co.rays.proj4.bean.FacultyBean;
-import in.co.rays.proj4.exception.ApplicationException;
-import in.co.rays.proj4.exception.DatabaseException;
-import in.co.rays.proj4.exception.DuplicateRecordException;
-import in.co.rays.proj4.model.FacultyModel;
+import in.co.rays.bean.FacultyBean;
+import in.co.rays.exception.ApplicationException;
+import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
+import in.co.rays.model.FacultyModel;
 
 public class TestFacultyModel {
 

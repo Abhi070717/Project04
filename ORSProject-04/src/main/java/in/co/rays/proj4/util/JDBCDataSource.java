@@ -1,4 +1,4 @@
-package in.co.rays.proj4.util;
+package in.co.rays.util;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,7 +14,7 @@ public final class JDBCDataSource {
 
 	private ComboPooledDataSource cpds = null;
 
-	private static ResourceBundle rb = ResourceBundle.getBundle("in.co.rays.proj4.bundle.system");
+	private static ResourceBundle rb = ResourceBundle.getBundle("in.co.rays.bundle.system");
 
 	private JDBCDataSource() {
 		try {

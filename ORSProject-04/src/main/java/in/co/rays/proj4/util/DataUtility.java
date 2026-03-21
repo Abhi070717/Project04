@@ -1,4 +1,4 @@
-package in.co.rays.proj4.util;
+package in.co.rays.util;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

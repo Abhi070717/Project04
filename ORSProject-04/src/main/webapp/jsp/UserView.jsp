@@ -1,17 +1,13 @@
 <%@page import="in.co.rays.proj4.bean.UserBean"%>
-<%@page import="java.util.List"%>
-<%@page import="in.co.rays.proj4.util.ServletUtility"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="in.co.rays.proj4.util.HTMLUtility"%>
-<%@page import="in.co.rays.proj4.util.DataUtility"%>
-<%@page import="in.co.rays.proj4.controller.UserCtl"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
+<%@page import="in.co.rays.proj4.controller.UserCtl"%>
+<%@page import="java.util.List"%>
+<%@page import="in.co.rays.proj4.util.HTMLUtility"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="in.co.rays.proj4.util.DataUtility"%>
+<%@page import="in.co.rays.proj4.util.ServletUtility"%>
 <html>
 <head>
-<meta charset="ISO-8859-1">
 <title>Add User</title>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
@@ -154,7 +150,6 @@
 				</tr>
 			</table>
 		</div>
-		<%@ include file="Footer.jsp"%>
 	</form>
 </body>
 </html>

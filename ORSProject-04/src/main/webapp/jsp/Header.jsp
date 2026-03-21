@@ -54,6 +54,10 @@
 	<b>|</b>
 	<a href="PetListCtl"><b>Pet List</b></a>
 	<b>|</b>
+	<a href="ParkingCtl"><b>Add Parking</b></a>
+	<b>|</b>
+	<a href="ParkingListCtl"><b>Parking List</b></a>
+	<b>|</b>
 	<a href=<%=ORSView.MAINTENANCE_CTL%>><b>Add Maintenance</b></a>
 	<hr>
 </body>

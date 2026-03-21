@@ -67,6 +67,7 @@
 					<th width="5%">S.No</th>
 					<th width="25%">Role</th>
 					<th width="60%">Description</th>
+					<th width="5%">Edit</th>
 				</tr>
 
 				<%
@@ -79,6 +80,9 @@
 					<td style="text-align: center;"><%=index++%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getName()%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getDescription()%></td>
+					<td style="text-align: center;"><a
+						href="RoleCtl?id=<%=bean.getId()%>">Edit</a></td>
+				</tr>
 				<%
 				}
 				%>

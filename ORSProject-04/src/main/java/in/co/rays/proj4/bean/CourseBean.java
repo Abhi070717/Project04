@@ -1,4 +1,4 @@
-package in.co.rays.proj4.bean;
+package in.co.rays.bean;
 
 public class CourseBean extends BaseBean {
 	private String name;

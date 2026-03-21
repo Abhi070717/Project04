@@ -77,9 +77,9 @@ public class CollegeCtl extends BaseCtl {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
 
-		long id = DataUtility.getLong(req.getParameter("id"));
+		long id = DataUtility.getLong(request.getParameter("id"));
 
 		CollegeModel model = new CollegeModel();
 
@@ -87,13 +87,13 @@ public class CollegeCtl extends BaseCtl {
 			CollegeBean bean;
 			try {
 				bean = model.findByPk(id);
-				ServletUtility.setBean(bean, req);
+				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
 				e.printStackTrace();
 				return;
 			}
 		}
-		ServletUtility.forward(getView(), req, resp);
+		ServletUtility.forward(getView(), request, resp);
 
 	}
 
@@ -122,25 +122,25 @@ public class CollegeCtl extends BaseCtl {
 				return;
 			}
 		} else if (OP_UPDATE.equalsIgnoreCase(op)) {
-				CollegeBean bean = (CollegeBean) populateBean(request);
-				try {
-					if (id > 0) {
-						model.update(bean);
-					}
-					ServletUtility.setBean(bean, request);
-					ServletUtility.setSuccessMessage("Data is successfully updated", request);
-				} catch (DuplicateRecordException e) {
-					ServletUtility.setBean(bean, request);
-					ServletUtility.setErrorMessage("College Name already exists", request);
-				} catch (ApplicationException e) {
-					e.printStackTrace();
-					ServletUtility.handleException(e, request, response);
-					return;
+			CollegeBean bean = (CollegeBean) populateBean(request);
+			try {
+				if (id > 0) {
+					model.update(bean);
 				}
-			} else if (OP_CANCEL.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.COLLEGE_LIST_CTL, request, response);
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setSuccessMessage("Data is successfully updated", request);
+			} catch (DuplicateRecordException e) {
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setErrorMessage("College Name already exists", request);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+				ServletUtility.handleException(e, request, response);
 				return;
-			
+			}
+		} else if (OP_CANCEL.equalsIgnoreCase(op)) {
+			ServletUtility.redirect(ORSView.COLLEGE_LIST_CTL, request, response);
+			return;
+
 		} else if (OP_RESET.equalsIgnoreCase(op)) {
 			ServletUtility.redirect(ORSView.COLLEGE_CTL, request, response);
 			return;

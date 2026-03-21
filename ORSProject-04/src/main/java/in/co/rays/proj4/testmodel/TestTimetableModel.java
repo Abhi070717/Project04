@@ -1,4 +1,4 @@
-package in.co.rays.proj4.testmodel;
+package in.co.rays.testmodel;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -6,9 +6,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import in.co.rays.proj4.bean.TimetableBean;
-import in.co.rays.proj4.exception.DatabaseException;
-import in.co.rays.proj4.model.TimetableModel;
+import in.co.rays.bean.TimetableBean;
+import in.co.rays.exception.DatabaseException;
+import in.co.rays.model.TimetableModel;
 
 public class TestTimetableModel {
 

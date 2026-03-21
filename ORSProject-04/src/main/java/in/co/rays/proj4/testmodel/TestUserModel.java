@@ -1,4 +1,4 @@
-package in.co.rays.proj4.testmodel;
+package in.co.rays.testmodel;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import in.co.rays.proj4.bean.UserBean;
-import in.co.rays.proj4.exception.ApplicationException;
-import in.co.rays.proj4.exception.DatabaseException;
-import in.co.rays.proj4.exception.DuplicateRecordException;
-import in.co.rays.proj4.model.UserModel;
+import in.co.rays.bean.UserBean;
+import in.co.rays.exception.ApplicationException;
+import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
+import in.co.rays.model.UserModel;
 
 public class TestUserModel {
 
@@ -22,7 +22,7 @@ public class TestUserModel {
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
-//		testSearch();
+		testSearch();
 
 	}
 
@@ -45,13 +45,16 @@ public class TestUserModel {
 
 		bean.setFirstName("Abhishish");
 		bean.setLastName("Bhawsar");
-		bean.setLogin("ramg@gmail.com");
+		bean.setLogin("ram@gmail.com");
 		bean.setPassword("123");
 		bean.setDob(sdf.parse("1999-11-19"));
 		bean.setMobileNo("9876543210");
 		bean.setRoleId(1);
 		bean.setGender("Male");
-		
+		bean.setCreatedBy("root");
+		bean.setModifiedBy("root");
+		bean.setCreatedDatetime(new Timestamp(new Date().getTime()));
+		bean.setModifiedDatetime(new Timestamp(new Date().getTime()));
 
 		UserModel model = new UserModel();
 
@@ -101,21 +104,17 @@ public class TestUserModel {
 
 	}
 
-	public static void testDelete() {
+	public static void testDelete() throws Exception {
 
 		UserBean bean = new UserBean();
 
-		bean.setId(3);
+		bean.setId(1);
 
 		UserModel model = new UserModel();
 
-		try {
-			model.delete(bean);
-			System.out.println("User Deleted in st_user");
-		} catch (ApplicationException e) {
-			e.printStackTrace();
-		}
+		model.delete(bean);
 
+		System.out.println("User Deleted in st_user");
 	}
 
 	public static void testFindByPk() throws Exception {

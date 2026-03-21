@@ -44,9 +44,8 @@ public class SubjectListCtl extends BaseCtl {
 	protected BaseBean populateBean(HttpServletRequest request) {
 
 		SubjectBean bean = new SubjectBean();
-
+		System.out.println(request.getParameter("name"));
 		bean.setName(DataUtility.getString(request.getParameter("name")));
-		bean.setCourseName(DataUtility.getString(request.getParameter("courseName")));
 		bean.setDescription(DataUtility.getString(request.getParameter("description")));
 		bean.setCourseId(DataUtility.getLong(request.getParameter("courseId")));
 		bean.setId(DataUtility.getLong(request.getParameter("subjectId")));
@@ -90,7 +89,6 @@ public class SubjectListCtl extends BaseCtl {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-
 		List list = null;
 		List next = null;
 
@@ -100,8 +98,8 @@ public class SubjectListCtl extends BaseCtl {
 		pageNo = (pageNo == 0) ? 1 : pageNo;
 		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 
-		StudentBean bean = (StudentBean) populateBean(request);
-		StudentModel model = new StudentModel();
+		SubjectBean bean = (SubjectBean) populateBean(request);
+		SubjectModel model = new SubjectModel();
 
 		String op = DataUtility.getString(request.getParameter("operation"));
 		String[] ids = request.getParameterValues("ids");
@@ -119,28 +117,28 @@ public class SubjectListCtl extends BaseCtl {
 				}
 
 			} else if (OP_NEW.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.STUDENT_CTL, request, response);
+				ServletUtility.redirect(ORSView.SUBJECT_CTL, request, response);
 				return;
 
 			} else if (OP_DELETE.equalsIgnoreCase(op)) {
 				pageNo = 1;
 				if (ids != null && ids.length > 0) {
-					StudentBean deletebean = new StudentBean();
+					SubjectBean deletebean = new SubjectBean();
 					for (String id : ids) {
 						deletebean.setId(DataUtility.getInt(id));
 						model.delete(deletebean);
-						ServletUtility.setSuccessMessage("Student is deleted successfully", request);
+						ServletUtility.setSuccessMessage("Data is deleted successfully", request);
 					}
 				} else {
 					ServletUtility.setErrorMessage("Select at least one record", request);
 				}
 
 			} else if (OP_RESET.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.STUDENT_LIST_CTL, request, response);
+				ServletUtility.redirect(ORSView.SUBJECT_LIST_CTL, request, response);
 				return;
 
 			} else if (OP_BACK.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.STUDENT_LIST_CTL, request, response);
+				ServletUtility.redirect(ORSView.SUBJECT_LIST_CTL, request, response);
 				return;
 			}
 

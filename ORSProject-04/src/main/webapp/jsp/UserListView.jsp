@@ -64,12 +64,7 @@
 						placeholder="Enter Email ID"
 						value="<%=ServletUtility.getParameter("login", request)%>">&emsp;
 
-						<label><b>Date of Birth:</b></label> <input type="text" name="dob"
-						placeholder="Enter date of birth"
-						value="<%=ServletUtility.getParameter("dob", request)%>">&emsp;
-
-						<label><b>Role : </b></label> 
-						<%=HTMLUtility.getList("roleId", String.valueOf(bean.getRoleId()), roleList)%>&emsp;
+						<label><b>Role : </b></label> <%=HTMLUtility.getList("roleId", String.valueOf(bean.getRoleId()), roleList)%>&emsp;
 
 						<input type="submit" name="operation"
 						value="<%=UserListCtl.OP_SEARCH%>"> &nbsp; <input
@@ -106,7 +101,7 @@
 				<tr>
 					<td style="text-align: center;"><input type="checkbox"
 						class="case" name="ids" value="<%=bean.getId()%>"
-						<%=(bean.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN) ? "disabled" : ""%>>
+						<%=(bean.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN)%>>
 					</td>
 					<td style="text-align: center;"><%=index++%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getFirstName()%></td>
@@ -117,9 +112,7 @@
 					<td style="text-align: center;"><%=date%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=roleBean.getName()%></td>
 					<td style="text-align: center;"><a
-						href="UserCtl?id=<%=bean.getId()%>"
-						<%=(bean.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN) ? "onclick='return false;'" : ""%>>Edit</a>
-					</td>
+						href="UserCtl?id=<%=bean.getId()%>">Edit</a></td>
 				</tr>
 
 				<%

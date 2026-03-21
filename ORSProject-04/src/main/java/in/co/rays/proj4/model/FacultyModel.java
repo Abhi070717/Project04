@@ -1,4 +1,4 @@
-package in.co.rays.proj4.model;
+package in.co.rays.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.co.rays.proj4.bean.FacultyBean;
-import in.co.rays.proj4.exception.ApplicationException;
-import in.co.rays.proj4.exception.DatabaseException;
-import in.co.rays.proj4.exception.DuplicateRecordException;
-import in.co.rays.proj4.util.JDBCDataSource;
+import in.co.rays.bean.FacultyBean;
+import in.co.rays.exception.ApplicationException;
+import in.co.rays.exception.DatabaseException;
+import in.co.rays.exception.DuplicateRecordException;
+import in.co.rays.util.JDBCDataSource;
 
 public class FacultyModel {
 

@@ -1,18 +1,15 @@
+<%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.controller.RoleCtl"%>
+<%@page import="in.co.rays.proj4.controller.BaseCtl"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
 <title>Add Role</title>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
-
 	<form action="<%=ORSView.ROLE_CTL%>" method="post">
 		<%@ include file="Header.jsp"%>
 
@@ -73,7 +70,6 @@
 					<th></th>
 					<td></td>
 				</tr>
-
 				<tr>
 					<th></th>
 					<%
@@ -96,9 +92,6 @@
 				</tr>
 			</table>
 		</div>
-		<%@ include file="Footer.jsp"%>
-
 	</form>
-
 </body>
 </html>

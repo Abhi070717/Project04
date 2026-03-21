@@ -1,4 +1,4 @@
-package in.co.rays.proj4.util;
+package in.co.rays.util;
 
 public class EmailMessage {
 	private String to;

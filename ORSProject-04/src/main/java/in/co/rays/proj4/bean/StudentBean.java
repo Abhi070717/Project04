@@ -1,4 +1,4 @@
-package in.co.rays.proj4.bean;
+package in.co.rays.bean;
 
 import java.util.Date;
 
@@ -83,6 +83,6 @@ public class StudentBean extends BaseBean {
 
 	@Override
 	public String getValue() {
-		return firstName + " " + lastName;
+		return firstName + "" + lastName;
 	}
 }

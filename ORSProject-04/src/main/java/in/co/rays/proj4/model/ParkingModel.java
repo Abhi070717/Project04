@@ -6,23 +6,23 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.co.rays.proj4.bean.PetBean;
+import in.co.rays.proj4.bean.ParkingBean;
 import in.co.rays.proj4.exception.ApplicationException;
 import in.co.rays.proj4.exception.DatabaseException;
 import in.co.rays.proj4.exception.DuplicateRecordException;
 import in.co.rays.proj4.exception.RecordNotFoundException;
 import in.co.rays.proj4.util.JDBCDataSource;
 
-public class PetModel {
+public class ParkingModel {
 
 	public long nextPK() throws DatabaseException {
 
-		long pk = 0;
 		Connection conn = null;
+		long pk = 0;
 
 		try {
 			conn = JDBCDataSource.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("select max(id) from st_pet");
+			PreparedStatement pstmt = conn.prepareStatement("select max(id) from st_parking");
 			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -38,33 +38,32 @@ public class PetModel {
 		return pk + 1;
 	}
 
-	public long add(PetBean bean) throws ApplicationException, DuplicateRecordException {
+	public long add(ParkingBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 		long pk = 0;
 
-		PetBean existBean = findByPetName(bean.getPetName());
+		ParkingBean existBean = findByVehicleNumber(bean.getVehicleNumber());
 		if (existBean != null) {
-			throw new DuplicateRecordException("Pet Name Already Exists");
+			throw new DuplicateRecordException("Vehicle Number Already Exists");
 		}
 
 		try {
-			pk = nextPK();
 			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
+			pk = nextPK();
 
-			PreparedStatement pstmt = conn.prepareStatement("insert into st_pet values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement pstmt = conn.prepareStatement("insert into st_parking values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			pstmt.setLong(1, pk);
-			pstmt.setString(2, bean.getPetName());
-			pstmt.setString(3, bean.getAnimalType());
-			pstmt.setString(4, bean.getAge());
-			pstmt.setString(5, bean.getAdoptionStatus());
+			pstmt.setString(2, bean.getVehicleNumber());
+			pstmt.setString(3, bean.getSlotNumber());
+			pstmt.setDate(4, new java.sql.Date(bean.getEntryTime().getTime()));
+			pstmt.setDate(5, new java.sql.Date(bean.getExitTime().getTime()));
 			pstmt.setString(6, bean.getCreatedBy());
 			pstmt.setString(7, bean.getModifiedBy());
 			pstmt.setTimestamp(8, bean.getCreatedDatetime());
 			pstmt.setTimestamp(9, bean.getModifiedDatetime());
-
 			pstmt.executeUpdate();
 			conn.commit();
 			pstmt.close();
@@ -76,7 +75,7 @@ public class PetModel {
 				throw new ApplicationException("Exception : add rollback exception " + ex.getMessage());
 			}
 
-			throw new ApplicationException("Exception : Exception in adding Pet");
+			throw new ApplicationException("Exception : Exception in adding Parking");
 
 		} finally {
 			JDBCDataSource.closeConnection(conn);
@@ -85,28 +84,27 @@ public class PetModel {
 		return pk;
 	}
 
-	public void update(PetBean bean) throws ApplicationException, DuplicateRecordException {
+	public void update(ParkingBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 
+		ParkingBean existBean = findByVehicleNumber(bean.getVehicleNumber());
 
-			PetBean existBean = findByPetName(bean.getPetName());
-
-			if (existBean != null && existBean.getId() != bean.getId()) {
-				throw new DuplicateRecordException("Pet Name already exists");
-			}
+		if (existBean != null && existBean.getId() != bean.getId()) {
+			throw new DuplicateRecordException("Vehicle Number already exists");
+		}
 
 		try {
 			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 
 			PreparedStatement pstmt = conn.prepareStatement(
-					"update st_pet set name = ?, type = ?, age = ?, status = ?, created_by = ?, modified_By = ?, created_datetime = ?, modified_Datetime = ? where id = ?");
+					"update st_parking set vehicle_number = ?, slot_number = ?, entry_time = ?, exit_time = ?, created_by = ?, modified_By = ?, created_datetime = ?, modified_Datetime = ? where id = ?");
 
-			pstmt.setString(1, bean.getPetName());
-			pstmt.setString(2, bean.getAnimalType());
-			pstmt.setString(3, bean.getAge());
-			pstmt.setString(4, bean.getAdoptionStatus());
+			pstmt.setString(1, bean.getVehicleNumber());
+			pstmt.setString(2, bean.getSlotNumber());
+			pstmt.setDate(3, new java.sql.Date(bean.getEntryTime().getTime()));
+			pstmt.setDate(4, new java.sql.Date(bean.getExitTime().getTime()));
 			pstmt.setString(5, bean.getCreatedBy());
 			pstmt.setString(6, bean.getModifiedBy());
 			pstmt.setTimestamp(7, bean.getCreatedDatetime());
@@ -121,7 +119,7 @@ public class PetModel {
 			} catch (Exception ex) {
 				throw new ApplicationException("Exception : Update rollback exception " + ex.getMessage());
 			}
-			throw new ApplicationException("Exception in updating Pet");
+			throw new ApplicationException("Exception in updating Parking");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -136,7 +134,7 @@ public class PetModel {
 			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 
-			PreparedStatement pstmt = conn.prepareStatement("delete from st_pet where id = ?");
+			PreparedStatement pstmt = conn.prepareStatement("delete from st_parking where id = ?");
 
 			pstmt.setLong(1, id);
 
@@ -149,34 +147,34 @@ public class PetModel {
 			} catch (Exception ex) {
 				throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
 			}
-			throw new ApplicationException("Exception in Deleting Pet");
+			throw new ApplicationException("Exception in Deleting Parking");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
 	}
 
-	public PetBean findByPK(long pk) throws ApplicationException {
+	public ParkingBean findByPK(long pk) throws ApplicationException {
 
-		PetBean bean = null;
+		ParkingBean bean = null;
 		Connection conn = null;
 
 		try {
 
 			conn = JDBCDataSource.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("select * from st_pet where id=?");
+			PreparedStatement pstmt = conn.prepareStatement("select * from st_parking where id = ?");
 
 			pstmt.setLong(1, pk);
 			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next()) {
 
-				bean = new PetBean();
+				bean = new ParkingBean();
 
 				bean.setId(rs.getLong(1));
-				bean.setPetName(rs.getString(2));
-				bean.setAnimalType(rs.getString(3));
-				bean.setAge(rs.getString(4));
-				bean.setAdoptionStatus(rs.getString(5));
+				bean.setVehicleNumber(rs.getString(2));
+				bean.setSlotNumber(rs.getString(3));
+				bean.setEntryTime(rs.getDate(4));
+				bean.setExitTime(rs.getDate(5));
 				bean.setCreatedBy(rs.getString(6));
 				bean.setModifiedBy(rs.getString(7));
 				bean.setCreatedDatetime(rs.getTimestamp(8));
@@ -184,7 +182,7 @@ public class PetModel {
 			}
 
 		} catch (Exception e) {
-			throw new ApplicationException("Exception in FindByPk Faculty ");
+			throw new ApplicationException("Exception in FindByPk");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -192,28 +190,28 @@ public class PetModel {
 		return bean;
 	}
 
-	public PetBean findByPetName(String PetName) throws ApplicationException {
+	public ParkingBean findByVehicleNumber(String VehicleNumber) throws ApplicationException {
 
-		PetBean bean = null;
+		ParkingBean bean = null;
 		Connection conn = null;
 
 		try {
 
 			conn = JDBCDataSource.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("select * from st_pet where name = ?");
+			PreparedStatement pstmt = conn.prepareStatement("select * from st_parking where vehicle_number = ?");
 
-			pstmt.setString(1, PetName);
+			pstmt.setString(1, VehicleNumber);
 			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next()) {
 
-				bean = new PetBean();
+				bean = new ParkingBean();
 
 				bean.setId(rs.getLong(1));
-				bean.setPetName(rs.getString(2));
-				bean.setAnimalType(rs.getString(3));
-				bean.setAge(rs.getString(4));
-				bean.setAdoptionStatus(rs.getString(5));
+				bean.setVehicleNumber(rs.getString(2));
+				bean.setSlotNumber(rs.getString(3));
+				bean.setEntryTime(rs.getDate(4));
+				bean.setExitTime(rs.getDate(5));
 				bean.setCreatedBy(rs.getString(6));
 				bean.setModifiedBy(rs.getString(7));
 				bean.setCreatedDatetime(rs.getTimestamp(8));
@@ -221,7 +219,7 @@ public class PetModel {
 			}
 
 		} catch (Exception e) {
-			throw new ApplicationException("Exception in FindByPetName Pet");
+			throw new ApplicationException("Exception in FindByVehicleNumber");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -229,32 +227,28 @@ public class PetModel {
 		return bean;
 	}
 
-	public List<PetBean> list() throws ApplicationException {
+	public List<ParkingBean> list() throws ApplicationException {
 		return search(null, 0, 0);
 	}
 
-	public List<PetBean> search(PetBean bean, int pageNo, int pageSize) throws ApplicationException {
+	public List<ParkingBean> search(ParkingBean bean, int pageNo, int pageSize) throws ApplicationException {
 
-		List<PetBean> list = new ArrayList<PetBean>();
+		List<ParkingBean> list = new ArrayList<ParkingBean>();
 		Connection conn = null;
 
-		StringBuffer sql = new StringBuffer("select * from st_pet where 1=1");
+		StringBuffer sql = new StringBuffer("select * from st_parking where 1=1");
 
 		if (bean != null) {
 
-			if (bean.getPetName() != null && bean.getPetName().length() > 0) {
-				sql.append(" and name like '" + bean.getPetName() + "%'");
+			if (bean.getVehicleNumber() != null && bean.getVehicleNumber().length() > 0) {
+				sql.append(" and vehicle_number like '" + bean.getVehicleNumber() + "%'");
 			}
 
-			if (bean.getAnimalType() != null && bean.getAnimalType().length() > 0) {
-				sql.append(" and type like '" + bean.getAnimalType() + "%'");
+			if (bean.getSlotNumber() != null && bean.getSlotNumber().length() > 0) {
+				sql.append(" and slot_number like '" + bean.getSlotNumber() + "%'");
 			}
 
-			if (bean.getAdoptionStatus() != null && bean.getAdoptionStatus().length() > 0) {
-				sql.append(" and status like '" + bean.getAdoptionStatus() + "%'");
-			}
 		}
-
 		try {
 
 			conn = JDBCDataSource.getConnection();
@@ -263,13 +257,13 @@ public class PetModel {
 
 			while (rs.next()) {
 
-				PetBean rb = new PetBean();
+				ParkingBean rb = new ParkingBean();
 
 				rb.setId(rs.getLong(1));
-				rb.setPetName(rs.getString(2));
-				rb.setAnimalType(rs.getString(3));
-				rb.setAge(rs.getString(4));
-				rb.setAdoptionStatus(rs.getString(5));
+				rb.setVehicleNumber(rs.getString(2));
+				rb.setSlotNumber(rs.getString(3));
+				rb.setEntryTime(rs.getDate(4));
+				rb.setExitTime(rs.getDate(5));
 				rb.setCreatedBy(rs.getString(6));
 				rb.setModifiedBy(rs.getString(7));
 				rb.setCreatedDatetime(rs.getTimestamp(8));
@@ -279,11 +273,10 @@ public class PetModel {
 			}
 
 		} catch (Exception e) {
-			throw new ApplicationException("Exception in searching  Pet");
+			throw new ApplicationException("Exception in searching  Parking");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
-
 		return list;
 	}
 }

@@ -75,6 +75,12 @@ public interface ORSView {
 	public String PET_LIST_VIEW = PAGE_FOLDER + "/PetListView.jsp";
 	public String PET_LIST_CTL = APP_CONTEXT + "/PetListCtl";
 
+	public String PARKING_VIEW = PAGE_FOLDER + "/ParkingView.jsp";
+	public String PARKING_CTL = APP_CONTEXT + "/ParkingCtl";
+
+	public String PARKING_LIST_VIEW = PAGE_FOLDER + "/ParkingListView.jsp";
+	public String PARKING_LIST_CTL = APP_CONTEXT + "/ParkingListCtl";
+
 	public String ERROR_VIEW = PAGE_FOLDER + "/ErrorView.jsp";
 	public String ERROR_CTL = APP_CONTEXT + "/ErrorCtl";
 

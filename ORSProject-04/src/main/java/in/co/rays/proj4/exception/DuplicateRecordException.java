@@ -1,4 +1,4 @@
-package in.co.rays.proj4.exception;
+package in.co.rays.exception;
 
 public class DuplicateRecordException extends Exception {
 
