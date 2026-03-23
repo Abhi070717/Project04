@@ -4,12 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import in.co.rays.proj4.bean.UserBean;
 import in.co.rays.proj4.exception.ApplicationException;
 import in.co.rays.proj4.exception.DatabaseException;
 import in.co.rays.proj4.exception.DuplicateRecordException;
+import in.co.rays.proj4.util.EmailBuilder;
+import in.co.rays.proj4.util.EmailMessage;
+import in.co.rays.proj4.util.EmailUtility;
 import in.co.rays.proj4.util.JDBCDataSource;
 
 public class UserModel {
@@ -248,6 +252,45 @@ public class UserModel {
 		return bean;
 	}
 
+	public UserBean authenticate(String login, String password) throws ApplicationException {
+
+		UserBean bean = null;
+		Connection conn = null;
+
+		StringBuffer sql = new StringBuffer("select * from st_user where login = ? and password = ?");
+
+		try {
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, login);
+			pstmt.setString(2, password);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new UserBean();
+				bean.setId(rs.getLong(1));
+				bean.setFirstName(rs.getString(2));
+				bean.setLastName(rs.getString(3));
+				bean.setLogin(rs.getString(4));
+				bean.setPassword(rs.getString(5));
+				bean.setDob(rs.getDate(6));
+				bean.setMobileNo(rs.getString(7));
+				bean.setRoleId(rs.getLong(8));
+				bean.setGender(rs.getString(9));
+				bean.setCreatedBy(rs.getString(10));
+				bean.setModifiedBy(rs.getString(11));
+				bean.setCreatedDatetime(rs.getTimestamp(12));
+				bean.setModifiedDatetime(rs.getTimestamp(13));
+			}
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			throw new ApplicationException("Exception : Exception in get roles");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+		return bean;
+	}
+
 	public List<UserBean> list() throws ApplicationException {
 		return search(null, 0, 0);
 	}
@@ -261,37 +304,37 @@ public class UserModel {
 
 		if (bean != null) {
 
-		    if (bean.getId() > 0) {
-		        sql.append(" and id = " + bean.getId());
-		    }
+			if (bean.getId() > 0) {
+				sql.append(" and id = " + bean.getId());
+			}
 
-		    if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
-		        sql.append(" and first_name like '" + bean.getFirstName() + "%'");
-		    }
+			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
+				sql.append(" and first_name like '" + bean.getFirstName() + "%'");
+			}
 
-		    if (bean.getLastName() != null && bean.getLastName().length() > 0) {
-		        sql.append(" and last_name like '" + bean.getLastName() + "%'");
-		    }
+			if (bean.getLastName() != null && bean.getLastName().length() > 0) {
+				sql.append(" and last_name like '" + bean.getLastName() + "%'");
+			}
 
-		    if (bean.getLogin() != null && bean.getLogin().length() > 0) {
-		        sql.append(" and login like '" + bean.getLogin() + "%'");
-		    }
+			if (bean.getLogin() != null && bean.getLogin().length() > 0) {
+				sql.append(" and login like '" + bean.getLogin() + "%'");
+			}
 
-		    if (bean.getDob() != null) {
-		        sql.append(" and dob = '" + new java.sql.Date(bean.getDob().getTime()) + "'");
-		    }
+			if (bean.getDob() != null) {
+				sql.append(" and dob = '" + new java.sql.Date(bean.getDob().getTime()) + "'");
+			}
 
-		    if (bean.getMobileNo() != null && bean.getMobileNo().length() > 0) {
-		        sql.append(" and mobile_no = '" + bean.getMobileNo() + "'");
-		    }
+			if (bean.getMobileNo() != null && bean.getMobileNo().length() > 0) {
+				sql.append(" and mobile_no = '" + bean.getMobileNo() + "'");
+			}
 
-		    if (bean.getRoleId() > 0) {
-		        sql.append(" and role_id = " + bean.getRoleId());
-		    }
+			if (bean.getRoleId() > 0) {
+				sql.append(" and role_id = " + bean.getRoleId());
+			}
 
-		    if (bean.getGender() != null && bean.getGender().length() > 0) {
-		        sql.append(" and gender like '" + bean.getGender() + "%'");
-		    }
+			if (bean.getGender() != null && bean.getGender().length() > 0) {
+				sql.append(" and gender like '" + bean.getGender() + "%'");
+			}
 		}
 
 		if (pageSize > 0) {
@@ -336,4 +379,25 @@ public class UserModel {
 		return list;
 	}
 
+	public long registerUser(UserBean bean) throws DuplicateRecordException, ApplicationException {
+
+		long pk = add(bean);
+
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("login", bean.getLogin());
+		map.put("password", bean.getPassword());
+
+		String message = EmailBuilder.getUserRegistrationMessage(map);
+
+		EmailMessage msg = new EmailMessage();
+
+		msg.setTo(bean.getLogin());
+		msg.setSubject("Registration is successful for ORSProject-04");
+		msg.setMessage(message);
+		msg.setMessageType(EmailMessage.HTML_MSG);
+
+		EmailUtility.sendMail(msg);
+
+		return pk;
+	}
 }

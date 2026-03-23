@@ -6,6 +6,15 @@ public interface ORSView {
 
 	public String PAGE_FOLDER = "/jsp";
 
+	public String WELCOME_VIEW = PAGE_FOLDER + "/WelcomeView.jsp";
+	public String WELCOME_CTL = APP_CONTEXT + "/WelcomeCtl";
+
+	public String USER_REGISTRATION_VIEW = PAGE_FOLDER + "/UserRegistrationView.jsp";
+	public String USER_REGISTRATION_CTL = APP_CONTEXT + "/UserRegistrationCtl";
+
+	public String LOGIN_VIEW = PAGE_FOLDER + "/LoginView.jsp";
+	public String LOGIN_CTL = APP_CONTEXT + "/LoginCtl";
+
 	public String ROLE_VIEW = PAGE_FOLDER + "/RoleView.jsp";
 	public String ROLE_CTL = APP_CONTEXT + "/RoleCtl";
 
@@ -53,33 +62,6 @@ public interface ORSView {
 
 	public String FACULTY_LIST_VIEW = PAGE_FOLDER + "/FacultyListView.jsp";
 	public String FACULTY_LIST_CTL = APP_CONTEXT + "/FacultyListCtl";
-
-	public String RECIPE_VIEW = PAGE_FOLDER + "/RecipeView.jsp";
-	public String RECIPE_CTL = APP_CONTEXT + "/RecipeCtl";
-
-	public String MAINTENANCE_VIEW = PAGE_FOLDER + "/MaintenanceView.jsp";
-	public String MAINTENANCE_CTL = APP_CONTEXT + "/MaintenanceCtl";
-
-	public String BROADCAST_VIEW = PAGE_FOLDER + "/BroadcastView.jsp";
-	public String BROADCAST_CTL = APP_CONTEXT + "/BroadcastCtl";
-
-	public String WALLET_VIEW = PAGE_FOLDER + "/WalletView.jsp";
-	public String WALLET_CTL = APP_CONTEXT + "/WalletCtl";
-
-	public String OTP_VIEW = PAGE_FOLDER + "/OtpView.jsp";
-	public String OTP_CTL = APP_CONTEXT + "/OtpCtl";
-
-	public String PET_VIEW = PAGE_FOLDER + "/PetView.jsp";
-	public String PET_CTL = APP_CONTEXT + "/PetCtl";
-
-	public String PET_LIST_VIEW = PAGE_FOLDER + "/PetListView.jsp";
-	public String PET_LIST_CTL = APP_CONTEXT + "/PetListCtl";
-
-	public String PARKING_VIEW = PAGE_FOLDER + "/ParkingView.jsp";
-	public String PARKING_CTL = APP_CONTEXT + "/ParkingCtl";
-
-	public String PARKING_LIST_VIEW = PAGE_FOLDER + "/ParkingListView.jsp";
-	public String PARKING_LIST_CTL = APP_CONTEXT + "/ParkingListCtl";
 
 	public String ERROR_VIEW = PAGE_FOLDER + "/ErrorView.jsp";
 	public String ERROR_CTL = APP_CONTEXT + "/ErrorCtl";

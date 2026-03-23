@@ -1,3 +1,4 @@
+<%@page import="in.co.rays.proj4.bean.UserBean"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -5,11 +6,21 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Header</title>
 </head>
 <body>
-	<h3>Hi, Guest</h3>
-
+	<%
+	UserBean ub = (UserBean) session.getAttribute("user");
+	%>
+	<%
+	if (ub != null) {
+	%>
+	<h2><%="Hii, " + ub.getFirstName()%><%=ub.getFirstName()%>
+		(<%=session.getAttribute("role")%>)</h2>
+	<a href="LoginCtl?operation=logout">Logout</a> |
+	<b>|</b>
+	<a href="WelcomeCtl"><b>Welcome</b></a>
+	<b>|</b>
 	<a href="RoleCtl"><b>Add Role</b></a>
 	<b>|</b>
 	<a href="RoleListCtl"><b>Role List</b></a>
@@ -41,24 +52,16 @@
 	<a href="FacultyCtl"><b>Add Faculty</b></a>
 	<b>|</b>
 	<a href="FacultyListCtl"><b>Faculty List</b></a>
-	<b>|</b>
-	<a href="RecipeCtl"><b>Add Recipe</b></a>
-	<b>|</b>
-	<a href="BroadcastCtl"><b>Add Broadcast</b></a>
-	<b>|</b>
-	<a href="WalletCtl"><b>Add Wallet</b></a>
-	<b>|</b>
-	<a href="OtpCtl"><b>Add Otp</b></a>
-	<b>|</b>
-	<a href="PetCtl"><b>Add Pet</b></a>
-	<b>|</b>
-	<a href="PetListCtl"><b>Pet List</b></a>
-	<b>|</b>
-	<a href="ParkingCtl"><b>Add Parking</b></a>
-	<b>|</b>
-	<a href="ParkingListCtl"><b>Parking List</b></a>
-	<b>|</b>
-	<a href=<%=ORSView.MAINTENANCE_CTL%>><b>Add Maintenance</b></a>
+	<hr>
+	<%
+	} else {
+	%>
+	<h2>Hii, Guest</h2>
+	<a href="WelcomeCtl">Welcome</a> |
+	<a href="LoginCtl">Login</a> |
+	<%
+	}
+	%>
 	<hr>
 </body>
 </html>
