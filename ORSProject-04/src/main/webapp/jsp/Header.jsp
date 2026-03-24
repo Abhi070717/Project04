@@ -9,16 +9,8 @@
 <title>Header</title>
 </head>
 <body>
-	<%
-	UserBean ub = (UserBean) session.getAttribute("user");
-	%>
-	<%
-	if (ub != null) {
-	%>
-	<h2><%="Hii, " + ub.getFirstName()%><%=ub.getFirstName()%>
-		(<%=session.getAttribute("role")%>)</h2>
-	<a href="LoginCtl?operation=logout">Logout</a> |
-	<b>|</b>
+	<h2>Hii, Guest</h2>
+	
 	<a href="WelcomeCtl"><b>Welcome</b></a>
 	<b>|</b>
 	<a href="RoleCtl"><b>Add Role</b></a>
@@ -52,16 +44,6 @@
 	<a href="FacultyCtl"><b>Add Faculty</b></a>
 	<b>|</b>
 	<a href="FacultyListCtl"><b>Faculty List</b></a>
-	<hr>
-	<%
-	} else {
-	%>
-	<h2>Hii, Guest</h2>
-	<a href="WelcomeCtl">Welcome</a> |
-	<a href="LoginCtl">Login</a> |
-	<%
-	}
-	%>
 	<hr>
 </body>
 </html>
