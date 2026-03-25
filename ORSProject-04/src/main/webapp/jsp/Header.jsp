@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h2>Hii, Guest</h2>
-	
+
 	<a href="WelcomeCtl"><b>Welcome</b></a>
 	<b>|</b>
 	<a href="RoleCtl"><b>Add Role</b></a>
