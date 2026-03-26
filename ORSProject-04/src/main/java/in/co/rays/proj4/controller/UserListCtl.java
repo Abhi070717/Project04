@@ -25,7 +25,7 @@ public class UserListCtl extends BaseCtl {
 	protected void preload(HttpServletRequest request) {
 		RoleModel roleModel = new RoleModel();
 		try {
-			List<RoleBean> roleList = roleModel.list();
+			List<RoleBean > roleList = roleModel.list();
 			request.setAttribute("roleList", roleList);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
