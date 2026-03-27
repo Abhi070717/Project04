@@ -160,6 +160,13 @@ public class UserCtl extends BaseCtl {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// UserCtl me basectl ko extend kiya hai
+		// Basectl ki service call hogi
+		// service ke ander hamne prelode call ki hai + opretion get kiyta hai +
+		// condition check ki if 5 opertions view, reset cancel, delete or null hai toh
+		// validate nahi chlegi
+		// condition anger 5 condition ko chod krr sab jgh chlegi
+		// validate chlegi child ki
 
 		String op = DataUtility.getString(request.getParameter("operation"));
 
