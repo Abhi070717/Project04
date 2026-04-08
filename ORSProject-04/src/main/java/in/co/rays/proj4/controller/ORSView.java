@@ -12,8 +12,8 @@ public interface ORSView {
 	public String LOGIN_VIEW = PAGE_FOLDER + "/LoginView.jsp";
 	public String LOGIN_CTL = APP_CONTEXT + "/LoginCtl";
 
-	public String FORGET_PASSWORD_VIEW = PAGE_FOLDER + "/WelcomeView.jsp";
-	public String FORGET_PASSWORD_CTL = APP_CONTEXT + "/WelcomeCtl";
+	public String FORGET_PASSWORD_VIEW = PAGE_FOLDER + "/ForgetPasswordView.jsp";
+	public String FORGET_PASSWORD_CTL = APP_CONTEXT + "/ForgetPasswordCtl";
 
 	public String USER_REGISTRATION_VIEW = PAGE_FOLDER + "/UserRegistrationView.jsp";
 	public String USER_REGISTRATION_CTL = APP_CONTEXT + "/UserRegistrationCtl";
