@@ -55,6 +55,8 @@ public class TestRoleModel {
 			System.out.println("Data Stored in st_role" + i);
 		} catch (ApplicationException | DuplicateRecordException e) {
 			e.printStackTrace();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
 		}
 	}
 

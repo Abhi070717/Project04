@@ -12,6 +12,7 @@ import in.co.rays.proj4.bean.RoleBean;
 import in.co.rays.proj4.bean.RoleBean;
 import in.co.rays.proj4.bean.RoleBean;
 import in.co.rays.proj4.exception.ApplicationException;
+import in.co.rays.proj4.exception.DatabaseException;
 import in.co.rays.proj4.exception.DuplicateRecordException;
 import in.co.rays.proj4.model.RoleModel;
 import in.co.rays.proj4.model.RoleModel;
@@ -31,7 +32,7 @@ public class RoleCtl extends BaseCtl {
 		if (DataValidator.isNull(request.getParameter("name"))) {
 			request.setAttribute("name", PropertyReader.getValue("error.require", "Name"));
 			pass = false;
-		} else if (! DataValidator.isName(request.getParameter("name"))) {
+		} else if (!DataValidator.isName(request.getParameter("name"))) {
 			request.setAttribute("name", "Invalid Name");
 			pass = false;
 		}
@@ -103,6 +104,8 @@ public class RoleCtl extends BaseCtl {
 				e.printStackTrace();
 				ServletUtility.handleException(e, request, response);
 				return;
+			} catch (DatabaseException e) {
+				e.printStackTrace();
 			}
 		} else if (OP_UPDATE.equalsIgnoreCase(op)) {
 			RoleBean bean = (RoleBean) populateBean(request);
