@@ -22,7 +22,7 @@ import in.co.rays.proj4.util.ServletUtility;
 public class UserListCtl extends BaseCtl {
 
 	@Override
-	protected void preload(HttpServletRequest request) {
+	protected void preload(HttpServletRequest request, HttpServletResponse response) {
 		RoleModel roleModel = new RoleModel();
 		try {
 			List<RoleBean > roleList = roleModel.list();

@@ -9,7 +9,7 @@ import in.co.rays.proj4.util.JDBCDataSource;
 
 public class TestJDBCDataSource {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
 		for (int i = 1; i <= 50; i++) {
 
@@ -19,7 +19,7 @@ public class TestJDBCDataSource {
 		}
 	}
 
-	private static void testGet() {
+	private static void testGet() throws SQLException {
 		Connection conn = JDBCDataSource.getConnection();
 
 		PreparedStatement pstmt;

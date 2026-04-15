@@ -4,16 +4,42 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * DataUtility provides common helper methods for converting and parsing
+ * primitive types and date/time related utilities used across the application.
+ *
+ * <p>
+ * This class contains methods to:
+ * <ul>
+ *   <li>convert strings to primitives (int, long)</li>
+ *   <li>convert strings to {@link Date} and {@link Timestamp}</li>
+ *   <li>format Date / Timestamp values</li>
+ *   <li>provide the current timestamp</li>
+ * </ul>
+ * </p>
+ *
+ * @author Abhishish Bhawsar
+ * 
+ * @version 1.0
+ */
 public class DataUtility {
 
-	public static final String APP_DATE_FORMAT = "dd-MM-yyyy";
+    /** Application date format used for parsing and formatting dates. */
+    public static final String APP_DATE_FORMAT = "dd-MM-yyyy";
 
-	public static final String APP_TIME_FORMAT = "dd-MM-yyyy HH:mm:ss";
+    /** Application time format used for parsing and formatting timestamps. */
+    public static final String APP_TIME_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
 	private static final SimpleDateFormat formatter = new SimpleDateFormat(APP_DATE_FORMAT);
 
 	private static final SimpleDateFormat timeFormatter = new SimpleDateFormat(APP_TIME_FORMAT);
 
+	/**
+     * Returns trimmed version of the input string when it is non-null and not empty.
+     *
+     * @param val input string
+     * @return trimmed string if input is not null, otherwise null
+	 */
 	public static String getString(String val) {
 		if (DataValidator.isNotNull(val)) {
 			return val.trim();
@@ -22,6 +48,12 @@ public class DataUtility {
 		}
 	}
 
+	/**
+     * Converts an object to its string representation.
+     *
+     * @param val input object
+     * @return {@code val.toString()} when val is non-null, otherwise empty string
+	 */
 	public static String getStringData(Object val) {
 		if (val != null) {
 			return val.toString();
@@ -30,6 +62,12 @@ public class DataUtility {
 		}
 	}
 
+	/**
+     * Converts a numeric string to int.
+     *
+     * @param val numeric string
+     * @return parsed int if valid integer, otherwise 0
+	 */
 	public static int getInt(String val) {
 		if (DataValidator.isInteger(val)) {
 			return Integer.parseInt(val);
@@ -38,6 +76,12 @@ public class DataUtility {
 		}
 	}
 
+	/**
+     * Converts a numeric string to long.
+     *
+     * @param val numeric string
+     * @return parsed long if valid long, otherwise 0
+	 */
 	public static long getLong(String val) {
 		if (DataValidator.isLong(val)) {
 			return Long.parseLong(val);
@@ -46,6 +90,12 @@ public class DataUtility {
 		}
 	}
 
+	/**
+     * Parses a date string using the application date format.
+     *
+     * @param val date string in {@value #APP_DATE_FORMAT} format
+     * @return parsed {@link Date} or {@code null} on parse failure
+	 */
 	public static Date getDate(String val) {
 		Date date = null;
 		try {
@@ -56,6 +106,12 @@ public class DataUtility {
 		return date;
 	}
 
+	/**
+     * Formats a {@link Date} using the application date format.
+     *
+     * @param date the date to format
+     * @return formatted date string or empty string on failure
+	 */
 	public static String getDateString(Date date) {
 		try {
 			return formatter.format(date);
@@ -64,6 +120,12 @@ public class DataUtility {
 		return "";
 	}
 
+	/**
+     * Parses a timestamp string using the application time format.
+     *
+     * @param val timestamp string in {@value #APP_TIME_FORMAT} format
+     * @return parsed {@link Timestamp} or {@code null} on parse failure
+	 */
 	public static Timestamp getTimestamp(String val) {
 		Timestamp timeStamp = null;
 		try {
@@ -74,6 +136,12 @@ public class DataUtility {
 		return timeStamp;
 	}
 
+	/**
+     * Creates a {@link Timestamp} from milliseconds since epoch.
+     *
+     * @param l milliseconds since epoch
+     * @return {@link Timestamp} or {@code null} on failure
+	 */
 	public static Timestamp getTimestamp(long l) {
 		Timestamp timeStamp = null;
 		try {
@@ -84,6 +152,11 @@ public class DataUtility {
 		return timeStamp;
 	}
 
+	/**
+     * Returns the current timestamp.
+     *
+     * @return current {@link Timestamp}
+	 */
 	public static Timestamp getCurrentTimestamp() {
 		Timestamp timeStamp = null;
 		try {
@@ -94,6 +167,12 @@ public class DataUtility {
 
 	}
 
+	/**
+     * Returns milliseconds value of the provided {@link Timestamp}.
+     *
+     * @param tm timestamp
+     * @return milliseconds since epoch or 0 on failure
+	 */
 	public static long getTimestamp(Timestamp tm) {
 		try {
 			return tm.getTime();
@@ -102,6 +181,17 @@ public class DataUtility {
 		}
 	}
 
+	/**
+     * A simple test driver for DataUtility methods.
+     *
+     * <p>
+     * Note: the test strings used here (e.g. "10/15/2024") do not match
+     * {@value #APP_DATE_FORMAT}. They are left as-is to preserve your original
+     * test code.
+     * </p>
+     *
+     * @param args command line args (not used)
+	 */
 	public static void main(String[] args) {
 
 //		Test getString

@@ -23,7 +23,7 @@ import in.co.rays.proj4.util.ServletUtility;
 @WebServlet(name = "StudentCtl", urlPatterns = { "/StudentCtl" })
 public class StudentCtl extends BaseCtl {
 	@Override
-	protected void preload(HttpServletRequest request) {
+	protected void preload(HttpServletRequest request, HttpServletResponse response) {
 		CollegeModel Model = new CollegeModel();
 		try {
 			List<CollegeBean> list = Model.list();

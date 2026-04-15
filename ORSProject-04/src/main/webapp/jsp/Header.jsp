@@ -1,3 +1,4 @@
+<%@page import="in.co.rays.proj4.bean.RoleBean"%>
 <%@page import="in.co.rays.proj4.bean.UserBean"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -7,19 +8,51 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Header</title>
+
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+<script src="/ORSProject-04/js/checkbox.js"></script>
+<script src="/ORSProject-04/js/datepicker.js"></script>
+
 </head>
 <body>
+
+	<!-- Logo -->
+	<img src="<%=request.getContextPath()%>/img/customLogo.jpg"
+		align="right" width="100" height="40" border="0">
+
 	<%
 	UserBean user = (UserBean) session.getAttribute("user");
+	boolean loggedIn = user != null;
 	%>
 	<%
-	if (user != null) {
+	if (loggedIn) {
 	%>
 	<h3>
 		Hi,
 		<%=user.getFirstName()%>
 		(<%=session.getAttribute("role")%>)
 	</h3>
+
+	<!-- Common menus -->
+
+	<a href="<%=ORSView.MY_PROFILE_CTL%>"><b>My Profile</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.CHANGE_PASSWORD_CTL%>"><b>Change Password</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.GET_MARKSHEET_CTL%>"><b>Get Marksheet</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.MARKSHEET_MERIT_LIST_CTL%>"><b>Merit List</b></a>
+	<b>|</b>
+
+	<!-- Admin Only -->
+	<%
+	if (user.getRoleId() == RoleBean.ADMIN) {
+	%>
 
 	<a href="<%=ORSView.WELCOME_CTL%>"><b>Welcome</b></a>
 	<b>|</b>
@@ -54,19 +87,60 @@
 	<a href="<%=ORSView.FACULTY_CTL%>"><b>Add Faculty</b></a>
 	<b>|</b>
 	<a href="<%=ORSView.FACULTY_LIST_CTL%>"><b>Faculty List</b></a>
+
+	<%
+	}
+	%>
+	<%
+	}
+	%>
+
+	<!-- Faculty + Admin Menus -->
+	<%
+	if (user.getRoleId() == RoleBean.FACULTY) {
+	%>
+
+	<a href="<%=ORSView.STUDENT_CTL%>"><b>Add Student</b></a>
 	<b>|</b>
+	<a href="<%=ORSView.STUDENT_LIST_CTL%>"><b>Student List</b></a>
+<b>|</b>
+	<a href="<%=ORSView.MARKSHEET_CTL%>"><b>Add Marksheet</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.MARKSHEET_LIST_CTL%>"><b>Marksheet List</b></a>
+<b>|</b>
+	<a href="<%=ORSView.COURSE_CTL%>"><b>Add Course</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.COURSE_LIST_CTL%>"><b>Course List</b></a>
+<b>|</b>
+	<a href="<%=ORSView.SUBJECT_CTL%>"><b>Add Subject</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.SUBJECT_LIST_CTL%>"><b>Subject List</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.FACULTY_CTL%>"><b>Add Faculty</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.FACULTY_LIST_CTL%>"><b>Faculty List</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.TIMETABLE_CTL%>"><b>Add Timetable</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.TIMETABLE_LIST_CTL%>"><b>Timetable List</b></a>
+	<b>|</b>
+
+	<!-- Logout -->
+
 	<a href="<%=ORSView.LOGIN_CTL + "?operation=Logout"%>"><b>Logout</b></a>
+
 	<%
 	} else {
-		%>
+	%>
+	<!-- Guest View -->
+
 	<h3>Hi, Guest</h3>
 	<a href="<%=ORSView.WELCOME_CTL%>"><b>Welcome</b></a> |
 	<a href="<%=ORSView.LOGIN_CTL%>"><b>Login</b></a> |
-	<a href="<%=ORSView.USER_REGISTRATION_CTL%>">SignUp</a>
 	<%
 	}
 	%>
 	<hr>
-
+	<%@ include file="Footer.jsp"%>
 </body>
 </html>

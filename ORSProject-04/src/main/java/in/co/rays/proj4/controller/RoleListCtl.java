@@ -20,7 +20,7 @@ import in.co.rays.proj4.util.ServletUtility;
 public class RoleListCtl extends BaseCtl {
 
 	@Override
-	protected void preload(HttpServletRequest request) {
+	protected void preload(HttpServletRequest request, HttpServletResponse response) {
 		RoleModel roleModel = new RoleModel();
 
 		try {
