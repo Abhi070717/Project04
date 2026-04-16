@@ -24,6 +24,10 @@ public interface ORSView {
 
 	/** Base JSP folder. */
 	public String PAGE_FOLDER = "/jsp";
+	
+	public String JAVA_DOC_VIEW = APP_CONTEXT + "/doc/index.html";
+	
+	public String JAVA_DOC = APP_CONTEXT + "/doc/index.html";
 
 	public String WELCOME_VIEW = PAGE_FOLDER + "/WelcomeView.jsp";
 	public String WELCOME_CTL = APP_CONTEXT + "/WelcomeCtl";
@@ -120,7 +124,5 @@ public interface ORSView {
 
 	/** Error Controller URL */
 	public String ERROR_CTL = APP_CONTEXT + "/ctl/ErrorCtl";
-
-	public String JAVA_DOC = APP_CONTEXT + "/doc/index.html";
 
 }
