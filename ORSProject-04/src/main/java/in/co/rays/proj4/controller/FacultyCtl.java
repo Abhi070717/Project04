@@ -24,6 +24,27 @@ import in.co.rays.proj4.util.DataValidator;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
 
+/**
+ * FacultyCtl is a controller servlet that manages faculty-related operations
+ * such as add, update, view and navigation. It handles request validation,
+ * preloading of related lists (college, course, subject), populating
+ * {@link FacultyBean} from request parameters and delegating persistence
+ * operations to {@link FacultyModel}.
+ *
+ * Preloads College, Course, and Subject lists for dropdowns.
+ *
+ * @author Abhishish Bhawsar
+ * 
+ *
+ * <p>Supported operations: Save, Update, Cancel, Reset.</p>
+ *
+ * @author Abhishish Bhawsar
+ * 
+ * @version 1.0
+ * @see in.co.rays.proj4.model.FacultyModel
+ * @see in.co.rays.proj4.bean.FacultyBean
+ *
+ */
 @WebServlet(name = "FacultyCtl", urlPatterns = { "/FacultyCtl" })
 public class FacultyCtl extends BaseCtl {
 

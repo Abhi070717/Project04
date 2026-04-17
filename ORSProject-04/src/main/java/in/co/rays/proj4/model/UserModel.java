@@ -327,7 +327,7 @@ public class UserModel {
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			throw new ApplicationException("Exception : Exception in get roles");
+			throw new ApplicationException(e.getMessage() + "Exception : Exception in get roles");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}

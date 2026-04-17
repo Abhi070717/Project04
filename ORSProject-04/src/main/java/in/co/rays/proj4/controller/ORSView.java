@@ -45,7 +45,7 @@ public interface ORSView {
 	public String MY_PROFILE_CTL = APP_CONTEXT + "/ctl/MyProfileCtl";
 
 	public String CHANGE_PASSWORD_VIEW = PAGE_FOLDER + "/ChangePasswordView.jsp";
-	public String CHANGE_PASSWORD_CTL = APP_CONTEXT + "/ChangePasswordCtl";
+	public String CHANGE_PASSWORD_CTL = APP_CONTEXT + "/ctl/ChangePasswordCtl";
 
 	public String GET_MARKSHEET_VIEW = PAGE_FOLDER + "/GetMarksheetView.jsp";
 	public String GET_MARKSHEET_CTL = APP_CONTEXT + "/ctl/GetMarksheetCtl";
@@ -95,25 +95,26 @@ public interface ORSView {
 	public String SUBJECT_LIST_VIEW = PAGE_FOLDER + "/SubjectListView.jsp";
 	public String SUBJECT_LIST_CTL = APP_CONTEXT + "/ctl/SubjectListCtl";
 
-	
+
 	/** Timetable View JSP */
 	public String TIMETABLE_VIEW = PAGE_FOLDER + "/TimeTableView.jsp";
 	/** Timetable Controller URL */
 	public String TIMETABLE_CTL = APP_CONTEXT + "/ctl/TimeTableCtl";
 
-	/** Faculty List JSP */
+	/** TimeTable List JSP */
 	public String TIMETABLE_LIST_VIEW = PAGE_FOLDER + "/TimeTableListView.jsp";
-
-	/** Faculty List Controller URL */
+	/** TimeTable List Controller URL */
 	public String TIMETABLE_LIST_CTL = APP_CONTEXT + "/ctl/TimeTableListCtl";
+
 	
 	/** Faculty View JSP */
 	public String FACULTY_VIEW = PAGE_FOLDER + "/FacultyView.jsp";
 	/** Faculty Controller URL */
 	public String FACULTY_CTL = APP_CONTEXT + "/ctl/FacultyCtl";
-
 	
+	/** Faculty List JSP */
 	public String FACULTY_LIST_VIEW = PAGE_FOLDER + "/FacultyListView.jsp";
+	/** Faculty List Controller URL */
 	public String FACULTY_LIST_CTL = APP_CONTEXT + "/ctl/FacultyListCtl";
 
 
@@ -125,4 +126,17 @@ public interface ORSView {
 	/** Error Controller URL */
 	public String ERROR_CTL = APP_CONTEXT + "/ctl/ErrorCtl";
 
+	/** ================= Other Models ================= */
+	
+	/** Timetable View JSP */
+	public String HEALTH_VIEW = PAGE_FOLDER + "/HealthView.jsp";
+	/** Timetable Controller URL */
+	public String HEALTH_CTL = APP_CONTEXT + "/ctl/HealthCtl";
+	
+	/** Faculty List JSP */
+	public String HEALTH_LIST_VIEW = PAGE_FOLDER + "/HealthListView.jsp";
+	/** Faculty List Controller URL */
+	public String HEALTH_LIST_CTL = APP_CONTEXT + "/ctl/HealthListCtl";
+
+	
 }

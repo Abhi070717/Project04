@@ -49,10 +49,6 @@
 	<a href="<%=ORSView.MARKSHEET_MERIT_LIST_CTL%>"><b>Marksheet
 			Merit-List</b></a>
 	<b>|</b>
-	<a target="blank" href="<%=ORSView.JAVA_DOC_VIEW%>">Java Doc</b></a>
-	<!-- Logout -->
-
-	<a href="<%=ORSView.LOGIN_CTL + "?operation=Logout"%>"><b>Logout</b></a>
 
 	<!-- Admin Only Admin Menus-->
 	<%
@@ -94,6 +90,22 @@
 	<b>|</b>
 	<a href="<%=ORSView.TIMETABLE_LIST_CTL%>">TimeTable List</b></a>
 	<b>|</b>
+	<a target="blank" href="<%=ORSView.JAVA_DOC_VIEW%>">Java Doc</b></a>
+	<b>|</b>
+
+
+
+
+	<!-- Daily Module -->
+
+	<a href="<%=ORSView.HEALTH_CTL%>"><b>Add Health</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.HEALTH_LIST_CTL%>"><b>Health List</b></a>
+
+
+	<!-- Logout -->
+
+	<a href="<%=ORSView.LOGIN_CTL + "?operation=Logout"%>"><b>Logout</b></a>
 	<%
 	}
 	%>
@@ -127,6 +139,17 @@
 	<b>|</b>
 	<a href="<%=ORSView.TIMETABLE_LIST_CTL%>"><b>Timetable List</b></a>
 	<b>|</b>
+	<a target="blank" href="<%=ORSView.JAVA_DOC_VIEW%>">Java Doc</b></a>
+	<!-- Logout -->
+	<a href="<%=ORSView.LOGIN_CTL + "?operation=Logout"%>"><b>Logout</b></a>
+
+	<!-- Daily Module -->
+
+	<a href="<%=ORSView.HEALTH_CTL%>"><b>Add Health</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.HEALTH_LIST_CTL%>"><b>Health List</b></a>
+
+
 
 	<%
 	}
@@ -137,8 +160,9 @@
 	<!-- Guest View -->
 
 	<h3>Hi, Guest</h3>
-	<a href="<%=ORSView.WELCOME_CTL%>"><b>Welcome</b></a> |
-	<a href="<%=ORSView.LOGIN_CTL%>"><b>Login</b></a> |
+	<a href="<%=ORSView.WELCOME_CTL%>"><b>Welcome</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.LOGIN_CTL%>"><b>Login</b></a>
 	<%
 	}
 	%>

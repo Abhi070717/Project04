@@ -27,7 +27,8 @@ import in.co.rays.proj4.util.ServletUtility;
  * the session has expired.
  * </p>
  *
- * @author Shruti Rathore
+ * @author Abhishish Bhawsar
+ * 
  * @version 1.0
  */
 @WebFilter(urlPatterns = { "/doc/*", "/ctl/*" })
