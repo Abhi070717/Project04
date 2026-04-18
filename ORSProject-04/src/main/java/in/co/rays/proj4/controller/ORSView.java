@@ -24,9 +24,9 @@ public interface ORSView {
 
 	/** Base JSP folder. */
 	public String PAGE_FOLDER = "/jsp";
-	
+
 	public String JAVA_DOC_VIEW = APP_CONTEXT + "/doc/index.html";
-	
+
 	public String JAVA_DOC = APP_CONTEXT + "/doc/index.html";
 
 	public String WELCOME_VIEW = PAGE_FOLDER + "/WelcomeView.jsp";
@@ -95,7 +95,6 @@ public interface ORSView {
 	public String SUBJECT_LIST_VIEW = PAGE_FOLDER + "/SubjectListView.jsp";
 	public String SUBJECT_LIST_CTL = APP_CONTEXT + "/ctl/SubjectListCtl";
 
-
 	/** Timetable View JSP */
 	public String TIMETABLE_VIEW = PAGE_FOLDER + "/TimeTableView.jsp";
 	/** Timetable Controller URL */
@@ -106,17 +105,15 @@ public interface ORSView {
 	/** TimeTable List Controller URL */
 	public String TIMETABLE_LIST_CTL = APP_CONTEXT + "/ctl/TimeTableListCtl";
 
-	
 	/** Faculty View JSP */
 	public String FACULTY_VIEW = PAGE_FOLDER + "/FacultyView.jsp";
 	/** Faculty Controller URL */
 	public String FACULTY_CTL = APP_CONTEXT + "/ctl/FacultyCtl";
-	
+
 	/** Faculty List JSP */
 	public String FACULTY_LIST_VIEW = PAGE_FOLDER + "/FacultyListView.jsp";
 	/** Faculty List Controller URL */
 	public String FACULTY_LIST_CTL = APP_CONTEXT + "/ctl/FacultyListCtl";
-
 
 	/** ================= Error Page ================= */
 
@@ -126,17 +123,26 @@ public interface ORSView {
 	/** Error Controller URL */
 	public String ERROR_CTL = APP_CONTEXT + "/ctl/ErrorCtl";
 
-	/** ================= Other Models ================= */
-	
-	/** Timetable View JSP */
+	/** ================= Daily Models ================= */
+
+	/** Health View JSP */
 	public String HEALTH_VIEW = PAGE_FOLDER + "/HealthView.jsp";
-	/** Timetable Controller URL */
+	/** Health Controller URL */
 	public String HEALTH_CTL = APP_CONTEXT + "/ctl/HealthCtl";
-	
-	/** Faculty List JSP */
+
+	/** Health List JSP */
 	public String HEALTH_LIST_VIEW = PAGE_FOLDER + "/HealthListView.jsp";
-	/** Faculty List Controller URL */
+	/** Health List Controller URL */
 	public String HEALTH_LIST_CTL = APP_CONTEXT + "/ctl/HealthListCtl";
 
-	
+	/** Purge View JSP */
+	public String PURGE_VIEW = PAGE_FOLDER + "/PurgeView.jsp";
+	/** Purge Controller URL */
+	public String PURGE_CTL = APP_CONTEXT + "/ctl/PurgeCtl";
+
+	/** Purge List JSP */
+	public String PURGE_LIST_VIEW = PAGE_FOLDER + "/PurgeListView.jsp";
+	/** Purge List Controller URL */
+	public String PURGE_LIST_CTL = APP_CONTEXT + "/ctl/PurgeListCtl";
+
 }

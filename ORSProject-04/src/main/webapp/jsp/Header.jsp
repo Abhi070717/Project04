@@ -94,18 +94,21 @@
 	<b>|</b>
 
 
-
-
 	<!-- Daily Module -->
 
 	<a href="<%=ORSView.HEALTH_CTL%>"><b>Add Health</b></a>
 	<b>|</b>
 	<a href="<%=ORSView.HEALTH_LIST_CTL%>"><b>Health List</b></a>
-
+	<b>|</b>
+	<a href="<%=ORSView.PURGE_CTL%>"><b>Add Purge</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.PURGE_LIST_CTL%>"><b>Purge List</b></a>
+	<b>|</b>
 
 	<!-- Logout -->
 
 	<a href="<%=ORSView.LOGIN_CTL + "?operation=Logout"%>"><b>Logout</b></a>
+
 	<%
 	}
 	%>
@@ -142,14 +145,6 @@
 	<a target="blank" href="<%=ORSView.JAVA_DOC_VIEW%>">Java Doc</b></a>
 	<!-- Logout -->
 	<a href="<%=ORSView.LOGIN_CTL + "?operation=Logout"%>"><b>Logout</b></a>
-
-	<!-- Daily Module -->
-
-	<a href="<%=ORSView.HEALTH_CTL%>"><b>Add Health</b></a>
-	<b>|</b>
-	<a href="<%=ORSView.HEALTH_LIST_CTL%>"><b>Health List</b></a>
-
-
 
 	<%
 	}

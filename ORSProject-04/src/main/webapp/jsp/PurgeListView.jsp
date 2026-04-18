@@ -1,27 +1,29 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
-<%@page import="in.co.rays.proj4.controller.HealthListCtl"%>
+<%@page import="in.co.rays.proj4.controller.PurgeListCtl"%>
 <%@page import="in.co.rays.proj4.controller.BaseCtl"%>
-<%@page import="in.co.rays.proj4.bean.HealthBean"%>
+<%@page import="in.co.rays.proj4.bean.PurgeBean"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 
 <html>
 <head>
-<title>Health List</title>
+<title>Purge List</title>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
 	<%@include file="Header.jsp"%>
 
-	<jsp:useBean id="bean" class="in.co.rays.proj4.bean.HealthBean"
+	<jsp:useBean id="bean" class="in.co.rays.proj4.bean.PurgeBean"
 		scope="request"></jsp:useBean>
 
 	<div align="center">
-		<h1 align="center" style="margin-bottom: -15; color: navy;">Health
+		<h1 align="center" style="margin-bottom: -15; color: navy;">Purge
 			List</h1>
 
 		<div style="height: 15px; margin-bottom: 12px">
@@ -33,17 +35,17 @@
 			</h3>
 		</div>
 
-		<form action="<%=ORSView.HEALTH_LIST_CTL%>" method="post">
+		<form action="<%=ORSView.PURGE_LIST_CTL%>" method="post">
 			<%
 			int pageNo = ServletUtility.getPageNo(request);
 			int pageSize = ServletUtility.getPageSize(request);
 			int index = ((pageNo - 1) * pageSize) + 1;
 			int nextListSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-			List<HealthBean> nameList = (List<HealthBean>) request.getAttribute("nameList");
+			List<PurgeBean> typeList = (List<PurgeBean>) request.getAttribute("typeList");
 
-			List<HealthBean> list = (List<HealthBean>) ServletUtility.getList(request);
-			Iterator<HealthBean> it = list.iterator();
+			List<PurgeBean> list = (List<PurgeBean>) ServletUtility.getList(request);
+			Iterator<PurgeBean> it = list.iterator();
 
 			if (list.size() != 0) {
 			%>
@@ -52,14 +54,14 @@
 
 			<table style="width: 100%">
 				<tr>
-					<td align="center"><label><b>Health Code:</b></label> <input
-						type="text" name="code" placeholder="Enter Health Code"
+					<td align="center"><label><b>Purge Code:</b></label> <input
+						type="text" name="code" placeholder="Enter Purge Code"
 						value="<%=ServletUtility.getParameter("code", request)%>">&emsp;
 
-						<label><b>Service name: </b></label> <%=HTMLUtility.getList("name", String.valueOf(bean.getServiceName()), nameList)%>
+						<label><b>Purge Type: </b></label> <%=HTMLUtility.getList("type", String.valueOf(bean.getDataType()), typeList)%>
 						&nbsp; <input type="submit" name="operation"
-						value="<%=HealthListCtl.OP_SEARCH%>">&nbsp; <input
-						type="submit" name="operation" value="<%=HealthListCtl.OP_RESET%>"></td>
+						value="<%=PurgeListCtl.OP_SEARCH%>">&nbsp; <input
+						type="submit" name="operation" value="<%=PurgeListCtl.OP_RESET%>"></td>
 				</tr>
 			</table>
 			<br>
@@ -68,27 +70,29 @@
 				<tr style="background-color: #e1e6f1e3;">
 					<th width="5%"><input type="checkbox" id="selectall" /></th>
 					<th width="5%">S.No</th>
-					<th width="25%">Health Code</th>
-					<th width="25%">Service Name</th>
-					<th width="30%">Up Time</th>
+					<th width="25%">Purge Code</th>
+					<th width="25%">Purge Type</th>
+					<th width="30%">Last Run Date</th>
 					<th width="25%">Status</th>
 					<th width="10%">Edit</th>
 				</tr>
 
 				<%
 				while (it.hasNext()) {
-					bean = (HealthBean) it.next();
+					bean = (PurgeBean) it.next();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String date = sdf.format(bean.getLastRunDate());
 				%>
 				<tr>
 					<td style="text-align: center;"><input type="checkbox"
 						class="case" name="ids" value="<%=bean.getId()%>"></td>
 					<td style="text-align: center;"><%=index++%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=bean.getHealthCode()%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=bean.getServiceName()%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=bean.getUptime()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getPurgeCode()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getDataType()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=date%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getStatus()%></td>
 					<td style="text-align: center;"><a
-						href="HealthCtl?id=<%=bean.getId()%>">Edit</a></td>
+						href="PurgeCtl?id=<%=bean.getId()%>">Edit</a></td>
 					<%
 					}
 					%>
@@ -98,14 +102,14 @@
 			<table style="width: 100%">
 				<tr>
 					<td style="width: 25%"><input type="submit" name="operation"
-						value="<%=HealthListCtl.OP_PREVIOUS%>"
+						value="<%=PurgeListCtl.OP_PREVIOUS%>"
 						<%=pageNo > 1 ? "" : "disabled"%>></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=HealthListCtl.OP_NEW%>"></td>
+						name="operation" value="<%=PurgeListCtl.OP_NEW%>"></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=HealthListCtl.OP_DELETE%>"></td>
+						name="operation" value="<%=PurgeListCtl.OP_DELETE%>"></td>
 					<td style="width: 25%" align="right"><input type="submit"
-						name="operation" value="<%=HealthListCtl.OP_NEXT%>"
+						name="operation" value="<%=PurgeListCtl.OP_NEXT%>"
 						<%=nextListSize != 0 ? "" : "disabled"%>></td>
 				</tr>
 			</table>
@@ -117,7 +121,7 @@
 			<table>
 				<tr>
 					<td align="right"><input type="submit" name="operation"
-						value="<%=HealthListCtl.OP_BACK%>"></td>
+						value="<%=PurgeListCtl.OP_BACK%>"></td>
 				</tr>
 			</table>
 			<%
