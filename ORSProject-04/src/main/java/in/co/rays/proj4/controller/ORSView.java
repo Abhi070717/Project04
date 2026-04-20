@@ -145,4 +145,13 @@ public interface ORSView {
 	/** Purge List Controller URL */
 	public String PURGE_LIST_CTL = APP_CONTEXT + "/ctl/PurgeListCtl";
 
+	/** System View JSP */
+	public String SYSTEM_VIEW = PAGE_FOLDER + "/SystemView.jsp";
+	/** System Controller URL */
+	public String SYSTEM_CTL = APP_CONTEXT + "/ctl/SystemCtl";
+	
+	/** System List JSP */
+	public String SYSTEM_LIST_VIEW = PAGE_FOLDER + "/SystemListView.jsp";
+	/** System List Controller URL */
+	public String SYSTEM_LIST_CTL = APP_CONTEXT + "/ctl/SystemListCtl";
 }

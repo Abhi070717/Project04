@@ -104,6 +104,10 @@
 	<b>|</b>
 	<a href="<%=ORSView.PURGE_LIST_CTL%>"><b>Purge List</b></a>
 	<b>|</b>
+	<a href="<%=ORSView.SYSTEM_CTL%>"><b>Add System Event</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.SYSTEM_LIST_CTL%>"><b>System Event List</b></a>
+	<b>|</b>
 
 	<!-- Logout -->
 
