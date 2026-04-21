@@ -45,7 +45,7 @@ import in.co.rays.proj4.util.ServletUtility;
  * @see in.co.rays.proj4.bean.FacultyBean
  *
  */
-@WebServlet(name = "FacultyCtl", urlPatterns = { "/FacultyCtl" })
+@WebServlet(name = "FacultyCtl", urlPatterns = { "/ctl/FacultyCtl" })
 public class FacultyCtl extends BaseCtl {
 
 	@Override

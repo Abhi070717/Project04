@@ -21,7 +21,7 @@ public class TestMarksheetModel {
 //		testUpdate();
 //		testDelete();
 //		testFindByPk();
-//		testFindByName();
+//		testFindByRollNo();
 		testSearch();
 	}
 
@@ -135,14 +135,14 @@ public class TestMarksheetModel {
 		}
 	}
 
-	public static void testFindByName() {
+	public static void testFindByRollNo() {
 
 		MarksheetModel model = new MarksheetModel();
 		MarksheetBean bean = new MarksheetBean();
 
 		try {
 
-			bean = model.findByName("Ankit jain");
+			bean = model.findByRollNo("101");
 
 			System.out.println("ID : " + bean.getId());
 			System.out.println("Roll No. : " + bean.getRollNo());
