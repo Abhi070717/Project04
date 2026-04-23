@@ -1,31 +1,30 @@
-<%@page import="in.co.rays.proj4.controller.ORSView"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 
-<!DOCTYPE html>
+<%@page import="in.co.rays.proj4.util.ServletUtility"%>
+<%@page import="in.co.rays.proj4.bean.UserBean"%>
+<%@page import="in.co.rays.proj4.controller.ORSView"%>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>ORS Project04</title>
+<title>Online Result System</title>
+<link rel="icon" type="image/png"
+	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
 	<br>
 	<br>
+	<marquee behavior="alternate" scrollamount="300" loop="1">
+		<div align="center">
+			<img src="img/customLogo.jpg" align="middle" width="318" height="127"
+				border="0">
+		</div>
+	</marquee>
+
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<div align="center">
-		<h1 align="center">
-			<a href="<%=ORSView.WELCOME_CTL%>"><font size="10px" color="red">Online
-					Result System ORSProject-04</font></a>
-		</h1>
-	</div>
+
+	<h1 align="center">
+		<font size="10px" color="red"> <a
+			href="<%=ORSView.WELCOME_CTL%>">Online Result System</a></font>
+	</h1>
+
 </body>
 </html>

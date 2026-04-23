@@ -11,7 +11,7 @@ import java.util.Date;
  * author Abhishish Bhawsar
  * @version 1.0
  */
-public class TimetableBean extends BaseBean {
+public class TimeTableBean extends BaseBean {
 
     /** Semester for which the timetable is scheduled. */
     private String semester;

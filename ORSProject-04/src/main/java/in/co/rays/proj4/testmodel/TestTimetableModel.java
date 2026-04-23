@@ -6,9 +6,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import in.co.rays.proj4.bean.TimetableBean;
+import in.co.rays.proj4.bean.TimeTableBean;
 import in.co.rays.proj4.exception.DatabaseException;
-import in.co.rays.proj4.model.TimetableModel;
+import in.co.rays.proj4.model.TimeTableModel;
 
 public class TestTimetableModel {
 
@@ -25,7 +25,7 @@ public class TestTimetableModel {
 
 	public static void testNextPk() {
 
-		TimetableModel model = new TimetableModel();
+		TimeTableModel model = new TimeTableModel();
 		try {
 			int i = model.nextPk();
 			System.out.println("NextPk : " + i);
@@ -37,7 +37,7 @@ public class TestTimetableModel {
 	public static void testAdd() {
 
 		try {
-			TimetableBean bean = new TimetableBean();
+			TimeTableBean bean = new TimeTableBean();
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -54,7 +54,7 @@ public class TestTimetableModel {
 			bean.setCreatedDatetime(new Timestamp(new Date().getTime()));
 			bean.setModifiedDatetime(new Timestamp(new Date().getTime()));
 
-			TimetableModel model = new TimetableModel();
+			TimeTableModel model = new TimeTableModel();
 
 			long pk = model.add(bean);
 
@@ -68,7 +68,7 @@ public class TestTimetableModel {
 	public static void testUpdate() {
 
 		try {
-			TimetableBean bean = new TimetableBean();
+			TimeTableBean bean = new TimeTableBean();
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -86,7 +86,7 @@ public class TestTimetableModel {
 			bean.setCreatedDatetime(new Timestamp(new Date().getTime()));
 			bean.setModifiedDatetime(new Timestamp(new Date().getTime()));
 
-			TimetableModel model = new TimetableModel();
+			TimeTableModel model = new TimeTableModel();
 
 			model.update(bean);
 
@@ -101,11 +101,11 @@ public class TestTimetableModel {
 
 		try {
 
-			TimetableBean bean = new TimetableBean();
+			TimeTableBean bean = new TimeTableBean();
 
 			bean.setId(3);
 
-			TimetableModel model = new TimetableModel();
+			TimeTableModel model = new TimeTableModel();
 
 			model.delete(bean);
 
@@ -121,9 +121,9 @@ public class TestTimetableModel {
 
 		try {
 
-			TimetableModel model = new TimetableModel();
+			TimeTableModel model = new TimeTableModel();
 
-			TimetableBean bean = model.findByPk(2);
+			TimeTableBean bean = model.findByPk(2);
 
 			System.out.println("ID : " + bean.getId());
 			System.out.println("Semester : " + bean.getSemester());
@@ -147,21 +147,21 @@ public class TestTimetableModel {
 	public static void testSearch() {
 
 		try {
-			TimetableBean bean = new TimetableBean();
+			TimeTableBean bean = new TimeTableBean();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			
 //			bean.setSemester("3rd");
 			bean.setExamDate(sdf.parse("2026-04-20"));
 
-			TimetableModel model = new TimetableModel();
+			TimeTableModel model = new TimeTableModel();
 
-			List<TimetableBean> list = model.search(bean, 0, 0);
+			List<TimeTableBean> list = model.search(bean, 0, 0);
 
-			Iterator<TimetableBean> it = list.iterator();
+			Iterator<TimeTableBean> it = list.iterator();
 
 			while (it.hasNext()) {
 
-				bean = (TimetableBean) it.next();
+				bean = (TimeTableBean) it.next();
 
 				System.out.println("ID : " + bean.getId());
 				System.out.println("Semester : " + bean.getSemester());

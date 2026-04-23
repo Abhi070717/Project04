@@ -108,6 +108,14 @@
 	<b>|</b>
 	<a href="<%=ORSView.SYSTEM_LIST_CTL%>"><b>System Event List</b></a>
 	<b>|</b>
+	<a href="<%=ORSView.SUBSCRIPTION_CTL%>"><b>Add Subscription Plan</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.SUBSCRIPTION_LIST_CTL%>"><b>Subscription Plan List</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.FEATURE_CTL%>"><b>Add Feature Access</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.FEATURE_LIST_CTL%>"><b>Feature Access List</b></a>
+	<b>|</b>
 
 	<!-- Logout -->
 

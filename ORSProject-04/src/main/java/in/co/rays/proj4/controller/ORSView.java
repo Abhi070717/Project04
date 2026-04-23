@@ -149,9 +149,29 @@ public interface ORSView {
 	public String SYSTEM_VIEW = PAGE_FOLDER + "/SystemView.jsp";
 	/** System Controller URL */
 	public String SYSTEM_CTL = APP_CONTEXT + "/ctl/SystemCtl";
-	
+
 	/** System List JSP */
 	public String SYSTEM_LIST_VIEW = PAGE_FOLDER + "/SystemListView.jsp";
 	/** System List Controller URL */
 	public String SYSTEM_LIST_CTL = APP_CONTEXT + "/ctl/SystemListCtl";
+
+	/** Subscription View JSP */
+	public String SUBSCRIPTION_VIEW = PAGE_FOLDER + "/SubscriptionView.jsp";
+	/** Subscription Controller URL */
+	public String SUBSCRIPTION_CTL = APP_CONTEXT + "/ctl/SubscriptionCtl";
+
+	/** Subscription List JSP */
+	public String SUBSCRIPTION_LIST_VIEW = PAGE_FOLDER + "/SubscriptionListView.jsp";
+	/** Subscription List Controller URL */
+	public String SUBSCRIPTION_LIST_CTL = APP_CONTEXT + "/ctl/SubscriptionListCtl";
+
+	/** Feature View JSP */
+	public String FEATURE_VIEW = PAGE_FOLDER + "/FeatureView.jsp";
+	/** Feature Controller URL */
+	public String FEATURE_CTL = APP_CONTEXT + "/ctl/FeatureCtl";
+
+	/** Feature List JSP */
+	public String FEATURE_LIST_VIEW = PAGE_FOLDER + "/FeatureListView.jsp";
+	/** Feature List Controller URL */
+	public String FEATURE_LIST_CTL = APP_CONTEXT + "/ctl/FeatureListCtl";
 }
