@@ -116,6 +116,10 @@
 	<b>|</b>
 	<a href="<%=ORSView.FEATURE_LIST_CTL%>"><b>Feature Access List</b></a>
 	<b>|</b>
+	<a href="<%=ORSView.AUDIT_CTL%>"><b>Add Audit Trail</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.AUDIT_LIST_CTL%>"><b>Audit Trail List</b></a>
+	<b>|</b>
 
 	<!-- Logout -->
 

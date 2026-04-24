@@ -56,6 +56,7 @@ public class FeatureModel {
 			PreparedStatement pstmt = conn.prepareStatement("insert into st_feature values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			pstmt.setInt(1, pk);
+			
 			pstmt.setString(2, bean.getAccessCode());
 			pstmt.setString(3, bean.getFeatureName());
 			pstmt.setString(4, bean.getUserName());

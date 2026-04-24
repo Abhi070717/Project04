@@ -11,7 +11,7 @@
 	<div align="center">
 		<h3>Some thing is wrong</h3>
 		<hr>
-		<img src="img/error500.webp">
+		<img src="img/error500.jpg">
 		<hr>
 		<a href=<%=ORSView.WELCOME_CTL%>>Go to home Page</a>
 	</div>

@@ -59,6 +59,10 @@
 					<td align="center"><label><b>First Name :</b></label> <input
 						type="text" name="firstName" placeholder="Enter First Name"
 						value="<%=ServletUtility.getParameter("firstName", request)%>">&emsp;
+						
+						<label><b>DOB :</b></label> <input type="text" name="dob"
+						placeholder="Enter DOB"
+						value="<%=ServletUtility.getParameter("dob", request)%>">&emsp;
 
 						<label><b>Login Id:</b></label> <input type="text" name="login"
 						placeholder="Enter Email ID"

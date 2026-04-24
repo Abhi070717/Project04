@@ -1,4 +1,4 @@
-<%@page import="in.co.rays.proj4.bean.UserBean"%>
++<%@page import="in.co.rays.proj4.bean.UserBean"%>
 <%@page import="in.co.rays.proj4.bean.RoleBean"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
@@ -101,7 +101,7 @@
 				<tr>
 					<td style="text-align: center;"><input type="checkbox"
 						class="case" name="ids" value="<%=bean.getId()%>"
-						<%=(bean.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN)%>>
+						<%=(user.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN) ? "disabled" : ""%>>
 					</td>
 					<td style="text-align: center;"><%=index++%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getFirstName()%></td>
@@ -112,7 +112,7 @@
 					<td style="text-align: center;"><%=date%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=roleBean.getName()%></td>
 					<td style="text-align: center;"><a
-						href="UserCtl?id=<%=bean.getId()%>">Edit</a></td>
+						<%=(user.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN) ? "onclick='return false;'" : ""%>>Edit</a>
 				</tr>
 
 				<%

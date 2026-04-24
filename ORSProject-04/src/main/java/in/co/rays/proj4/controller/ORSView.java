@@ -174,4 +174,14 @@ public interface ORSView {
 	public String FEATURE_LIST_VIEW = PAGE_FOLDER + "/FeatureListView.jsp";
 	/** Feature List Controller URL */
 	public String FEATURE_LIST_CTL = APP_CONTEXT + "/ctl/FeatureListCtl";
+
+	/** Audit View JSP */
+	public String AUDIT_VIEW = PAGE_FOLDER + "/AuditView.jsp";
+	/** Audit Controller URL */
+	public String AUDIT_CTL = APP_CONTEXT + "/ctl/AuditCtl";
+	
+	/** Audit List JSP */
+	public String AUDIT_LIST_VIEW = PAGE_FOLDER + "/AuditListView.jsp";
+	/** Audit List Controller URL */
+	public String AUDIT_LIST_CTL = APP_CONTEXT + "/ctl/AuditListCtl";
 }
