@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>User</title>
+<title>Add Course</title>
 <style type="text/css">
 .panel-default1 {
 	border-color: red;

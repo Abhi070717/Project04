@@ -29,7 +29,7 @@ import in.co.rays.proj4.util.ServletUtility;
  * user's profile page.
  * </p>
  * 
- * author Abhishish Bhawsar
+ * @author Abhishish Bhawsar
  * 
  * @version 1.0
  */

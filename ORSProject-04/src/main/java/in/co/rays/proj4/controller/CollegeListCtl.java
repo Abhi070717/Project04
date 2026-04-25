@@ -28,8 +28,8 @@ import in.co.rays.proj4.util.ServletUtility;
  * Back.
  * </p>
  * 
- * author Abhishish Bhawsar
- * 
+ * @author Abhishish Bhawsar
+ *  
  * @version 1.0
  * @see in.co.rays.proj4.model.CollegeModel
  * @see in.co.rays.proj4.bean.CollegeBean

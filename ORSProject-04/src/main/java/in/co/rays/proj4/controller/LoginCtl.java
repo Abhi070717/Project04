@@ -42,13 +42,20 @@ public class LoginCtl extends BaseCtl {
 			request.setAttribute("login", PropertyReader.getValue("error.require", "Login Id"));
 			pass = false;
 		} else if (!DataValidator.isEmail(request.getParameter("login"))) {
-			request.setAttribute("login", PropertyReader.getValue("error.email", "Login "));
+			request.setAttribute("login", PropertyReader.getValue("error.email", "Login Id"));
 			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("password"))) {
 			request.setAttribute("password", PropertyReader.getValue("error.require", "Password"));
 			pass = false;
+		} else if (!DataValidator.isPasswordLength(request.getParameter("password"))) {
+			request.setAttribute("password", "Password should be 8 to 12 characters");
+			pass = false;
+		} else if (!DataValidator.isPassword(request.getParameter("password"))) {
+			request.setAttribute("password", "Must contain uppercase, lowercase, digit & special character");
+			pass = false;
 		}
+		
 		return pass;
 	}
 

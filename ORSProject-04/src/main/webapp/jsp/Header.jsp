@@ -111,6 +111,9 @@
 	<b>|</b>
 	<a href="<%=ORSView.AUDIT_LIST_CTL%>"><b>Audit Trail List</b></a>
 	<b>|</b>
+	<a href="<%=ORSView.ALLOW_CTL%>"><b>Add Allow List</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.ALLOW_LIST_CTL%>"><b>Allow List</b></a>
 	<%
 	}
 	%>
@@ -143,29 +146,29 @@
 	<%
 	if (user.getRoleId() == RoleBean.FACULTY) {
 	%>
-	<a href="<%=ORSView.STUDENT_CTL%>"><b>Add Student</b></a>
+	<a href="<%=ORSView.STUDENT_CTL%>">Add Student</a>
 	<b>|</b>
-	<a href="<%=ORSView.STUDENT_LIST_CTL%>"><b>Student List</b></a>
+	<a href="<%=ORSView.STUDENT_LIST_CTL%>">Student List</a>
 	<b>|</b>
-	<a href="<%=ORSView.MARKSHEET_CTL%>"><b>Add Marksheet</b></a>
+	<a href="<%=ORSView.MARKSHEET_CTL%>">Add Marksheet</a>
 	<b>|</b>
-	<a href="<%=ORSView.MARKSHEET_LIST_CTL%>"><b>Marksheet List</b></a>
+	<a href="<%=ORSView.MARKSHEET_LIST_CTL%>">Marksheet List</a>
 	<b>|</b>
-	<a href="<%=ORSView.COURSE_CTL%>"><b>Add Course</b></a>
+	<a href="<%=ORSView.COURSE_CTL%>">Add Course</a>
 	<b>|</b>
-	<a href="<%=ORSView.COURSE_LIST_CTL%>"><b>Course List</b></a>
+	<a href="<%=ORSView.COURSE_LIST_CTL%>">Course List</a>
 	<b>|</b>
-	<a href="<%=ORSView.SUBJECT_CTL%>"><b>Add Subject</b></a>
+	<a href="<%=ORSView.SUBJECT_CTL%>">Add Subject</a>
 	<b>|</b>
-	<a href="<%=ORSView.SUBJECT_LIST_CTL%>"><b>Subject List</b></a>
+	<a href="<%=ORSView.SUBJECT_LIST_CTL%>">Subject List</a>
 	<b>|</b>
-	<a href="<%=ORSView.FACULTY_CTL%>"><b>Add Faculty</b></a>
+	<a href="<%=ORSView.FACULTY_CTL%>">Add Faculty</a>
 	<b>|</b>
-	<a href="<%=ORSView.FACULTY_LIST_CTL%>"><b>Faculty List</b></a>
+	<a href="<%=ORSView.FACULTY_LIST_CTL%>">Faculty List</a>
 	<b>|</b>
-	<a href="<%=ORSView.TIMETABLE_CTL%>"><b>Add Timetable</b></a>
+	<a href="<%=ORSView.TIMETABLE_CTL%>">Add Timetable</a>
 	<b>|</b>
-	<a href="<%=ORSView.TIMETABLE_LIST_CTL%>"><b>Timetable List</b></a>
+	<a href="<%=ORSView.TIMETABLE_LIST_CTL%>">Timetable List</a>
 	<%
 	}
 	%>

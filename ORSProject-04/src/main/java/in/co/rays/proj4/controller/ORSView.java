@@ -184,4 +184,14 @@ public interface ORSView {
 	public String AUDIT_LIST_VIEW = PAGE_FOLDER + "/AuditListView.jsp";
 	/** Audit List Controller URL */
 	public String AUDIT_LIST_CTL = APP_CONTEXT + "/ctl/AuditListCtl";
+
+	/** Allow View JSP */
+	public String ALLOW_VIEW = PAGE_FOLDER + "/AllowView.jsp";
+	/** Allow Controller URL */
+	public String ALLOW_CTL = APP_CONTEXT + "/ctl/AllowCtl";
+	
+	/** Allow List JSP */
+	public String ALLOW_LIST_VIEW = PAGE_FOLDER + "/AllowListView.jsp";
+	/** Allow List Controller URL */
+	public String ALLOW_LIST_CTL = APP_CONTEXT + "/ctl/AllowListCtl";
 }

@@ -28,7 +28,7 @@ import in.co.rays.proj4.util.ServletUtility;
  * reset.
  * </p>
  * 
- * author Abhishish Bhawsar
+ * @author Abhishish Bhawsar
  * 
  * @version 1.0
  * @see in.co.rays.proj4.model.CollegeModel

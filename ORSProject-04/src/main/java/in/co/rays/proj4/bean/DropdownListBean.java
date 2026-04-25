@@ -4,8 +4,8 @@ package in.co.rays.proj4.bean;
  * The DropdownListBean interface defines the structure for beans that can be
  * represented in dropdown lists. Implementing classes must provide a key
  * (usually the ID) and a value (usually the name or label to be displayed).
- *
- * author Abhishish Bhawsar
+ * 
+ * @author Abhishish Bhawsar
  * 
  * @version 1.0
  */
