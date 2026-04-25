@@ -8,7 +8,7 @@ import java.util.Date;
  * information, along with associated college details. This class extends
  * {@link BaseBean} to include common audit fields.
  *
- * author Abhishish Bhawsar
+ * @author Abhishish Bhawsar
  * 
  * @version 1.0
  */

@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.proj4.bean.BaseBean;
 import in.co.rays.proj4.bean.RoleBean;
 import in.co.rays.proj4.exception.ApplicationException;
@@ -16,144 +18,243 @@ import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
 
+/**
+ * RoleListCtl handles listing, searching, pagination and bulk actions for Role
+ * entities. It preloads role list data for the view, populates {@link RoleBean}
+ * from request parameters, delegates search/delete operations to
+ * {@link RoleModel}, and prepares pagination metadata for the view.
+ * <p>
+ * Supported operations include Search, Next, Previous, New, Delete, Reset and Back.
+ * </p>
+ * 
+ * @author Abhishish Bhawsar
+ * @version 1.0
+ * @see in.co.rays.proj4.model.RoleModel
+ * @see in.co.rays.proj4.bean.RoleBean
+ */
 @WebServlet(name = "RoleListCtl", urlPatterns = { "/ctl/RoleListCtl" })
 public class RoleListCtl extends BaseCtl {
 
-	@Override
-	protected void preload(HttpServletRequest request, HttpServletResponse response) {
-		RoleModel roleModel = new RoleModel();
+    /** Log4j Logger */
+    private static final Logger log = Logger.getLogger(RoleListCtl.class);
 
-		try {
-			List roleList = roleModel.list();
-			request.setAttribute("roleList", roleList);
-		} catch (ApplicationException e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Preloads the list of roles and sets it as request attribute "roleList".
+     * This is used to populate dropdowns or auxiliary lists in the view.
+     *
+     * @param request the {@link HttpServletRequest}
+     * @throws ServletException 
+     * @throws IOException 
+     */
+    @Override
+    protected void preload(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-	@Override
-	protected BaseBean populateBean(HttpServletRequest request) {
+        log.debug("RoleListCtl preload() started");
 
-		RoleBean bean = new RoleBean();
+        RoleModel roleModel = new RoleModel();
 
-		bean.setName(DataUtility.getString(request.getParameter("name")));
-		bean.setId(DataUtility.getLong(request.getParameter("roleId")));
+        try {
+            List roleList = roleModel.list();
+            request.setAttribute("roleList", roleList);
+            log.info("Role list preloaded successfully. Total roles: " + roleList.size());
+        } catch (ApplicationException e) {
+            log.error("Error while preloading role list", e);
+            ServletUtility.handleException(e, request, response, getView());
+            e.printStackTrace();
+        }
+    }
 
-		return bean;
-	}
+    /**
+     * Populates a {@link RoleBean} from request parameters for search or other operations.
+     *
+     * @param request the {@link HttpServletRequest} containing parameters
+     * @return populated {@link BaseBean} (actually a {@link RoleBean})
+     */
+    @Override
+    protected BaseBean populateBean(HttpServletRequest request) {
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+        log.debug("RoleListCtl populateBean() called");
 
-		int pageNo = 1;
-		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
+        RoleBean bean = new RoleBean();
 
-		RoleBean bean = (RoleBean) populateBean(request);
-		RoleModel model = new RoleModel();
+        bean.setName(DataUtility.getString(request.getParameter("name")));
+        bean.setId(DataUtility.getLong(request.getParameter("roleId")));
 
-		try {
-			List<RoleBean> list = model.search(bean, pageNo, pageSize);
-			List<RoleBean> next = model.search(bean, pageNo + 1, pageSize);
+        return bean;
+    }
 
-			if (list == null || list.isEmpty()) {
-				ServletUtility.setErrorMessage("No Record Found", request);
-			}
+    /**
+     * Handles HTTP GET requests. Performs an initial search and forwards the result
+     * list to the view. If no records are found, an error message is set.
+     *
+     * @param request  the {@link HttpServletRequest}
+     * @param response the {@link HttpServletResponse}
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-			ServletUtility.setList(list, request);
-			ServletUtility.setPageNo(pageNo, request);
-			ServletUtility.setPageSize(pageSize, request);
-			ServletUtility.setBean(bean, request);
-			request.setAttribute("nextListSize", next.size());
+        log.info("RoleListCtl doGet() started");
 
-			ServletUtility.forward(getView(), request, response);
-		} catch (ApplicationException e) {
-			e.printStackTrace();
-			ServletUtility.handleException(e, request, response);
-			return;
-		}
-	}
+        int pageNo = 1;
+        int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+        log.debug("PageNo: " + pageNo + ", PageSize: " + pageSize);
 
-		List list = null;
-		List next = null;
+        RoleBean bean = (RoleBean) populateBean(request);
+        RoleModel model = new RoleModel();
 
-		int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
-		int pageSize = DataUtility.getInt(request.getParameter("pageSize"));
+        try {
+            List<RoleBean> list = model.search(bean, pageNo, pageSize);
+            List<RoleBean> next = model.search(bean, pageNo + 1, pageSize);
 
-		pageNo = (pageNo == 0) ? 1 : pageNo;
-		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
+            if (list == null || list.isEmpty()) {
+                log.warn("No role records found");
+                ServletUtility.setErrorMessage("No record found", request);
+            }
 
-		RoleBean bean = (RoleBean) populateBean(request);
-		RoleModel model = new RoleModel();
+            ServletUtility.setList(list, request);
+            ServletUtility.setPageNo(pageNo, request);
+            ServletUtility.setPageSize(pageSize, request);
+            ServletUtility.setBean(bean, request);
+            request.setAttribute("nextListSize", next.size());
 
-		String op = DataUtility.getString(request.getParameter("operation"));
-		String[] ids = request.getParameterValues("ids");
+            ServletUtility.forward(getView(), request, response);
 
-		try {
+        } catch (ApplicationException e) {
+            log.error("ApplicationException in RoleListCtl doGet()", e);
+            e.printStackTrace();
+            ServletUtility.handleException(e, request, response, getView());
+            return;
+        }
 
-			if (OP_SEARCH.equalsIgnoreCase(op) || "Next".equalsIgnoreCase(op) || "Previous".equalsIgnoreCase(op)) {
+        log.info("RoleListCtl doGet() completed");
+    }
 
-				if (OP_SEARCH.equalsIgnoreCase(op)) {
-					pageNo = 1;
-				} else if (OP_NEXT.equalsIgnoreCase(op)) {
-					pageNo++;
-				} else if (OP_PREVIOUS.equalsIgnoreCase(op) && pageNo > 1) {
-					pageNo--;
-				}
+    /**
+     * Handles HTTP POST requests for search, pagination, new, delete, reset and back
+     * operations. After performing the requested operation it forwards the updated
+     * list and pagination metadata to the view.
+     *
+     * @param request  the {@link HttpServletRequest}
+     * @param response the {@link HttpServletResponse}
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-			} else if (OP_NEW.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.ROLE_CTL, request, response);
-				return;
+        log.info("RoleListCtl doPost() started");
 
-			} else if (OP_DELETE.equalsIgnoreCase(op)) {
-				pageNo = 1;
-				if (ids != null && ids.length > 0) {
-					RoleBean deletebean = new RoleBean();
-					for (String id : ids) {
-						deletebean.setId(DataUtility.getInt(id));
-						model.delete(deletebean);
-						ServletUtility.setSuccessMessage("Data is deleted successfully", request);
-					}
-				} else {
-					ServletUtility.setErrorMessage("Select at least one record", request);
-				}
+        List list = null;
+        List next = null;
 
-			} else if (OP_RESET.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.ROLE_LIST_CTL, request, response);
-				return;
+        int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
+        int pageSize = DataUtility.getInt(request.getParameter("pageSize"));
 
-			} else if (OP_BACK.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.ROLE_LIST_CTL, request, response);
-				return;
-			}
+        pageNo = (pageNo == 0) ? 1 : pageNo;
+        pageSize = (pageSize == 0)
+                ? DataUtility.getInt(PropertyReader.getValue("page.size"))
+                : pageSize;
 
-			list = model.search(bean, pageNo, pageSize);
-			next = model.search(bean, pageNo + 1, pageSize);
+        log.debug("PageNo: " + pageNo + ", PageSize: " + pageSize);
 
-			if (list == null || list.size() == 0) {
-				ServletUtility.setErrorMessage("No record found ", request);
-			}
+        RoleBean bean = (RoleBean) populateBean(request);
+        RoleModel model = new RoleModel();
 
-			ServletUtility.setList(list, request);
-			ServletUtility.setPageNo(pageNo, request);
-			ServletUtility.setPageSize(pageSize, request);
-			ServletUtility.setBean(bean, request);
-			request.setAttribute("nextListSize", next.size());
+        String op = DataUtility.getString(request.getParameter("operation"));
+        String[] ids = request.getParameterValues("ids");
 
-			ServletUtility.forward(getView(), request, response);
-		} catch (ApplicationException e) {
-			e.printStackTrace();
-			ServletUtility.handleException(e, request, response);
-			return;
-		}
-	}
+        log.debug("Operation: " + op);
 
-	@Override
-	protected String getView() {
-		return ORSView.ROLE_LIST_VIEW;
-	}
+        try {
+
+            if (OP_SEARCH.equalsIgnoreCase(op)
+                    || "Next".equalsIgnoreCase(op)
+                    || "Previous".equalsIgnoreCase(op)) {
+
+                if (OP_SEARCH.equalsIgnoreCase(op)) {
+                    pageNo = 1;
+                } else if (OP_NEXT.equalsIgnoreCase(op)) {
+                    pageNo++;
+                } else if (OP_PREVIOUS.equalsIgnoreCase(op) && pageNo > 1) {
+                    pageNo--;
+                }
+
+            } else if (OP_NEW.equalsIgnoreCase(op)) {
+
+                log.info("Redirecting to User Controller");
+                ServletUtility.redirect(ORSView.USER_CTL, request, response);
+                return;
+
+            } else if (OP_DELETE.equalsIgnoreCase(op)) {
+
+                log.info("Delete operation triggered");
+                pageNo = 1;
+
+                if (ids != null && ids.length > 0) {
+                    RoleBean deletebean = new RoleBean();
+                    for (String id : ids) {
+                        deletebean.setId(DataUtility.getInt(id));
+                        model.delete(deletebean);
+                        log.info("Deleted role id: " + id);
+                        ServletUtility.setSuccessMessage("Data is deleted successfully", request);
+                    }
+                } else {
+                    log.warn("Delete requested without selecting records");
+                    ServletUtility.setErrorMessage("Select at least one record", request);
+                }
+
+            } else if (OP_RESET.equalsIgnoreCase(op)) {
+
+                log.info("Reset operation triggered");
+                ServletUtility.redirect(ORSView.USER_LIST_CTL, request, response);
+                return;
+
+            } else if (OP_BACK.equalsIgnoreCase(op)) {
+
+                log.info("Back operation triggered");
+                ServletUtility.redirect(ORSView.USER_LIST_CTL, request, response);
+                return;
+            }
+
+            list = model.search(bean, pageNo, pageSize);
+            next = model.search(bean, pageNo + 1, pageSize);
+
+            if (list == null || list.size() == 0) {
+                log.warn("No role records found after operation");
+                ServletUtility.setErrorMessage("No record found ", request);
+            }
+
+            ServletUtility.setList(list, request);
+            ServletUtility.setPageNo(pageNo, request);
+            ServletUtility.setPageSize(pageSize, request);
+            ServletUtility.setBean(bean, request);
+            request.setAttribute("nextListSize", next.size());
+
+            ServletUtility.forward(getView(), request, response);
+
+        } catch (ApplicationException e) {
+            log.error("ApplicationException in RoleListCtl doPost()", e);
+            e.printStackTrace();
+            ServletUtility.handleException(e, request, response, getView());
+            return;
+        }
+
+        log.info("RoleListCtl doPost() completed");
+    }
+
+    /**
+     * Returns the JSP view path for the role list.
+     *
+     * @return view page path as {@link String}
+     */
+    @Override
+    protected String getView() {
+        log.debug("Returning Role List View");
+        return ORSView.ROLE_LIST_VIEW;
+    }
 }

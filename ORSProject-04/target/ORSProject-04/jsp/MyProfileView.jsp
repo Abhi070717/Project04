@@ -13,18 +13,13 @@
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
-
 	<form action="<%=ORSView.MY_PROFILE_CTL%>" method="post">
-
 		<%@ include file="Header.jsp"%>
-
 		<jsp:useBean id="bean" class="in.co.rays.proj4.bean.UserBean"
 			scope="request"></jsp:useBean>
-
 		<div align="center">
 			<h1 align="center" style="margin-bottom: -15; color: navy">My
 				Profile</h1>
-
 			<div style="height: 15px; margin-bottom: 12px">
 				<h3>
 					<font color="red"> <%=ServletUtility.getErrorMessage(request)%>
@@ -35,7 +30,6 @@
 					</font>
 				</h3>
 			</div>
-
 			<input type="hidden" name="id" value="<%=bean.getId()%>"> <input
 				type="hidden" name="createdBy" value="<%=bean.getCreatedBy()%>">
 			<input type="hidden" name="modifiedBy"
@@ -44,7 +38,6 @@
 				value="<%=DataUtility.getTimestamp(bean.getCreatedDatetime())%>">
 			<input type="hidden" name="modifiedDatetime"
 				value="<%=DataUtility.getTimestamp(bean.getModifiedDatetime())%>">
-
 			<table>
 				<tr>
 					<th align="left">Login Id<span style="color: red">*</span></th>
@@ -55,7 +48,6 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("login", request)%>
 					</font></td>
 				</tr>
-
 				<tr>
 					<th align="left">First Name<span style="color: red">*</span></th>
 					<td><input type="text" name="firstName"
@@ -65,7 +57,6 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("firstName", request)%>
 					</font></td>
 				</tr>
-
 				<tr>
 					<th align="left">Last Name<span style="color: red">*</span></th>
 					<td><input type="text" name="lastName"
@@ -75,7 +66,6 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("lastName", request)%>
 					</font></td>
 				</tr>
-
 				<tr>
 					<th align="left">Date of Birth<span style="color: red">*</span></th>
 					<td><input type="text" id="udate" name="dob"
@@ -84,7 +74,6 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("dob", request)%>
 					</font></td>
 				</tr>
-
 				<tr>
 					<th align="left">Gender<span style="color: red">*</span></th>
 					<td>
@@ -98,7 +87,6 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("gender", request)%>
 					</font></td>
 				</tr>
-
 				<tr>
 					<th align="left">Mobile No<span style="color: red">*</span></th>
 					<td><input type="text" name="mobileNo" maxlength="10"
@@ -108,12 +96,10 @@
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("mobileNo", request)%>
 					</font></td>
 				</tr>
-
 				<tr>
 					<th></th>
 					<td></td>
 				</tr>
-
 				<tr>
 					<th></th>
 					<td align="center" colspan="2"><input type="submit"

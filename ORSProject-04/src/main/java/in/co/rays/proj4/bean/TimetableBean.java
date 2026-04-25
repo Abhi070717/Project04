@@ -8,7 +8,7 @@ import java.util.Date;
  * subject, and a description. This class extends {@link BaseBean}
  * to inherit standard audit attributes.
  *
- * author Abhishish Bhawsar
+  * @author Abhishish Bhawsar
  * @version 1.0
  */
 public class TimeTableBean extends BaseBean {

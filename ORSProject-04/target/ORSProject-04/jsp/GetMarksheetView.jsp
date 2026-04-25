@@ -1,246 +1,245 @@
+<%@page import="in.co.rays.proj4.controller.ORSView"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="in.co.rays.proj4.controller.GetMarksheetCtl"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
-<%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+
 <html>
 <head>
+<title>Get Marksheet</title>
 <link rel="icon" type="image/png"
-	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16*16" />
-<title>Get marksheet</title>
-
-
-
+	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
+	<%@ include file="Header.jsp"%>
+
 	<jsp:useBean id="bean" class="in.co.rays.proj4.bean.MarksheetBean"
 		scope="request"></jsp:useBean>
-	<form action="<%=ORSView.GET_MARKSHEET_CTL%>" method="post">
-		<%@ include file="Header.jsp"%>
+	<jsp:useBean id="coursebean" class="in.co.rays.proj4.bean.CourseBean"
+		scope="request"></jsp:useBean>
 
+	<div align="center">
+		<h1 align="center" style="margin-bottom: -15; color: navy">Get
+			Marksheet</h1>
 
-		<input type="hidden" name="id" value="<%=bean.getId()%>">
+		<div style="height: 15px; margin-bottom: 12px">
+			<h3>
+				<font color="red"><%=ServletUtility.getErrorMessage(request)%></font>
+			</h3>
+			<h3>
+				<font color="green"><%=ServletUtility.getSuccessMessage(request)%></font>
+			</h3>
+		</div>
 
-		<center>
-			<div align="center">
-				<h1>Get Marksheet</h1>
-
-				<h3>
-					<font color="red"> <%=ServletUtility.getErrorMessage(request)%></font>
-				</h3>
-				<H3>
-					<font color="green"> <%=ServletUtility.getSuccessMessage(request)%></font>
-				</H3>
-			</div>
+		<form action="<%=ORSView.GET_MARKSHEET_CTL%>" method="post">
+			<input type="hidden" name="id" value="<%=bean.getId()%>">
 
 			<table>
 				<tr>
-					<th align="left">Roll No <span style="color: red">*</span> :
-					</th>
+					<th align="left">Roll No :-</th>
 					<td><input type="text" name="rollNo"
-						placeholder="Enter RollNo." size="25"
-						value="<%=ServletUtility.getParameter("rollNo", request)%>">
+						placeholder="Enter Roll No." maxlength="5"
+						value="<%=ServletUtility.getParameter("rollNo", request)%>">&nbsp;
 					</td>
-					<td style="position: fixed"><font color="red"><%=ServletUtility.getErrorMessage("rollNo", request)%></font></td>
-				</tr>
-
-
-				<tr>
-					<th style="padding: 3px"></th>
-				</tr>
-
-				<tr>
-					<th></th>
-					<td>&nbsp;&emsp;<input type="submit" name="operation"
-						value="<%=GetMarksheetCtl.OP_GO%>"> &nbsp;&nbsp;<input
-						type="submit" name="operation"
-						value="<%=GetMarksheetCtl.OP_RESET%>">
+					<td><input type="submit" name="operation"
+						value="<%=GetMarksheetCtl.OP_GO%>"></td>
+					<td style="position: fixed;"><font color="red"><%=ServletUtility.getErrorMessage("rollNo", request)%></font>
 					</td>
 				</tr>
-
 			</table>
+
+			<br>
 
 			<%
-			/* 			if (bean.getRollNo() != null  && bean.getRollNo().trim().length() > 0 ) { */
+				int physics = DataUtility.getInt(DataUtility.getStringData(bean.getPhysics()));
+				int chemistry = DataUtility.getInt(DataUtility.getStringData(bean.getChemistry()));
+				int maths = DataUtility.getInt(DataUtility.getStringData(bean.getMaths()));
 
-			if (bean.getName() != null && bean.getName().length() >= 0) {
+				int total = physics + chemistry + maths;
+				float percentage = (float) total / 3;
+				percentage = Float.parseFloat(new DecimalFormat("##.##").format(percentage));
+
+				if (bean.getRollNo() != null && bean.getRollNo().trim().length() > 0) {
 			%>
 
-			<table>
-				<table border="1" width="100%">
-					<tr align="center" style="background: skyblue">
-						<td><h2>Rays Technologies</h2></td>
-					</tr>
-				</table>
-
-				<table border="1" width="100%">
-					<tr align="center" style="background: darkcream">
-						<th>Name</th>
-						<td><%=DataUtility.getStringData(bean.getName())%></td>
-						<th>Roll No</th>
-						<td><%=DataUtility.getStringData(bean.getRollNo())%></td>
-
-					</tr>
-					<tr align="center" style="background: darkcream">
-						<td>Status</td>
-						<th>Regular</th>
-						<td>Course</td>
-						<th>BE</th>
-					</tr>
-				</table>
-				<%
-				int phy = DataUtility.getInt(DataUtility.getStringData(bean.getPhysics()));
-				int chem = DataUtility.getInt(DataUtility.getStringData(bean.getChemistry()));
-				int math = DataUtility.getInt(DataUtility.getStringData(bean.getMaths()));
-				int total = (phy + chem + math);
-				float perc = total / 3;
-				%>
-
-				<table border="1" width="100%">
-
-					<tr align="center" style="background: skyblue" style="width: 25%">
-						<th>Subject</th>
-						<th>Maximum Marks</th>
-						<th>Minimum Marks</th>
-						<th>Marks Obtained</th>
-						<th>Grade</th>
-					</tr>
-
-					<tr align="center" style="background: darkcream">
-						<td>Physics</td>
-						<td>100</td>
-						<td>33</td>
-						<td><%=phy%> <%
- if (phy < 33) {
- %> <span style="color: red">*</span> <%
- }
- %></td>
-
-						<td align="center" style="background: darkcream">
-							<%
-							if (phy <= 100 && phy > 85) {
-							%> A+ <%
-							} else if (phy <= 85 && phy > 75) {
-							%>B+ <%
-							} else if (phy <= 75 && phy > 65) {
-							%>B <%
-							} else if (phy <= 65 && phy > 55) {
-							%>C+ <%
-							} else if (phy <= 55 && phy >= 33) {
-							%>C <%
-							} else if (phy < 33 && phy >= 0) {
-							%><span style="color: red"> Fail</span> <%
- }
- %>
-						</td>
-					</tr>
-
-					<tr align="center" style="background: darkcream">
-						<td>Chemistry</td>
-						<td>100</td>
-						<td>33</td>
-						<td><%=chem%> <%
- if (chem < 33) {
- %> <span style="color: red">*</span> <%
- }
- %></td>
-
-						<td align="center" style="background: darkcream">
-							<%
-							if (chem <= 100 && chem > 85) {
-							%> A+ <%
-							} else if (chem <= 85 && chem > 75) {
-							%>B+ <%
-							} else if (chem <= 75 && chem > 65) {
-							%>B <%
-							} else if (chem <= 65 && chem > 55) {
-							%>C+ <%
-							} else if (chem <= 55 && chem >= 33) {
-							%>C <%
-							} else if (chem < 33 && chem >= 0) {
-							%><span style="color: red"> Fail</span> <%
- }
- %>
-						</td>
-					</tr>
-
-					<tr align="center" style="background: darkcream">
-						<td>Maths</td>
-						<td>100</td>
-						<td>33</td>
-						<td><%=math%> <%
- if (math < 33) {
- %> <span style="color: red">*</span> <%
- }
- %></td>
-
-						<td align="center" style="background: darkcream">
-							<%
-							if (math <= 100 && math > 85) {
-							%> A+ <%
-							} else if (math <= 85 && math > 75) {
-							%>B+ <%
-							} else if (math <= 75 && math > 65) {
-							%>B <%
-							} else if (math <= 65 && math > 55) {
-							%>C+ <%
-							} else if (math <= 55 && math >= 33) {
-							%>C <%
-							} else if (math < 33 && math >= 0) {
-							%><span style="color: red"> Fail</span> <%
- }
- %>
-						</td>
-					</tr>
-				</table>
-
-				<table border="1" width="100%">
-					<tr style="background: skyblue">
-						<th>Total</th>
-						<th>Percentage</th>
-						<th>Division</th>
-						<th>Result</th>
-					</tr>
-					<tr>
-						<th style="background: darkcream"><%=total%> <%
- if (total < 99 || phy < 33 || chem < 33 || math < 33) {
- %> <span style="color: red">*</span> <%
- }
- %></th>
-
-						<th style="background: darkcream"><%=perc%> %</th>
-						<th>
-							<%
-							if (perc < 100 && perc >= 60) {
-							%>1<sup>st</sup> <%
- } else if (perc < 60 && perc >= 40) {
- %>2<sup>nd</sup> <%
- } else if (perc < 40 && perc >= 0) {
- %>3<sup>rd</sup> <%
- }
- %>
-						</th>
-
-						<th style="background: darkcream">
-							<%
-							if (phy >= 33 && chem >= 33 && math >= 33) {
-							%> <span style="color: green"> Pass</span> <%
- } else {
- %> <span style="color: red"> Fail</span> <%
- }
- %>
-
-						</th>
-					</tr>
-				</table>
-
-				<%
-				}
-				%>
+			<table border="1" style="border: groove; width: 35%">
+				<tr>
+					<td align="center"
+						style="background-color: #fdebc5; color: maroon;">
+						<h2>Rays Technologies, Indore</h2>
+					</td>
+				</tr>
 			</table>
-	</form>
-	</center>
+
+			<table border="1" style="border: groove; width: 35%">
+				<tr>
+					<td align="center" style="width: 15%">Name</td>
+					<th align="center" style="width: 35%; text-transform: capitalize;"><%=DataUtility.getStringData(bean.getName())%></th>
+
+					<td align="center" style="width: 15%">Roll No</td>
+					<th align="center" style="width: 25%; text-transform: uppercase;"><%=DataUtility.getStringData(bean.getRollNo())%></th>
+				</tr>
+				<tr>
+					<td align="center" style="width: 15%">Status</td>
+					<th align="center" style="width: 35%">Regular</th>
+
+					<td align="center" style="width: 15%">Course</td>
+					<th align="center" style="width: 25%; text-transform: uppercase;"><%=DataUtility.getStringData(coursebean.getName())%></th>
+				</tr>
+			</table>
+
+			<table border="1" style="border: groove; width: 35%">
+				<tr style="background-color: #e6e6e485;">
+					<th align="center" style="width: 25%">Subject</th>
+					<th align="center" style="width: 25%">Earned Credits</th>
+					<th align="center" style="width: 25%">Total Credits</th>
+					<th align="center" style="width: 25%">Grade</th>
+				</tr>
+
+				<tr>
+					<td align="center">Physics</td>
+					<td align="center"><%=physics%> <%
+ 	if (physics < 33) {
+ %><span style="color: red">*</span>
+						<%
+							}
+						%></td>
+					<td align="center">100</td>
+					<td align="center">
+						<%
+							if (physics > 90 && physics <= 100) {
+						%>A+<%
+							} else if (physics > 80 && physics <= 90) {
+						%>A<%
+							} else if (physics > 70 && physics <= 80) {
+						%>B+<%
+							} else if (physics > 60 && physics <= 70) {
+						%>C+<%
+							} else if (physics > 50 && physics <= 60) {
+						%>C<%
+							} else if (physics >= 33 && physics <= 50) {
+						%>D<%
+							} else if (physics >= 0 && physics < 33) {
+						%><span
+						style="color: red;">F</span>
+						<%
+							}
+						%>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="center">Chemistry</td>
+					<td align="center"><%=chemistry%> <%
+ 	if (chemistry < 33) {
+ %><span style="color: red">*</span>
+						<%
+							}
+						%></td>
+					<td align="center">100</td>
+					<td align="center">
+						<%
+							if (chemistry > 90 && chemistry <= 100) {
+						%>A+<%
+							} else if (chemistry > 80 && chemistry <= 90) {
+						%>A<%
+							} else if (chemistry > 70 && chemistry <= 80) {
+						%>B+<%
+							} else if (chemistry > 60 && chemistry <= 70) {
+						%>C+<%
+							} else if (chemistry > 50 && chemistry <= 60) {
+						%>C<%
+							} else if (chemistry >= 33 && chemistry <= 50) {
+						%>D<%
+							} else if (chemistry >= 0 && chemistry < 33) {
+						%><span
+						style="color: red;">F</span>
+						<%
+							}
+						%>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="center">Maths</td>
+					<td align="center"><%=maths%> <%
+ 	if (maths < 33) {
+ %><span style="color: red">*</span>
+						<%
+							}
+						%></td>
+					<td align="center">100</td>
+					<td align="center">
+						<%
+							if (maths > 90 && maths <= 100) {
+						%>A+<%
+							} else if (maths > 80 && maths <= 90) {
+						%>A<%
+							} else if (maths > 70 && maths <= 80) {
+						%>B+<%
+							} else if (maths > 60 && maths <= 70) {
+						%>C+<%
+							} else if (maths > 50 && maths <= 60) {
+						%>C<%
+							} else if (maths >= 33 && maths <= 50) {
+						%>D<%
+							} else if (maths >= 0 && maths < 33) {
+						%><span
+						style="color: red;">F</span>
+						<%
+							}
+						%>
+					</td>
+				</tr>
+			</table>
+
+			<table border="1" style="border: groove; width: 35%">
+				<tr style="background-color: #e6e6e485;">
+					<th align="center" style="width: 25%">Total Marks</th>
+					<th align="center" style="width: 25%">Percentage (%)</th>
+					<th align="center" style="width: 25%">Division</th>
+					<th align="center" style="width: 25%">Result</th>
+				</tr>
+
+				<tr>
+					<th align="center"><%=total%> <%
+ 	if (total < 99 || physics < 33 || chemistry < 33 || maths < 33) {
+ %><span style="color: red;">*</span>
+						<%
+							}
+						%></th>
+					<th align="center"><%=percentage%> %</th>
+					<th align="center">
+						<%
+							if (percentage >= 60 && percentage <= 100) {
+						%>1<sup>st</sup>
+						<%
+							} else if (percentage >= 40 && percentage < 60) {
+						%>2<sup>nd</sup>
+						<%
+							} else if (percentage >= 0 && percentage < 40) {
+						%>3<sup>rd</sup>
+						<%
+							}
+						%>
+					</th>
+					<th align="center">
+						<%
+							if (physics >= 33 && chemistry >= 33 && maths >= 33) {
+						%><span style="color: forestgreen;">Pass</span>
+						<%
+							} else {
+						%><span style="color: red;">Fail</span>
+						<%
+							}
+						%>
+					</th>
+				</tr>
+			</table>
+			<%
+				}
+			%>
+		</form>
 	</div>
 	<%@ include file="Footer.jsp"%>
 </body>

@@ -5,7 +5,7 @@ package in.co.rays.proj4.bean;
  * subject-wise marks, roll number, and student identity details. This class
  * inherits audit fields from {@link BaseBean}.
  *
- * author Abhishish Bhawsar
+ * @author Abhishish Bhawsar
  * 
  * @version 1.0
  */

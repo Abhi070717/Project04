@@ -6,7 +6,7 @@ package in.co.rays.proj4.bean;
  * subject description. This class extends {@link BaseBean} to include standard
  * audit information.
  *
- * author Abhishish Bhawsar
+ * @author Abhishish Bhawsar
  * 
  * @version 1.0
  */

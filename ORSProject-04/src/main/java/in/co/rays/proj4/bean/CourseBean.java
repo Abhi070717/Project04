@@ -5,7 +5,7 @@ package in.co.rays.proj4.bean;
  * such as course name, duration, and description. This class extends
  * {@link BaseBean} to inherit common auditing fields.
  *
- * author Abhishish Bhawsar
+ * @author Abhishish Bhawsar
  * 
  * @version 1.0
  */

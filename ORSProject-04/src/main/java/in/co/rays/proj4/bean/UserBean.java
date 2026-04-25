@@ -8,7 +8,7 @@ import java.util.Date;
  * gender, and assigned role. This class extends {@link BaseBean} to include
  * standard audit fields.
  *
- * author Abhishish Bhawsar
+ * @author Abhishish Bhawsar
  * 
  * @version 1.0
  */

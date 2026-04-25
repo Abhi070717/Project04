@@ -6,7 +6,7 @@ package in.co.rays.proj4.bean;
  * permissions and actions available to the user. This class extends
  * {@link BaseBean} to include common audit fields.
  *
- * author Abhishish Bhawsar
+ * @author Abhishish Bhawsar
  * 
  * @version 1.0
  */

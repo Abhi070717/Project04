@@ -84,36 +84,36 @@
 	<b>|</b>
 	<a href="<%=ORSView.FACULTY_LIST_CTL%>">Faculty List</a>
 	<b>|</b>
-	<a target="blank" href="<%=ORSView.JAVA_DOC_VIEW%>">Java Doc</a>
+	<a target="blank" href="<%=ORSView.JAVA_DOC_VIEW%>"><b>Java Doc</b></a>
 	<b>|</b>
 	<!-- Daily Module -->
-	<a href="<%=ORSView.HEALTH_CTL%>"><b>Add Health</b></a>
+	<a href="<%=ORSView.HEALTH_CTL%>">Add Health</a>
 	<b>|</b>
-	<a href="<%=ORSView.HEALTH_LIST_CTL%>"><b>Health List</b></a>
+	<a href="<%=ORSView.HEALTH_LIST_CTL%>">Health List</a>
 	<b>|</b>
-	<a href="<%=ORSView.PURGE_CTL%>"><b>Add Purge</b></a>
+	<a href="<%=ORSView.PURGE_CTL%>">Add Purge</a>
 	<b>|</b>
-	<a href="<%=ORSView.PURGE_LIST_CTL%>"><b>Purge List</b></a>
+	<a href="<%=ORSView.PURGE_LIST_CTL%>">Purge List</a>
 	<b>|</b>
-	<a href="<%=ORSView.SYSTEM_CTL%>"><b>Add System Event</b></a>
+	<a href="<%=ORSView.SYSTEM_CTL%>">Add System Event</a>
 	<b>|</b>
-	<a href="<%=ORSView.SYSTEM_LIST_CTL%>"><b>System Event List</b></a>
+	<a href="<%=ORSView.SYSTEM_LIST_CTL%>">System Event List</a>
 	<b>|</b>
-	<a href="<%=ORSView.SUBSCRIPTION_CTL%>"><b>Add Subscription Plan</b></a>
+	<a href="<%=ORSView.SUBSCRIPTION_CTL%>">Add Subscription Plan</a>
 	<b>|</b>
-	<a href="<%=ORSView.SUBSCRIPTION_LIST_CTL%>"><b>Subscription Plan List</b></a>
+	<a href="<%=ORSView.SUBSCRIPTION_LIST_CTL%>">Subscription Plan List</a>
 	<b>|</b>
-	<a href="<%=ORSView.FEATURE_CTL%>"><b>Add Feature Access</b></a>
+	<a href="<%=ORSView.FEATURE_CTL%>">Add Feature Access</a>
 	<b>|</b>
-	<a href="<%=ORSView.FEATURE_LIST_CTL%>"><b>Feature Access List</b></a>
+	<a href="<%=ORSView.FEATURE_LIST_CTL%>">Feature Access List</a>
 	<b>|</b>
-	<a href="<%=ORSView.AUDIT_CTL%>"><b>Add Audit Trail</b></a>
+	<a href="<%=ORSView.AUDIT_CTL%>">Add Audit Trail</a>
 	<b>|</b>
-	<a href="<%=ORSView.AUDIT_LIST_CTL%>"><b>Audit Trail List</b></a>
+	<a href="<%=ORSView.AUDIT_LIST_CTL%>">Audit Trail List</a>
 	<b>|</b>
-	<a href="<%=ORSView.ALLOW_CTL%>"><b>Add Allow List</b></a>
+	<a href="<%=ORSView.ALLOW_CTL%>">Add Allow List</a>
 	<b>|</b>
-	<a href="<%=ORSView.ALLOW_LIST_CTL%>"><b>Allow List</b></a>
+	<a href="<%=ORSView.ALLOW_LIST_CTL%>">Allow List</a>
 	<%
 	}
 	%>

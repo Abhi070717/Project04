@@ -17,7 +17,9 @@ in\co\rays\proj4\model\TimeTableModel.class
 in\co\rays\proj4\controller\SubjectCtl.class
 in\co\rays\proj4\model\StudentModel.class
 in\co\rays\proj4\controller\LoginCtl.class
+in\co\rays\proj4\controller\AllowCtl.class
 in\co\rays\proj4\controller\StudentListCtl.class
+in\co\rays\proj4\bean\AllowBean.class
 in\co\rays\proj4\model\PurgeModel.class
 in\co\rays\proj4\model\SubscriptionModel.class
 in\co\rays\proj4\controller\AuditListCtl.class
@@ -68,10 +70,12 @@ in\co\rays\proj4\controller\TimeTableListCtl.class
 in\co\rays\proj4\controller\AuditCtl.class
 in\co\rays\proj4\controller\CollegeListCtl.class
 in\co\rays\proj4\util\EmailUtility.class
+in\co\rays\proj4\controller\AllowListCtl.class
 in\co\rays\proj4\testmodel\TestCollegeModel.class
 in\co\rays\proj4\controller\MyProfileCtl.class
 in\co\rays\proj4\model\FeatureModel.class
 in\co\rays\proj4\model\UserModel.class
+in\co\rays\proj4\model\AllowModel.class
 in\co\rays\proj4\model\MarksheetModel.class
 in\co\rays\proj4\controller\FeatureListCtl.class
 in\co\rays\proj4\testmodel\TestFacultyModel.class
