@@ -50,6 +50,7 @@ D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\be
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\util\DataValidator.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\bean\TimeTableBean.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\controller\ErrorCtl.java
+D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\model\BlockModel.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\controller\CourseCtl.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\model\HealthModel.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\util\ServletUtility.java
@@ -76,7 +77,9 @@ D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\co
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\testmodel\TestCourseModel.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\bean\AllowBean.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\testmodel\TestLog4J.java
+D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\controller\BlockCtl.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\testmodel\TestStudentModel.java
+D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\controller\BlockListCtl.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\bean\CollegeBean.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\controller\StudentCtl.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\controller\HealthCtl.java
@@ -97,6 +100,7 @@ D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\te
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\controller\ORSView.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\bean\SystemBean.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\controller\HealthListCtl.java
+D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\bean\BlockBean.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\controller\UserRegistrationCtl.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\testmodel\TestJDBCDataSource.java
 D:\workspace\project04 workspace\ORSProject-04\src\main\java\in\co\rays\proj4\bean\FeatureBean.java

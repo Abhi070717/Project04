@@ -18,7 +18,7 @@
 	<div id="Footer">
 		<hr>
 		<h3>All rights reserved by Rays Technologies, SunilOS Infotech
-			Pvt Ltd Copyright © 2026</h3>
+			Pvt Ltd Copyright &copy 2026</h3>
 	</div>
 </body>
 </html>

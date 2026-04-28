@@ -194,4 +194,24 @@ public interface ORSView {
 	public String ALLOW_LIST_VIEW = PAGE_FOLDER + "/AllowListView.jsp";
 	/** Allow List Controller URL */
 	public String ALLOW_LIST_CTL = APP_CONTEXT + "/ctl/AllowListCtl";
+
+	/** Block View JSP */
+	public String BLOCK_VIEW = PAGE_FOLDER + "/BlockView.jsp";
+	/** Block Controller URL */
+	public String BLOCK_CTL = APP_CONTEXT + "/ctl/BlockCtl";
+	
+	/** Block List JSP */
+	public String BLOCK_LIST_VIEW = PAGE_FOLDER + "/BlockListView.jsp";
+	/** Block List Controller URL */
+	public String BLOCK_LIST_CTL = APP_CONTEXT + "/ctl/BlockListCtl";
+
+	/** Rule View JSP */
+	public String RULE_VIEW = PAGE_FOLDER + "/RuleView.jsp";
+	/** Rule Controller URL */
+	public String RULE_CTL = APP_CONTEXT + "/ctl/RuleCtl";
+	
+	/** Rule List JSP */
+	public String RULE_LIST_VIEW = PAGE_FOLDER + "/RuleListView.jsp";
+	/** Rule List Controller URL */
+	public String RULE_LIST_CTL = APP_CONTEXT + "/ctl/RuleListCtl";
 }

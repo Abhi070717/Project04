@@ -108,7 +108,6 @@ public class LoginCtl extends BaseCtl {
 
         UserBean bean = new UserBean();
         bean.setId(DataUtility.getLong(request.getParameter("id")));
-        System.out.println("jhscouKJAOASLCAS8GF" +request.getParameter("id"));
         bean.setLogin(DataUtility.getString(request.getParameter("login")));
         bean.setPassword(DataUtility.getString(request.getParameter("password")));
 
@@ -201,13 +200,12 @@ public class LoginCtl extends BaseCtl {
 
             } catch (ApplicationException e) {
                 log.error("ApplicationException during login", e);
-                e.printStackTrace();
                 ServletUtility.handleException(e, request, response, getView());
                 return;
             }
 
         } else if (OP_SIGN_UP.equalsIgnoreCase(op)) {
-            log.info("Sign Up requested � redirecting to registration");
+            log.info("Sign Up requested redirecting to registration");
             ServletUtility.redirect(ORSView.USER_REGISTRATION_CTL, request, response);
             return;
         }

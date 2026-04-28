@@ -17,6 +17,7 @@ in\co\rays\proj4\model\TimeTableModel.class
 in\co\rays\proj4\controller\SubjectCtl.class
 in\co\rays\proj4\model\StudentModel.class
 in\co\rays\proj4\controller\LoginCtl.class
+in\co\rays\proj4\controller\BlockCtl.class
 in\co\rays\proj4\controller\AllowCtl.class
 in\co\rays\proj4\controller\StudentListCtl.class
 in\co\rays\proj4\bean\AllowBean.class
@@ -65,6 +66,7 @@ in\co\rays\proj4\util\ServletUtility.class
 in\co\rays\proj4\exception\RecordNotFoundException.class
 in\co\rays\proj4\exception\ApplicationException.class
 in\co\rays\proj4\exception\DuplicateRecordException.class
+in\co\rays\proj4\bean\BlockBean.class
 in\co\rays\proj4\bean\HealthBean.class
 in\co\rays\proj4\controller\TimeTableListCtl.class
 in\co\rays\proj4\controller\AuditCtl.class
@@ -83,11 +85,13 @@ in\co\rays\proj4\controller\TimeTableCtl.class
 in\co\rays\proj4\testmodel\TestTimetableModel.class
 in\co\rays\proj4\controller\MarksheetMeritListCtl.class
 in\co\rays\proj4\controller\RoleListCtl.class
+in\co\rays\proj4\model\BlockModel.class
 in\co\rays\proj4\controller\RoleCtl.class
 in\co\rays\proj4\controller\StudentCtl.class
 in\co\rays\proj4\bean\UserBean.class
 in\co\rays\proj4\bean\TimeTableBean.class
 in\co\rays\proj4\controller\ForgetPasswordCtl.class
+in\co\rays\proj4\controller\BlockListCtl.class
 in\co\rays\proj4\controller\PurgeCtl.class
 in\co\rays\proj4\controller\UserCtl.class
 in\co\rays\proj4\model\RoleModel.class

@@ -114,6 +114,10 @@
 	<a href="<%=ORSView.ALLOW_CTL%>">Add Allow List</a>
 	<b>|</b>
 	<a href="<%=ORSView.ALLOW_LIST_CTL%>">Allow List</a>
+	<b>|</b>
+	<a href="<%=ORSView.BLOCK_CTL%>">Add Block List</a>
+	<b>|</b>
+	<a href="<%=ORSView.BLOCK_LIST_CTL%>">Block List</a>
 	<%
 	}
 	%>

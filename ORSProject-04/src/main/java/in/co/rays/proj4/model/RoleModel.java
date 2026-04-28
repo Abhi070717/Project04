@@ -273,10 +273,10 @@ public class RoleModel {
 				sql.append(" and id = " + bean.getId());
 			}
 			if (bean.getName() != null && bean.getName().length() > 0) {
-				sql.append(" and name like '%" + bean.getName() + "%'");
+				sql.append(" and name like '" + bean.getName() + "%'");
 			}
 			if (bean.getDescription() != null && bean.getDescription().length() > 0) {
-				sql.append(" and description like '%" + bean.getDescription() + "%'");
+				sql.append(" and description like '" + bean.getDescription() + "%'");
 			}
 		}
 		if (pageSize > 0) {
