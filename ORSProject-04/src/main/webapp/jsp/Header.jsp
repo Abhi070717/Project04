@@ -122,6 +122,10 @@
 	<a href="<%=ORSView.RULE_CTL%>">Add Rule Engine</a>
 	<b>|</b>
 	<a href="<%=ORSView.RULE_LIST_CTL%>">Rule Engine List</a>
+	<b>|</b>
+	<a href="<%=ORSView.ACCESS_CTL%>">Add Access Log</a>
+	<b>|</b>
+	<a href="<%=ORSView.ACCESS_LIST_CTL%>">Access Log List</a>
 	<%
 	}
 	%>

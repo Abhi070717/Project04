@@ -65,7 +65,7 @@ public class UserListCtl extends BaseCtl {
             log.info("Preloaded role list, size=" + roleList.size());
         } catch (ApplicationException e) {
             log.error("ApplicationException in preload()", e);
-            ServletUtility.handleException(e, request, response, getView());
+            ServletUtility.handleExceptionDB(getView(), request, response);
             e.printStackTrace();
         }
     }
@@ -132,8 +132,8 @@ public class UserListCtl extends BaseCtl {
         } catch (ApplicationException e) {
             log.error("ApplicationException in doGet()", e);
             e.printStackTrace();
-            ServletUtility.handleException(e, request, response, getView());
-        }
+            ServletUtility.handleExceptionDB(getView(), request, response);
+            }
     }
 
     /**
@@ -232,8 +232,7 @@ public class UserListCtl extends BaseCtl {
 
         } catch (ApplicationException e) {
             log.error("ApplicationException in doPost()", e);
-            e.printStackTrace();
-            ServletUtility.handleException(e, request, response, getView());
+            ServletUtility.handleExceptionDB(getView(), request, response);
         }
     }
 

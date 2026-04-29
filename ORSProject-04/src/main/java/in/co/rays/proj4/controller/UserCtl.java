@@ -70,8 +70,7 @@ public class UserCtl extends BaseCtl {
             log.info("Preloaded role list, size=" + roleList.size());
         } catch (ApplicationException e) {
             log.error("ApplicationException in doPost() SAVE", e);
-            e.printStackTrace();
-            ServletUtility.handleException(e, request, response, getView());
+            ServletUtility.handleExceptionDB(getView(), request, response);
             return;
         }
     }
@@ -187,7 +186,6 @@ public class UserCtl extends BaseCtl {
         bean.setConfirmPassword(DataUtility.getString(request.getParameter("confirmPassword")));
         bean.setGender(DataUtility.getString(request.getParameter("gender")));
         bean.setDob(DataUtility.getDate(request.getParameter("dob")));
-        System.out.println(DataUtility.getDate(request.getParameter("dob")));
         bean.setMobileNo(DataUtility.getString(request.getParameter("mobileNo")));
         bean.setRoleId(DataUtility.getLong(request.getParameter("roleId")));
 
@@ -221,7 +219,7 @@ public class UserCtl extends BaseCtl {
             } catch (ApplicationException e) {
                 log.error("ApplicationException in doGet()", e);
                 e.printStackTrace();
-                ServletUtility.handleException(e, request, response, getView());
+                ServletUtility.handleExceptionDB(getView(), request, response);
                 return;
             }
         }
@@ -239,7 +237,6 @@ public class UserCtl extends BaseCtl {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         log.info("UserCtl doPost() started");
 
         String op = DataUtility.getString(request.getParameter("operation"));
@@ -261,7 +258,7 @@ public class UserCtl extends BaseCtl {
             } catch (ApplicationException e) {
                 log.error("ApplicationException in doPost() SAVE", e);
                 e.printStackTrace();
-                ServletUtility.handleException(e, request, response, getView());
+                ServletUtility.handleExceptionDB(getView(), request, response);
                 return;
             }
         } else if (OP_UPDATE.equalsIgnoreCase(op)) {
@@ -281,7 +278,7 @@ public class UserCtl extends BaseCtl {
             } catch (ApplicationException e) {
                 log.error("ApplicationException in doPost() UPDATE", e);
                 e.printStackTrace();
-                ServletUtility.handleException(e, request, response, getView());
+                ServletUtility.handleExceptionDB(getView(), request, response);
                 return;
             }
         } else if (OP_CANCEL.equalsIgnoreCase(op)) {

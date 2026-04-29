@@ -214,4 +214,14 @@ public interface ORSView {
 	public String RULE_LIST_VIEW = PAGE_FOLDER + "/RuleListView.jsp";
 	/** Rule List Controller URL */
 	public String RULE_LIST_CTL = APP_CONTEXT + "/ctl/RuleListCtl";
+
+	/** Access View JSP */
+	public String ACCESS_VIEW = PAGE_FOLDER + "/AccessView.jsp";
+	/** Access Controller URL */
+	public String ACCESS_CTL = APP_CONTEXT + "/ctl/AccessCtl";
+	
+	/** Access List JSP */
+	public String ACCESS_LIST_VIEW = PAGE_FOLDER + "/AccessListView.jsp";
+	/** Access List Controller URL */
+	public String ACCESS_LIST_CTL = APP_CONTEXT + "/ctl/AccessListCtl";
 }
