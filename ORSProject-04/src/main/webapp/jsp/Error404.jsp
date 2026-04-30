@@ -9,9 +9,9 @@
 </head>
 <body>
 	<div align="center">
-	<h3>Some thing is wrong</h3>
+	<h3>Something Went Wrong</h3>
 	<hr>
-	<img src="img/error404.jpg">
+	<img src="img/error404.webp">
 	<hr>
 	<a href=<%=ORSView.WELCOME_CTL%>>Go to home Page</a>
 	</div>

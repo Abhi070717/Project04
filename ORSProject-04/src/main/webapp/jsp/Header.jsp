@@ -126,6 +126,10 @@
 	<a href="<%=ORSView.ACCESS_CTL%>">Add Access Log</a>
 	<b>|</b>
 	<a href="<%=ORSView.ACCESS_LIST_CTL%>">Access Log List</a>
+	<b>|</b>
+	<a href="<%=ORSView.TRANSFORMATION_CTL%>">Add Transformation</a>
+	<b>|</b>
+	<a href="<%=ORSView.TRANSFORMATION_LIST_CTL%>">Transformation List</a>
 	<%
 	}
 	%>
