@@ -14,23 +14,23 @@ import in.co.rays.proj4.util.JDBCDataSource;
 
 public class EventModel {
 
-	public long nextPk() throws DatabaseException {
+	public Integer nextPk() throws DatabaseException {
 
 		Connection conn = null;
-		long pk = 0;
+		int pk = 0;
 
+		conn = JDBCDataSource.getConnection();
 		try {
-			conn = JDBCDataSource.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("select max(id) from st_event");
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-			pk = rs.getLong(1);
+				pk = rs.getInt(1);
 			}
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DatabaseException("Exception : Exception in getting PK");
+			throw new DatabaseException("Exception : Exception in getting Pk");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -40,12 +40,12 @@ public class EventModel {
 	public long add(EventBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
-		long pk = 0;
+		int pk = 0;
 
-		EventBean existBean = findByVenue(bean.getVenue());
+		EventBean existBean = findByName(bean.getEventName());
 
 		if (existBean != null) {
-			throw new DuplicateRecordException("Venue Already Exist");
+			throw new DuplicateRecordException("Event Name Already Exist");
 		}
 
 		try {
@@ -53,24 +53,18 @@ public class EventModel {
 			pk = nextPk();
 			conn.setAutoCommit(false);
 
-			PreparedStatement pstmt = conn
-					.prepareStatement("insert into st_event values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement pstmt = conn.prepareStatement("insert into st_event values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			pstmt.setLong(1, pk);
-			pstmt.setString(2, bean.getTitle());
-			pstmt.setString(3, bean.getDescription());
-			pstmt.setDate(4, new java.sql.Date(bean.getEventDate().getTime()));
-			pstmt.setString(5, bean.getStartTime());
-			pstmt.setString(6, bean.getEndTime());
-			pstmt.setString(7, bean.getVenue());
-			pstmt.setString(8, bean.getOrganizerName());
-			pstmt.setString(9, bean.getContactEmail());
-			pstmt.setString(10, bean.getContectMobile());
-			pstmt.setString(11, bean.getStatus());
-			pstmt.setString(12, bean.getCreatedBy());
-			pstmt.setString(13, bean.getModifiedBy());
-			pstmt.setTimestamp(14, bean.getCreatedDatetime());
-			pstmt.setTimestamp(15, bean.getModifiedDatetime());
+			pstmt.setInt(1, pk);
+
+			pstmt.setString(2, bean.getEventListenerCode());
+			pstmt.setString(3, bean.getEventName());
+			pstmt.setString(4, bean.getHandler());
+			pstmt.setString(5, bean.getStatus());
+			pstmt.setString(6, bean.getCreatedBy());
+			pstmt.setString(7, bean.getModifiedBy());
+			pstmt.setTimestamp(8, bean.getCreatedDatetime());
+			pstmt.setTimestamp(9, bean.getModifiedDatetime());
 			int i = pstmt.executeUpdate();
 			conn.commit();
 
@@ -97,10 +91,10 @@ public class EventModel {
 
 		Connection conn = null;
 
-		EventBean existBean = findByVenue(bean.getVenue());
+		EventBean existBean = findByName(bean.getEventName());
 
 		if (existBean != null && existBean.getId() != bean.getId()) {
-			throw new DuplicateRecordException("venue Already Exist");
+			throw new DuplicateRecordException("Event Name Already Exist");
 		}
 
 		try {
@@ -108,23 +102,17 @@ public class EventModel {
 			conn.setAutoCommit(false);
 
 			PreparedStatement pstmt = conn.prepareStatement(
-					"update st_event set title = ?, description = ?, event_date = ?, start_time = ?, end_time = ?, venue = ?, organizer_name = ?, contact_email = ?, contact_mobile = ?, contact_mobile = ?, created_by = ?, modified_by = ?, created_datetime = ?, modified_datetime = ? where id = ?");
+					"update st_event set code = ?, name = ?, handler = ?, status= ?, created_by = ?, modified_by = ?, created_datetime = ?, modified_datetime = ? where id = ?");
 
-			pstmt.setString(1, bean.getTitle());
-			pstmt.setString(2, bean.getDescription());
-			pstmt.setDate(3, new java.sql.Date(bean.getEventDate().getTime()));
-			pstmt.setString(4, bean.getStartTime());
-			pstmt.setString(5, bean.getEndTime());
-			pstmt.setString(6, bean.getVenue());
-			pstmt.setString(7, bean.getOrganizerName());
-			pstmt.setString(8, bean.getContactEmail());
-			pstmt.setString(9, bean.getContectMobile());
-			pstmt.setString(10, bean.getStatus());
-			pstmt.setString(11, bean.getCreatedBy());
-			pstmt.setString(12, bean.getModifiedBy());
-			pstmt.setTimestamp(13, bean.getCreatedDatetime());
-			pstmt.setTimestamp(14, bean.getModifiedDatetime());
-			pstmt.setLong(15, bean.getId());
+			pstmt.setString(1, bean.getEventListenerCode());
+			pstmt.setString(2, bean.getEventName());
+			pstmt.setString(3, bean.getHandler());
+			pstmt.setString(4, bean.getStatus());
+			pstmt.setString(5, bean.getCreatedBy());
+			pstmt.setString(6, bean.getModifiedBy());
+			pstmt.setTimestamp(7, bean.getCreatedDatetime());
+			pstmt.setTimestamp(8, bean.getModifiedDatetime());
+			pstmt.setLong(9, bean.getId());
 			int i = pstmt.executeUpdate();
 			conn.commit();
 
@@ -144,7 +132,7 @@ public class EventModel {
 		}
 	}
 
-	public void delete(EventBean bean) throws ApplicationException, DuplicateRecordException {
+	public void delete(EventBean bean) throws ApplicationException {
 
 		Connection conn = null;
 
@@ -155,6 +143,7 @@ public class EventModel {
 			PreparedStatement pstmt = conn.prepareStatement("delete from st_event where id = ?");
 
 			pstmt.setLong(1, bean.getId());
+
 			int i = pstmt.executeUpdate();
 			conn.commit();
 
@@ -166,9 +155,9 @@ public class EventModel {
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
+				throw new ApplicationException("Exception : Deleted rollback exception " + ex.getMessage());
 			}
-			throw new ApplicationException("Exception : Exception in Deleting Event");
+			throw new ApplicationException("Exception : Exception in Deleted Event");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -189,20 +178,14 @@ public class EventModel {
 			while (rs.next()) {
 				bean = new EventBean();
 				bean.setId(rs.getLong(1));
-				bean.setTitle(rs.getString(2));
-				bean.setDescription(rs.getString(3));
-				bean.setEventDate(rs.getDate(4));
-				bean.setStartTime(rs.getString(5));
-				bean.setEndTime(rs.getString(6));
-				bean.setVenue(rs.getString(7));
-				bean.setOrganizerName(rs.getString(8));
-				bean.setContactEmail(rs.getString(9));
-				bean.setContectMobile(rs.getString(10));
-				bean.setStatus(rs.getString(11));
-				bean.setCreatedBy(rs.getString(12));
-				bean.setModifiedBy(rs.getString(13));
-				bean.setCreatedDatetime(rs.getTimestamp(14));
-				bean.setModifiedDatetime(rs.getTimestamp(15));
+				bean.setEventListenerCode(rs.getString(2));
+				bean.setEventName(rs.getString(3));
+				bean.setHandler(rs.getString(4));
+				bean.setStatus(rs.getString(5));
+				bean.setCreatedBy(rs.getString(6));
+				bean.setModifiedBy(rs.getString(7));
+				bean.setCreatedDatetime(rs.getTimestamp(8));
+				bean.setModifiedDatetime(rs.getTimestamp(9));
 			}
 			rs.close();
 			pstmt.close();
@@ -215,45 +198,43 @@ public class EventModel {
 		return bean;
 	}
 
-	public EventBean findByVenue(String Venue) throws ApplicationException {
+	public EventBean findByName(String name) throws ApplicationException {
 
 		Connection conn = null;
 		EventBean bean = null;
 
-		StringBuffer sb = new StringBuffer("select * from st_event where venue = ?");
+		StringBuffer sb = new StringBuffer("select * from st_event where name = ?");
 
 		try {
 			conn = JDBCDataSource.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setString(1, Venue);
+			pstmt.setString(1, name);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				bean = new EventBean();
 				bean.setId(rs.getLong(1));
-				bean.setTitle(rs.getString(2));
-				bean.setDescription(rs.getString(3));
-				bean.setEventDate(rs.getDate(4));
-				bean.setStartTime(rs.getString(5));
-				bean.setEndTime(rs.getString(6));
-				bean.setVenue(rs.getString(7));
-				bean.setOrganizerName(rs.getString(8));
-				bean.setContactEmail(rs.getString(9));
-				bean.setContectMobile(rs.getString(10));
-				bean.setStatus(rs.getString(11));
-				bean.setCreatedBy(rs.getString(12));
-				bean.setModifiedBy(rs.getString(13));
-				bean.setCreatedDatetime(rs.getTimestamp(14));
-				bean.setModifiedDatetime(rs.getTimestamp(15));
+				bean.setEventListenerCode(rs.getString(2));
+				bean.setEventName(rs.getString(3));
+				bean.setHandler(rs.getString(4));
+				bean.setStatus(rs.getString(5));
+				bean.setCreatedBy(rs.getString(6));
+				bean.setModifiedBy(rs.getString(7));
+				bean.setCreatedDatetime(rs.getTimestamp(8));
+				bean.setModifiedDatetime(rs.getTimestamp(9));
 			}
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in getting Event by Venue");
+			throw new ApplicationException("Exception : Exception in getting Event by Event Name ");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
 		return bean;
+	}
+
+	public List<EventBean> list() throws ApplicationException {
+		return search(null, 0, 0);
 	}
 
 	public List<EventBean> search(EventBean bean, int pageNo, int pageSize) throws ApplicationException {
@@ -267,30 +248,17 @@ public class EventModel {
 			if (bean.getId() > 0) {
 				sql.append(" and id = " + bean.getId());
 			}
-			if (bean.getTitle() != null && bean.getTitle().length() > 0) {
-				sql.append(" and title like '" + bean.getTitle() + "%'");
+			if (bean.getEventListenerCode() != null && bean.getEventListenerCode().length() > 0) {
+				sql.append(" and code like '" + bean.getEventListenerCode() + "%'");
 			}
-			if (bean.getDescription() != null && bean.getDescription().length() > 0) {
-				sql.append(" and description like '" + bean.getDescription() + "%'");
+			if (bean.getEventName() != null && bean.getEventName().length() > 0) {
+				sql.append(" and name like '" + bean.getEventName() + "%'");
 			}
-			if (bean.getEventDate() != null && bean.getEventDate().getTime() > 0) {
-				sql.append(" and event_date like '" + bean.getEventDate() + "%'");
+
+			if (bean.getHandler() != null && bean.getHandler().length() > 0) {
+				sql.append(" and handler like '" + bean.getHandler() + "%'");
 			}
-			if (bean.getStartTime() != null && bean.getStartTime().length() > 0) {
-				sql.append(" and start_time like '" + bean.getStartTime() + "%'");
-			}
-			if (bean.getVenue() != null && bean.getVenue().length() > 0) {
-				sql.append(" and venue like '" + bean.getVenue() + "%'");
-			}
-			if (bean.getOrganizerName() != null && bean.getOrganizerName().length() > 0) {
-				sql.append(" and organizer_name like '" + bean.getOrganizerName() + "%'");
-			}
-			if (bean.getContactEmail() != null && bean.getContactEmail().length() > 0) {
-				sql.append(" and contact_email like '" + bean.getContactEmail() + "%'");
-			}
-			if (bean.getContectMobile() != null && bean.getContectMobile().length() > 0) {
-				sql.append(" and contact_mobile like '" + bean.getContectMobile() + "%'");
-			}
+
 			if (bean.getStatus() != null && bean.getStatus().length() > 0) {
 				sql.append(" and status like '" + bean.getStatus() + "%'");
 			}
@@ -308,20 +276,14 @@ public class EventModel {
 			while (rs.next()) {
 				bean = new EventBean();
 				bean.setId(rs.getLong(1));
-				bean.setTitle(rs.getString(2));
-				bean.setDescription(rs.getString(3));
-				bean.setEventDate(rs.getDate(4));
-				bean.setStartTime(rs.getString(5));
-				bean.setEndTime(rs.getString(6));
-				bean.setVenue(rs.getString(7));
-				bean.setOrganizerName(rs.getString(8));
-				bean.setContactEmail(rs.getString(9));
-				bean.setContectMobile(rs.getString(10));
-				bean.setStatus(rs.getString(11));
-				bean.setCreatedBy(rs.getString(12));
-				bean.setModifiedBy(rs.getString(13));
-				bean.setCreatedDatetime(rs.getTimestamp(14));
-				bean.setModifiedDatetime(rs.getTimestamp(15));
+				bean.setEventListenerCode(rs.getString(2));
+				bean.setEventName(rs.getString(3));
+				bean.setHandler(rs.getString(4));
+				bean.setStatus(rs.getString(5));
+				bean.setCreatedBy(rs.getString(6));
+				bean.setModifiedBy(rs.getString(7));
+				bean.setCreatedDatetime(rs.getTimestamp(8));
+				bean.setModifiedDatetime(rs.getTimestamp(9));
 				list.add(bean);
 			}
 			rs.close();
@@ -334,4 +296,5 @@ public class EventModel {
 		}
 		return list;
 	}
+
 }

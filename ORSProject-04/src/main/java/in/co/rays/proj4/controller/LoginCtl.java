@@ -206,7 +206,7 @@ public class LoginCtl extends BaseCtl {
 
 			} catch (ApplicationException e) {
 				log.error("ApplicationException during login", e);
-				ServletUtility.handleExceptionDB(getView(), request, response);
+				ServletUtility.handleException(e, request, response, getView());
 				return;
 			}
 

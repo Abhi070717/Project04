@@ -70,7 +70,7 @@ public class UserCtl extends BaseCtl {
             log.info("Preloaded role list, size=" + roleList.size());
         } catch (ApplicationException e) {
             log.error("ApplicationException in doPost() SAVE", e);
-            ServletUtility.handleExceptionDB(getView(), request, response);
+            ServletUtility.handleException(e, request, response, getView());
             return;
         }
     }
@@ -219,7 +219,7 @@ public class UserCtl extends BaseCtl {
             } catch (ApplicationException e) {
                 log.error("ApplicationException in doGet()", e);
                 e.printStackTrace();
-                ServletUtility.handleExceptionDB(getView(), request, response);
+                ServletUtility.handleException(e, request, response, getView());
                 return;
             }
         }
@@ -258,7 +258,7 @@ public class UserCtl extends BaseCtl {
             } catch (ApplicationException e) {
                 log.error("ApplicationException in doPost() SAVE", e);
                 e.printStackTrace();
-                ServletUtility.handleExceptionDB(getView(), request, response);
+                ServletUtility.handleException(e, request, response, getView());
                 return;
             }
         } else if (OP_UPDATE.equalsIgnoreCase(op)) {
@@ -278,7 +278,7 @@ public class UserCtl extends BaseCtl {
             } catch (ApplicationException e) {
                 log.error("ApplicationException in doPost() UPDATE", e);
                 e.printStackTrace();
-                ServletUtility.handleExceptionDB(getView(), request, response);
+                ServletUtility.handleException(e, request, response, getView());
                 return;
             }
         } else if (OP_CANCEL.equalsIgnoreCase(op)) {

@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import in.co.rays.proj4.bean.BaseBean;
-import in.co.rays.proj4.bean.TransformationBean;
+import in.co.rays.proj4.bean.EventBean;
 import in.co.rays.proj4.exception.ApplicationException;
-import in.co.rays.proj4.model.TransformationModel;
+import in.co.rays.proj4.model.EventModel;
 import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
 
-@WebServlet(name = "TransformationListCtl", urlPatterns = { "/ctl/TransformationListCtl" })
-public class TransformationListCtl extends BaseCtl {
+@WebServlet(name = "EventListCtl", urlPatterns = { "/ctl/EventListCtl" })
+public class EventListCtl extends BaseCtl {
 
 	@Override
 	protected void preload(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		TransformationModel nameModel = new TransformationModel();
+		EventModel nameModel = new EventModel();
 		try {
 			List nameList = nameModel.list();
 			request.setAttribute("nameList", nameList);
@@ -33,10 +33,10 @@ public class TransformationListCtl extends BaseCtl {
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
 
-		TransformationBean bean = new TransformationBean();
+		EventBean bean = new EventBean();
 
-		bean.setTransformCode(DataUtility.getString(request.getParameter("code")));
-		bean.setRuleName(DataUtility.getString(request.getParameter("name")));
+		bean.setEventListenerCode(DataUtility.getString(request.getParameter("code")));
+		bean.setEventName(DataUtility.getString(request.getParameter("name")));
 
 		return bean;
 	}
@@ -48,13 +48,13 @@ public class TransformationListCtl extends BaseCtl {
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
 
-		TransformationBean bean = (TransformationBean) populateBean(request);
-		TransformationModel model = new TransformationModel();
+		EventBean bean = (EventBean) populateBean(request);
+		EventModel model = new EventModel();
 
 		try {
 
-			List<TransformationBean> list = model.search(bean, pageNo, pageSize);
-			List<TransformationBean> next = model.search(bean, pageNo + 1, pageSize);
+			List<EventBean> list = model.search(bean, pageNo, pageSize);
+			List<EventBean> next = model.search(bean, pageNo + 1, pageSize);
 
 			if (list == null || list.isEmpty()) {
 				ServletUtility.setErrorMessage("No record found", request);
@@ -68,7 +68,7 @@ public class TransformationListCtl extends BaseCtl {
 			ServletUtility.forward(getView(), request, response);
 
 		} catch (ApplicationException e) {
-				ServletUtility.handleException(e, request, response, getView());
+			ServletUtility.handleException(e, request, response, getView());
 		}
 	}
 
@@ -82,8 +82,8 @@ public class TransformationListCtl extends BaseCtl {
 		pageNo = (pageNo == 0) ? 1 : pageNo;
 		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 
-		TransformationBean bean = (TransformationBean) populateBean(request);
-		TransformationModel model = new TransformationModel();
+		EventBean bean = (EventBean) populateBean(request);
+		EventModel model = new EventModel();
 
 		String op = request.getParameter("operation");
 		String[] ids = request.getParameterValues("ids");
@@ -100,16 +100,16 @@ public class TransformationListCtl extends BaseCtl {
 				pageNo--;
 
 			} else if (OP_NEW.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.TRANSFORMATION_CTL, request, response);
+				ServletUtility.redirect(ORSView.EVENT_CTL, request, response);
 				return;
 
 			} else if (OP_RESET.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.TRANSFORMATION_LIST_CTL, request, response);
+				ServletUtility.redirect(ORSView.EVENT_LIST_CTL, request, response);
 				return;
 
 			} else if (OP_DELETE.equalsIgnoreCase(op)) {
 				pageNo = 1;
-				TransformationBean deletebean = new TransformationBean();
+				EventBean deletebean = new EventBean();
 
 				if (ids != null && ids.length > 0) {
 					for (String id : ids) {
@@ -122,8 +122,8 @@ public class TransformationListCtl extends BaseCtl {
 				}
 			}
 
-			List<TransformationBean> list = model.search(bean, pageNo, pageSize);
-			List<TransformationBean> next = model.search(bean, pageNo + 1, pageSize);
+			List<EventBean> list = model.search(bean, pageNo, pageSize);
+			List<EventBean> next = model.search(bean, pageNo + 1, pageSize);
 
 			if (list == null || list.size() == 0) {
 				ServletUtility.setErrorMessage("No Record Found ", request);
@@ -139,12 +139,12 @@ public class TransformationListCtl extends BaseCtl {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-				ServletUtility.handleException(e, request, response, getView());
+			ServletUtility.handleException(e, request, response, getView());
 		}
 	}
 
 	@Override
 	protected String getView() {
-		return ORSView.TRANSFORMATION_LIST_VIEW;
+		return ORSView.EVENT_LIST_VIEW;
 	}
 }

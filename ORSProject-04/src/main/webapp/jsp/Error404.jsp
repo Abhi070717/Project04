@@ -9,11 +9,11 @@
 </head>
 <body>
 	<div align="center">
-	<h3>Something Went Wrong</h3>
-	<hr>
-	<img src="img/error404.webp">
-	<hr>
-	<a href=<%=ORSView.WELCOME_CTL%>>Go to home Page</a>
+		<h3>Something Went Wrong</h3>
+		<hr>
+		<img src="<%=ORSView.APP_CONTEXT%>/img/error404.jpg">
+		<hr>
+		<a href=<%=ORSView.WELCOME_CTL%>>Go to home Page</a>
 	</div>
 </body>
 </html>

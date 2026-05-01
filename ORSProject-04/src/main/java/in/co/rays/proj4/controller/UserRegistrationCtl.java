@@ -232,7 +232,7 @@ public class UserRegistrationCtl extends BaseCtl {
                 log.info("User registered successfully: " + bean.getLogin());
             } catch (ApplicationException e) {
                 log.error("ApplicationException in doPost() during registration", e);
-                ServletUtility.handleExceptionDB(getView(), request, response);
+                ServletUtility.handleException(e, request, response, getView());
                 return;
             } catch (DuplicateRecordException e) {
                 ServletUtility.setBean(bean, request);

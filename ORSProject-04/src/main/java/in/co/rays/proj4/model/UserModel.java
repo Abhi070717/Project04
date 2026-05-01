@@ -349,7 +349,6 @@ public class UserModel {
 	 * @throws ApplicationException if an application-level exception occurs
 	 */
 	public List<UserBean> search(UserBean bean, int pageNo, int pageSize) throws ApplicationException {
-
 		Connection conn = null;
 		ArrayList<UserBean> list = new ArrayList<UserBean>();
 

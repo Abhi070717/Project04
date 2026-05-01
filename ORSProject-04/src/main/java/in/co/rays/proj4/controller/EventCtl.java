@@ -8,17 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import in.co.rays.proj4.bean.BaseBean;
-import in.co.rays.proj4.bean.TransformationBean;
+import in.co.rays.proj4.bean.EventBean;
 import in.co.rays.proj4.exception.ApplicationException;
 import in.co.rays.proj4.exception.DuplicateRecordException;
-import in.co.rays.proj4.model.TransformationModel;
+import in.co.rays.proj4.model.EventModel;
 import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.DataValidator;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
 
-@WebServlet(name = "TransformationCtl", urlPatterns = { "/ctl/TransformationCtl" })
-public class TransformationCtl extends BaseCtl {
+@WebServlet(name = "EventCtl", urlPatterns = { "/ctl/EventCtl" })
+public class EventCtl extends BaseCtl {
 
 	@Override
 	protected boolean validate(HttpServletRequest request) {
@@ -26,15 +26,18 @@ public class TransformationCtl extends BaseCtl {
 		boolean pass = true;
 
 		if (DataValidator.isNull(request.getParameter("code"))) {
-			request.setAttribute("code", PropertyReader.getValue("error.require", "Transform Code"));
+			request.setAttribute("code", PropertyReader.getValue("error.require", "Event Listener Code"));
 			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("name"))) {
-			request.setAttribute("name", PropertyReader.getValue("error.require", "Rule Name"));
+			request.setAttribute("name", PropertyReader.getValue("error.require", "Event Name"));
 			pass = false;
-		}
-		if (DataValidator.isNull(request.getParameter("logic"))) {
-			request.setAttribute("logic", PropertyReader.getValue("error.require", "Logic"));
+		}else if (!DataValidator.isName(request.getParameter("name"))) {
+            request.setAttribute("name", "Invalid Event Name");
+            pass = false;
+        }
+		if (DataValidator.isNull(request.getParameter("handler"))) {
+			request.setAttribute("handler", PropertyReader.getValue("error.require", "Handler"));
 			pass = false;
 		}
 		if (DataValidator.isNull(request.getParameter("status"))) {
@@ -47,12 +50,12 @@ public class TransformationCtl extends BaseCtl {
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
 
-		TransformationBean bean = new TransformationBean();
+		EventBean bean = new EventBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
-		bean.setTransformCode(DataUtility.getString(request.getParameter("code")));
-		bean.setRuleName(DataUtility.getString(request.getParameter("name")));
-		bean.setLogic(DataUtility.getString(request.getParameter("logic")));
+		bean.setEventListenerCode(DataUtility.getString(request.getParameter("code")));
+		bean.setEventName(DataUtility.getString(request.getParameter("name")));
+		bean.setHandler(DataUtility.getString(request.getParameter("handler")));
 		bean.setStatus(DataUtility.getString(request.getParameter("status")));
 		populateDTO(bean, request);
 
@@ -64,11 +67,11 @@ public class TransformationCtl extends BaseCtl {
 			throws ServletException, IOException {
 		long id = DataUtility.getLong(request.getParameter("id"));
 
-		TransformationModel model = new TransformationModel();
+		EventModel model = new EventModel();
 
 		if (id > 0) {
 			try {
-				TransformationBean bean = model.findByPk(id);
+				EventBean bean = model.findByPk(id);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
 				ServletUtility.handleException(e, request, response, getView());
@@ -84,25 +87,25 @@ public class TransformationCtl extends BaseCtl {
 
 		String op = DataUtility.getString(request.getParameter("operation"));
 
-		TransformationModel model = new TransformationModel();
+		EventModel model = new EventModel();
 
 		long id = DataUtility.getLong(request.getParameter("id"));
 
 		if (OP_SAVE.equalsIgnoreCase(op)) {
-			TransformationBean bean = (TransformationBean) populateBean(request);
+			EventBean bean = (EventBean) populateBean(request);
 			try {
 				long pk = model.add(bean);
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setSuccessMessage("Data is successfully saved", request);
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
-				ServletUtility.setErrorMessage("Rule Name already exists", request);
+				ServletUtility.setErrorMessage("Event Name already exists", request);
 			} catch (ApplicationException e) {
 				ServletUtility.handleException(e, request, response, getView());
 				return;
 			}
 		} else if (OP_UPDATE.equalsIgnoreCase(op)) {
-			TransformationBean bean = (TransformationBean) populateBean(request);
+			EventBean bean = (EventBean) populateBean(request);
 			try {
 				if (id > 0) {
 					model.update(bean);
@@ -111,17 +114,17 @@ public class TransformationCtl extends BaseCtl {
 				ServletUtility.setSuccessMessage("Data is successfully updated", request);
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
-				ServletUtility.setErrorMessage("Rule Name already exists", request);
+				ServletUtility.setErrorMessage("Event Name already exists", request);
 			} catch (ApplicationException e) {
 				ServletUtility.handleException(e, request, response, getView());
 				return;
 			}
 		} else if (OP_CANCEL.equalsIgnoreCase(op)) {
-			ServletUtility.redirect(ORSView.TRANSFORMATION_LIST_CTL, request, response);
+			ServletUtility.redirect(ORSView.EVENT_LIST_CTL, request, response);
 			return;
 
 		} else if (OP_RESET.equalsIgnoreCase(op)) {
-			ServletUtility.redirect(ORSView.TRANSFORMATION_CTL, request, response);
+			ServletUtility.redirect(ORSView.EVENT_CTL, request, response);
 			return;
 		}
 
@@ -130,7 +133,7 @@ public class TransformationCtl extends BaseCtl {
 
 	@Override
 	protected String getView() {
-		return ORSView.TRANSFORMATION_VIEW;
+		return ORSView.EVENT_VIEW;
 	}
 
 }

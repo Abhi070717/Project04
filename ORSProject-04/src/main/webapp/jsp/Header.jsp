@@ -130,6 +130,10 @@
 	<a href="<%=ORSView.TRANSFORMATION_CTL%>">Add Transformation</a>
 	<b>|</b>
 	<a href="<%=ORSView.TRANSFORMATION_LIST_CTL%>">Transformation List</a>
+	<b>|</b>
+	<a href="<%=ORSView.EVENT_CTL%>">Add Event Listener</a>
+	<b>|</b>
+	<a href="<%=ORSView.EVENT_LIST_CTL%>">Event Listener List</a>
 	<%
 	}
 	%>

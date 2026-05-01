@@ -249,21 +249,4 @@ public class ServletUtility {
 		RequestDispatcher rd = request.getRequestDispatcher(ORSView.ERROR_CTL);
 		rd.forward(request, response);
 	}
-
-	public static void handleExceptionDB(String page, HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-		setErrorMessage("DATABASE SERVER DOWN....!!", request);// doGet or doPost
-		forward(page, request, response);
-	}
-
-	public static void handleExceptionDBList(String page, BaseBean bean, int pageNo, int pageSize,
-			HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		setErrorMessage("DATABASE SERVER DOWN UNABLE TO LOAD LIST....!!", request);// preloads
-		setList(new ArrayList<Object>(), request);
-		setBean(bean, request);
-		request.setAttribute("pageNo", pageNo);
-		request.setAttribute("pageSize", pageSize);
-		request.setAttribute("nextListSize", 0);
-		forward(page, request, response);
-	}
 }

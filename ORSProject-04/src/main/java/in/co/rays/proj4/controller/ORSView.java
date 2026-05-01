@@ -234,4 +234,14 @@ public interface ORSView {
 	public String TRANSFORMATION_LIST_VIEW = PAGE_FOLDER + "/TransformationListView.jsp";
 	/** Transformation List Controller URL */
 	public String TRANSFORMATION_LIST_CTL = APP_CONTEXT + "/ctl/TransformationListCtl";
+
+	/** Event View JSP */
+	public String EVENT_VIEW = PAGE_FOLDER + "/EventView.jsp";
+	/** Event Controller URL */
+	public String EVENT_CTL = APP_CONTEXT + "/ctl/EventCtl";
+	
+	/** Event List JSP */
+	public String EVENT_LIST_VIEW = PAGE_FOLDER + "/EventListView.jsp";
+	/** Event List Controller URL */
+	public String EVENT_LIST_CTL = APP_CONTEXT + "/ctl/EventListCtl";
 }
