@@ -11,29 +11,29 @@ import javax.servlet.http.HttpServletResponse;
 import in.co.rays.proj4.util.ServletUtility;
 
 /**
- * ErrorCtl handles application-wide errors and forwards the user
- * to an appropriate error view.
+ * ErrorCtl handles application-wide errors and forwards the user to an
+ * appropriate error view.
  * 
- * It captures error details from the request and sets default
- * error messages and attributes for display.
+ * It captures error details from the request and sets default error messages
+ * and attributes for display.
  * 
  * URL Mapping: /ErrorCtl
  * 
  * @author Abhishish Bhawsar
  * 
- *@version 1.0
+ * @version 1.0
  */
 @WebServlet("/ErrorCtl")
 public class ErrorCtl extends BaseCtl {
 
 	/**
-	 * Handles HTTP GET requests.
-     * Delegates processing to the common process() method.
-     * 
-     * @param request  HttpServletRequest object
-     * @param response HttpServletResponse object
-     * @throws ServletException if servlet-specific error occurs
-     * @throws IOException      if an input/output error occurs
+	 * Handles HTTP GET requests. Delegates processing to the common process()
+	 * method.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @throws ServletException if servlet-specific error occurs
+	 * @throws IOException      if an input/output error occurs
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -42,13 +42,13 @@ public class ErrorCtl extends BaseCtl {
 	}
 
 	/**
-	 * Handles HTTP POST requests.
-     * Delegates processing to the common process() method.
-     * 
-     * @param request  HttpServletRequest object
-     * @param response HttpServletResponse object
-     * @throws ServletException if servlet-specific error occurs
-     * @throws IOException      if an input/output error occurs
+	 * Handles HTTP POST requests. Delegates processing to the common process()
+	 * method.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @throws ServletException if servlet-specific error occurs
+	 * @throws IOException      if an input/output error occurs
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -58,17 +58,15 @@ public class ErrorCtl extends BaseCtl {
 
 	/**
 	 * Common method to process both GET and POST requests.
-     * 
-     * This method:
-     * - Retrieves the last requested controller
-     * - Sets a default error message
-     * - Handles list view fallback (if error occurred in ListCtl)
-     * - Forwards the request to the error view
-     * 
-     * @param request  HttpServletRequest object
-     * @param response HttpServletResponse object
-     * @throws IOException      if input/output error occurs
-     * @throws ServletException if servlet error occurs
+	 * 
+	 * This method: - Retrieves the last requested controller - Sets a default error
+	 * message - Handles list view fallback (if error occurred in ListCtl) -
+	 * Forwards the request to the error view
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @throws IOException      if input/output error occurs
+	 * @throws ServletException if servlet error occurs
 	 */
 	private void process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -102,6 +100,6 @@ public class ErrorCtl extends BaseCtl {
 	 */
 	@Override
 	protected String getView() {
-		return ORSView.ERROR_VIEW;
+		return ORSView.LOGIN_VIEW;
 	}
 }
