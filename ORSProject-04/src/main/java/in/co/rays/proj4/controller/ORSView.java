@@ -244,4 +244,14 @@ public interface ORSView {
 	public String EVENT_LIST_VIEW = PAGE_FOLDER + "/EventListView.jsp";
 	/** Event List Controller URL */
 	public String EVENT_LIST_CTL = APP_CONTEXT + "/ctl/EventListCtl";
+
+	/** Password View JSP */
+	public String PASSWORD_VIEW = PAGE_FOLDER + "/PasswordView.jsp";
+	/** Password Controller URL */
+	public String PASSWORD_CTL = APP_CONTEXT + "/ctl/PasswordCtl";
+	
+	/** Password List JSP */
+	public String PASSWORD_LIST_VIEW = PAGE_FOLDER + "/PasswordListView.jsp";
+	/** Password List Controller URL */
+	public String PASSWORD_LIST_CTL = APP_CONTEXT + "/ctl/PasswordListCtl";
 }
