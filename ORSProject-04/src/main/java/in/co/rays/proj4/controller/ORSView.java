@@ -254,4 +254,14 @@ public interface ORSView {
 	public String PASSWORD_LIST_VIEW = PAGE_FOLDER + "/PasswordListView.jsp";
 	/** Password List Controller URL */
 	public String PASSWORD_LIST_CTL = APP_CONTEXT + "/ctl/PasswordListCtl";
+
+	/** Queue View JSP */
+	public String QUEUE_VIEW = PAGE_FOLDER + "/QueueView.jsp";
+	/** Queue Controller URL */
+	public String QUEUE_CTL = APP_CONTEXT + "/ctl/QueueCtl";
+	
+	/** Queue List JSP */
+	public String QUEUE_LIST_VIEW = PAGE_FOLDER + "/QueueListView.jsp";
+	/** Queue List Controller URL */
+	public String QUEUE_LIST_CTL = APP_CONTEXT + "/ctl/QueueListCtl";
 }

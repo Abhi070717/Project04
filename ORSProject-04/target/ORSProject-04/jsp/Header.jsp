@@ -118,6 +118,26 @@
 	<a href="<%=ORSView.BLOCK_CTL%>">Add Block List</a>
 	<b>|</b>
 	<a href="<%=ORSView.BLOCK_LIST_CTL%>">Block List</a>
+	<b>|</b>
+	<a href="<%=ORSView.RULE_CTL%>">Add Rule Engine</a>
+	<b>|</b>
+	<a href="<%=ORSView.RULE_LIST_CTL%>">Rule Engine List</a>
+	<b>|</b>
+	<a href="<%=ORSView.ACCESS_CTL%>">Add Access Log</a>
+	<b>|</b>
+	<a href="<%=ORSView.ACCESS_LIST_CTL%>">Access Log List</a>
+	<b>|</b>
+	<a href="<%=ORSView.TRANSFORMATION_CTL%>">Add Transformation</a>
+	<b>|</b>
+	<a href="<%=ORSView.TRANSFORMATION_LIST_CTL%>">Transformation List</a>
+	<b>|</b>
+	<a href="<%=ORSView.EVENT_CTL%>">Add Event Listener</a>
+	<b>|</b>
+	<a href="<%=ORSView.EVENT_LIST_CTL%>">Event Listener List</a>
+	<b>|</b>
+	<a href="<%=ORSView.PASSWORD_CTL%>">Add Password Reset</a>
+	<b>|</b>
+	<a href="<%=ORSView.PASSWORD_LIST_CTL%>">Password Reset List</a>
 	<%
 	}
 	%>

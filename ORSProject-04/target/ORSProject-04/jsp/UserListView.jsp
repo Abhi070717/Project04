@@ -1,4 +1,4 @@
-<%@page import="in.co.rays.proj4.bean.UserBean"%>
+ <%@page import="in.co.rays.proj4.bean.UserBean"%>
 <%@page import="in.co.rays.proj4.bean.RoleBean"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
