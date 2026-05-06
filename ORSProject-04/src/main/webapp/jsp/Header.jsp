@@ -131,10 +131,6 @@
 	<b>|</b>
 	<a href="<%=ORSView.TRANSFORMATION_LIST_CTL%>">Transformation List</a>
 	<b>|</b>
-	<a href="<%=ORSView.EVENT_CTL%>">Add Event Listener</a>
-	<b>|</b>
-	<a href="<%=ORSView.EVENT_LIST_CTL%>">Event Listener List</a>
-	<b>|</b>
 	<a href="<%=ORSView.PASSWORD_CTL%>">Add Password Reset</a>
 	<b>|</b>
 	<a href="<%=ORSView.PASSWORD_LIST_CTL%>">Password Reset List</a>
@@ -142,6 +138,10 @@
 	<a href="<%=ORSView.QUEUE_CTL%>">Add Queue Listener</a>
 	<b>|</b>
 	<a href="<%=ORSView.QUEUE_LIST_CTL%>">Queue Listener List</a>
+	<b>|</b>
+	<a href="<%=ORSView.EVENT_CTL%>">Add Event Listener</a>
+	<b>|</b>
+	<a href="<%=ORSView.EVENT_LIST_CTL%>">Event Listener List</a>
 	<%
 	}
 	%>
