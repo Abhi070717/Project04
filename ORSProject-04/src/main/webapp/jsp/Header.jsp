@@ -11,7 +11,8 @@
 <!-- JQuery -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
 <script src="/ORSProject-04/js/checkbox.js"></script>
 <script src="/ORSProject-04/js/datepicker.js"></script>
@@ -39,7 +40,8 @@
 	<b>|</b>
 	<a href="<%=ORSView.GET_MARKSHEET_CTL%>"><b>Get Marksheet</b></a>
 	<b>|</b>
-	<a href="<%=ORSView.MARKSHEET_MERIT_LIST_CTL%>"><b>Marksheet Merit-List</b></a>
+	<a href="<%=ORSView.MARKSHEET_MERIT_LIST_CTL%>"><b>Marksheet
+			Merit-List</b></a>
 	<b>|</b>
 	<!-- Logout -->
 	<a href="<%=ORSView.LOGIN_CTL + "?operation=Logout"%>"><b>Logout</b></a>
@@ -87,7 +89,7 @@
 	<a target="blank" href="<%=ORSView.JAVA_DOC_VIEW%>"><b>Java Doc</b></a>
 	<b>|</b>
 	<!-- Daily Module -->
-	<a href="<%=ORSView.HEALTH_CTL%>">Add Health</a>
+	<%-- <a href="<%=ORSView.HEALTH_CTL%>">Add Health</a>
 	<b>|</b>
 	<a href="<%=ORSView.HEALTH_LIST_CTL%>">Health List</a>
 	<b>|</b>
@@ -111,12 +113,8 @@
 	<b>|</b>
 	<a href="<%=ORSView.AUDIT_LIST_CTL%>">Audit Trail List</a>
 	<b>|</b>
-	<a href="<%=ORSView.ALLOW_CTL%>">Add Allow List</a>
-	<b>|</b>
-	<a href="<%=ORSView.ALLOW_LIST_CTL%>">Allow List</a>
-	<b>|</b>
 	<a href="<%=ORSView.BLOCK_CTL%>">Add Block List</a>
-	<b>|</b>
+	<b>|</b> --%>
 	<a href="<%=ORSView.BLOCK_LIST_CTL%>">Block List</a>
 	<b>|</b>
 	<a href="<%=ORSView.RULE_CTL%>">Add Rule Engine</a>
@@ -142,6 +140,10 @@
 	<a href="<%=ORSView.EVENT_CTL%>">Add Event Listener</a>
 	<b>|</b>
 	<a href="<%=ORSView.EVENT_LIST_CTL%>">Event Listener List</a>
+	<b>|</b>
+	<a href="<%=ORSView.ALLOW_CTL%>">Add Allow List</a>
+	<b>|</b>
+	<a href="<%=ORSView.ALLOW_LIST_CTL%>">Allow List</a>
 	<%
 	}
 	%>

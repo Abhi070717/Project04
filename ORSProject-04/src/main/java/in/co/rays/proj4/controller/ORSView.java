@@ -27,8 +27,6 @@ public interface ORSView {
 
 	public String JAVA_DOC_VIEW = APP_CONTEXT + "/doc/index.html";
 
-	public String JAVA_DOC = APP_CONTEXT + "/doc/index.html";
-
 	public String WELCOME_VIEW = PAGE_FOLDER + "/WelcomeView.jsp";
 	public String WELCOME_CTL = APP_CONTEXT + "/WelcomeCtl";
 
@@ -185,15 +183,6 @@ public interface ORSView {
 	/** Audit List Controller URL */
 	public String AUDIT_LIST_CTL = APP_CONTEXT + "/ctl/AuditListCtl";
 
-	/** Allow View JSP */
-	public String ALLOW_VIEW = PAGE_FOLDER + "/AllowView.jsp";
-	/** Allow Controller URL */
-	public String ALLOW_CTL = APP_CONTEXT + "/ctl/AllowCtl";
-	
-	/** Allow List JSP */
-	public String ALLOW_LIST_VIEW = PAGE_FOLDER + "/AllowListView.jsp";
-	/** Allow List Controller URL */
-	public String ALLOW_LIST_CTL = APP_CONTEXT + "/ctl/AllowListCtl";
 
 	/** Block View JSP */
 	public String BLOCK_VIEW = PAGE_FOLDER + "/BlockView.jsp";
@@ -264,4 +253,14 @@ public interface ORSView {
 	public String QUEUE_LIST_VIEW = PAGE_FOLDER + "/QueueListView.jsp";
 	/** Queue List Controller URL */
 	public String QUEUE_LIST_CTL = APP_CONTEXT + "/ctl/QueueListCtl";
+
+	/** Allow View JSP */
+	public String ALLOW_VIEW = PAGE_FOLDER + "/AllowView.jsp";
+	/** Allow Controller URL */
+	public String ALLOW_CTL = APP_CONTEXT + "/ctl/AllowCtl";
+	
+	/** Allow List JSP */
+	public String ALLOW_LIST_VIEW = PAGE_FOLDER + "/AllowListView.jsp";
+	/** Allow List Controller URL */
+	public String ALLOW_LIST_CTL = APP_CONTEXT + "/ctl/AllowListCtl";
 }
