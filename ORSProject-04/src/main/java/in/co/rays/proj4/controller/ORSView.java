@@ -263,4 +263,14 @@ public interface ORSView {
 	public String ALLOW_LIST_VIEW = PAGE_FOLDER + "/AllowListView.jsp";
 	/** Allow List Controller URL */
 	public String ALLOW_LIST_CTL = APP_CONTEXT + "/ctl/AllowListCtl";
+
+	/** Face View JSP */
+	public String FACE_VIEW = PAGE_FOLDER + "/FaceView.jsp";
+	/** Face Controller URL */
+	public String FACE_CTL = APP_CONTEXT + "/ctl/FaceCtl";
+	
+	/** Face List JSP */
+	public String FACE_LIST_VIEW = PAGE_FOLDER + "/FaceListView.jsp";
+	/** Face List Controller URL */
+	public String FACE_LIST_CTL = APP_CONTEXT + "/ctl/FaceListCtl";
 }

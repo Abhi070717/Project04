@@ -144,6 +144,10 @@
 	<a href="<%=ORSView.ALLOW_CTL%>">Add Allow List</a>
 	<b>|</b>
 	<a href="<%=ORSView.ALLOW_LIST_CTL%>">Allow List</a>
+	<b>|</b>
+	<a href="<%=ORSView.FACE_CTL%>">Add Face Recognition</a>
+	<b>|</b>
+	<a href="<%=ORSView.FACE_LIST_CTL%>">Face Recognition List</a>
 	<%
 	}
 	%>

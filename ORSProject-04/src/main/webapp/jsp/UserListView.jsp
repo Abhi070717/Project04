@@ -1,4 +1,5 @@
- <%@page import="in.co.rays.proj4.bean.UserBean"%>
+
+<%@page import="in.co.rays.proj4.bean.UserBean"%>
 <%@page import="in.co.rays.proj4.bean.RoleBean"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
@@ -59,9 +60,9 @@
 					<td align="center"><label><b>First Name :</b></label> <input
 						type="text" name="firstName" placeholder="Enter First Name"
 						value="<%=ServletUtility.getParameter("firstName", request)%>">&emsp;
-						
-						<label><b>DOB :</b></label> <input type="text" name="dob"
-						placeholder="Enter DOB"
+
+						<label><b>DOB :</b></label> <input type="text" id="udate"
+						name="dob" placeholder="Enter DOB"
 						value="<%=ServletUtility.getParameter("dob", request)%>">&emsp;
 
 						<label><b>Login Id:</b></label> <input type="text" name="login"
@@ -115,7 +116,8 @@
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getGender()%></td>
 					<td style="text-align: center;"><%=date%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=roleBean.getName()%></td>
-					<td style="text-align: center;"><a href="UserCtl?id=<%=bean.getId()%>"
+					<td style="text-align: center;"><a
+						href="UserCtl?id=<%=bean.getId()%>"
 						<%=(user.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN) ? "onclick='return false;'" : ""%>>Edit</a>
 					</td>
 				</tr>

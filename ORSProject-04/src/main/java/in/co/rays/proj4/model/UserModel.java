@@ -3,6 +3,7 @@ package in.co.rays.proj4.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLClientInfoException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -371,7 +372,7 @@ public class UserModel {
 				sql.append(" and password like '" + bean.getPassword() + "%'");
 			}
 			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
-				sql.append(" and dob like '" + new java.sql.Date(bean.getDob().getTime()) + " %'");
+				sql.append(" and dob = '" + new java.sql.Date(bean.getDob().getTime()) + "'");
 			}
 			if (bean.getMobileNo() != null && bean.getMobileNo().length() > 0) {
 				sql.append(" and mobile_no = " + bean.getMobileNo());
@@ -388,7 +389,7 @@ public class UserModel {
 			pageNo = (pageNo - 1) * pageSize;
 			sql.append(" limit " + pageNo + ", " + pageSize);
 		}
-
+		System.out.println("sql ===== > " + sql.toString());
 		try {
 			conn = JDBCDataSource.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());

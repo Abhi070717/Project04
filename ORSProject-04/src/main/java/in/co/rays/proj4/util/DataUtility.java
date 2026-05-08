@@ -25,10 +25,10 @@ import java.util.Date;
 public class DataUtility {
 
     /** Application date format used for parsing and formatting dates. */
-    public static final String APP_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String APP_DATE_FORMAT = "dd-MM-yyyy";
 
     /** Application time format used for parsing and formatting timestamps. */
-    public static final String APP_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String APP_TIME_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
 	private static final SimpleDateFormat formatter = new SimpleDateFormat(APP_DATE_FORMAT);
 
