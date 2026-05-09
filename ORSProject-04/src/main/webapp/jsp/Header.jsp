@@ -148,6 +148,10 @@
 	<a href="<%=ORSView.FACE_CTL%>">Add Face Recognition</a>
 	<b>|</b>
 	<a href="<%=ORSView.FACE_LIST_CTL%>">Face Recognition List</a>
+	<b>|</b>
+	<a href="<%=ORSView.CLAIM_CTL%>">Add Claim</a>
+	<b>|</b>
+	<a href="<%=ORSView.CLAIM_LIST_CTL%>">Claim List</a>
 	<%
 	}
 	%>

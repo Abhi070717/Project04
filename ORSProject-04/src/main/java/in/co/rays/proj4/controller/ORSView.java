@@ -273,4 +273,14 @@ public interface ORSView {
 	public String FACE_LIST_VIEW = PAGE_FOLDER + "/FaceListView.jsp";
 	/** Face List Controller URL */
 	public String FACE_LIST_CTL = APP_CONTEXT + "/ctl/FaceListCtl";
+
+	/** Claim View JSP */
+	public String CLAIM_VIEW = PAGE_FOLDER + "/ClaimView.jsp";
+	/** Claim Controller URL */
+	public String CLAIM_CTL = APP_CONTEXT + "/ctl/ClaimCtl";
+	
+	/** Claim List JSP */
+	public String CLAIM_LIST_VIEW = PAGE_FOLDER + "/ClaimListView.jsp";
+	/** Claim List Controller URL */
+	public String CLAIM_LIST_CTL = APP_CONTEXT + "/ctl/ClaimListCtl";
 }
