@@ -267,7 +267,7 @@ public class UserCtl extends BaseCtl {
             try {
                 if (id > 0) {
                     model.update(bean);
-                    log.info("User updated successfully, id=" + id);
+                    log.info("User updated successfully, id = " + id);
                 }
                 ServletUtility.setBean(bean, request);
                 ServletUtility.setSuccessMessage("User updated successfully", request);

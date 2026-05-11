@@ -1,7 +1,6 @@
-
-<%@page import="in.co.rays.proj4.util.ServletUtility"%>
-<%@page import="in.co.rays.proj4.bean.UserBean"%>
-<%@page import="in.co.rays.proj4.controller.ORSView"%>
+<%@ page import="in.co.rays.proj4.util.ServletUtility" %>
+<%@ page import="in.co.rays.proj4.bean.UserBean" %>
+<%@ page import="in.co.rays.proj4.controller.ORSView" %>
 <html>
 <head>
 <title>Online Result System</title>

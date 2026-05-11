@@ -27,7 +27,7 @@
 		<div align="center">
 			<h1 align="center" style="margin-bottom: -15; color: navy">
 				<%
-				if (bean != null) {
+				if (bean != null && bean.getId() > 0) {
 				%>Update<%
 				} else {
 				%>Add<%

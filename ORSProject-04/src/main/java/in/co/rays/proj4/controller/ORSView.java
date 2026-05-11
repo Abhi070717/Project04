@@ -283,4 +283,14 @@ public interface ORSView {
 	public String CLAIM_LIST_VIEW = PAGE_FOLDER + "/ClaimListView.jsp";
 	/** Claim List Controller URL */
 	public String CLAIM_LIST_CTL = APP_CONTEXT + "/ctl/ClaimListCtl";
+
+	/** Account View JSP */
+	public String ACCOUNT_VIEW = PAGE_FOLDER + "/AccountView.jsp";
+	/** Account Controller URL */
+	public String ACCOUNT_CTL = APP_CONTEXT + "/ctl/AccountCtl";
+	
+	/** Account List JSP */
+	public String ACCOUNT_LIST_VIEW = PAGE_FOLDER + "/AccountListView.jsp";
+	/** Account List Controller URL */
+	public String ACCOUNT_LIST_CTL = APP_CONTEXT + "/ctl/AccountListCtl";
 }
