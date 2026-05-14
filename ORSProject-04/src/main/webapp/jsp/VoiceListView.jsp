@@ -1,30 +1,28 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
-<%@page import="in.co.rays.proj4.controller.PurgeListCtl"%>
+<%@page import="in.co.rays.proj4.controller.VoiceListCtl"%>
 <%@page import="in.co.rays.proj4.controller.BaseCtl"%>
-<%@page import="in.co.rays.proj4.bean.PurgeBean"%>
+<%@page import="in.co.rays.proj4.bean.VoiceBean"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 
 <html>
 <head>
-<title>Purge List</title>
+<title>Voice Command List</title>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
 	<%@include file="Header.jsp"%>
 
-	<jsp:useBean id="bean" class="in.co.rays.proj4.bean.PurgeBean"
+	<jsp:useBean id="bean" class="in.co.rays.proj4.bean.VoiceBean"
 		scope="request"></jsp:useBean>
 
 	<div align="center">
-		<h1 align="center" style="margin-bottom: -15; color: navy;">Purge
-			List</h1>
+		<h1 align="center" style="margin-bottom: -15; color: navy;">Voice
+			Command List</h1>
 
 		<div style="height: 15px; margin-bottom: 12px">
 			<h3>
@@ -35,17 +33,17 @@
 			</h3>
 		</div>
 
-		<form action="<%=ORSView.PURGE_LIST_CTL%>" method="post">
+		<form action="<%=ORSView.VOICE_LIST_CTL%>" method="post">
 			<%
 			int pageNo = ServletUtility.getPageNo(request);
 			int pageSize = ServletUtility.getPageSize(request);
 			int index = ((pageNo - 1) * pageSize) + 1;
 			int nextListSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-			List<PurgeBean> typeList = (List<PurgeBean>) request.getAttribute("typeList");
+			List<VoiceBean> codeList = (List<VoiceBean>) request.getAttribute("codeList");
 
-			List<PurgeBean> list = (List<PurgeBean>) ServletUtility.getList(request);
-			Iterator<PurgeBean> it = list.iterator();
+			List<VoiceBean> list = (List<VoiceBean>) ServletUtility.getList(request);
+			Iterator<VoiceBean> it = list.iterator();
 
 			if (list.size() != 0) {
 			%>
@@ -54,66 +52,62 @@
 
 			<table style="width: 100%">
 				<tr>
-					<td align="center"><label><b>Purge Code:</b></label> <input
-						type="text" name="code" placeholder="Enter Purge Code"
-						value="<%=ServletUtility.getParameter("code", request)%>">&emsp;
-
-						<label><b>Purge Type: </b></label> <%=HTMLUtility.getList("type", String.valueOf(bean.getDataType()), typeList)%>
-						&nbsp; <input type="submit" name="operation"
-						value="<%=PurgeListCtl.OP_SEARCH%>">&nbsp; <input
-						type="submit" name="operation" value="<%=PurgeListCtl.OP_RESET%>"></td>
+					<td align="center"><label><b>Command Code: </b></label> <%=HTMLUtility.getList("code", String.valueOf(bean.getCommandCode()), codeList)%>
+						&nbsp; 
+						<label><b>Voice Name:</b></label>
+						<input type="text"
+						name="name" placeholder="Enter Voice Name"
+						value="<%=ServletUtility.getParameter("name", request)%>">&emsp;
+						<input type="submit" name="operation"
+						value="<%=VoiceListCtl.OP_SEARCH%>">&nbsp; <input
+						type="submit" name="operation"
+						value="<%=VoiceListCtl.OP_RESET%>"></td>
 				</tr>
 			</table>
 			<br>
-
 			<table border="1" style="width: 100%; border: groove;">
 				<tr style="background-color: #e1e6f1e3;">
 					<th width="5%"><input type="checkbox" id="selectall" /></th>
 					<th width="5%">S.No</th>
-					<th width="25%">Purge Code</th>
-					<th width="25%">Purge Type</th>
-					<th width="30%">Last Run Date</th>
+					<th width="25%">Command Code</th>
+					<th width="25%">User Name</th>
+					<th width="30%">Command Text</th>
 					<th width="25%">Status</th>
 					<th width="10%">Edit</th>
 				</tr>
-
 				<%
 				while (it.hasNext()) {
-					bean = (PurgeBean) it.next();
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					String date = sdf.format(bean.getLastRunDate());
+					bean = (VoiceBean) it.next();
 				%>
 				<tr>
 					<td style="text-align: center;"><input type="checkbox"
 						class="case" name="ids" value="<%=bean.getId()%>"></td>
 					<td style="text-align: center;"><%=index++%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=bean.getPurgeCode()%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=bean.getDataType()%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=date%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getCommandCode()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getUserName()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getCommandText()%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getStatus()%></td>
 					<td style="text-align: center;"><a
-						href="PurgeCtl?id=<%=bean.getId()%>">Edit</a></td>
+						href="VoiceCtl?id=<%=bean.getId()%>">Edit</a></td>
 					<%
 					}
 					%>
 				
 			</table>
-
 			<table style="width: 100%">
 				<tr>
 					<td style="width: 25%"><input type="submit" name="operation"
-						value="<%=PurgeListCtl.OP_PREVIOUS%>"
+						value="<%=VoiceListCtl.OP_PREVIOUS%>"
 						<%=pageNo > 1 ? "" : "disabled"%>></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=PurgeListCtl.OP_NEW%>"></td>
+						name="operation" value="<%=VoiceListCtl.OP_NEW%>"></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=PurgeListCtl.OP_DELETE%>"></td>
+						name="operation" value="<%=VoiceListCtl.OP_DELETE%>"></td>
 					<td style="width: 25%" align="right"><input type="submit"
-						name="operation" value="<%=PurgeListCtl.OP_NEXT%>"
+						name="operation" value="<%=VoiceListCtl.OP_NEXT%>"
 						<%=nextListSize != 0 ? "" : "disabled"%>></td>
 				</tr>
 			</table>
-
 			<%
 			}
 			if (list.size() == 0) {
@@ -121,7 +115,7 @@
 			<table>
 				<tr>
 					<td align="right"><input type="submit" name="operation"
-						value="<%=PurgeListCtl.OP_BACK%>"></td>
+						value="<%=VoiceListCtl.OP_BACK%>"></td>
 				</tr>
 			</table>
 			<%

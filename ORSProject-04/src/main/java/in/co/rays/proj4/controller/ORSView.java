@@ -24,6 +24,10 @@ public interface ORSView {
 
 	/** Base JSP folder. */
 	public String PAGE_FOLDER = "/jsp";
+	
+	
+	public String MODULE_VIEW = PAGE_FOLDER + "/ModuleView.jsp";
+	public String MODULE_CTL = APP_CONTEXT + "/ModuleCtl";
 
 	public String JAVA_DOC_VIEW = APP_CONTEXT + "/doc/index.html";
 
@@ -293,4 +297,34 @@ public interface ORSView {
 	public String ACCOUNT_LIST_VIEW = PAGE_FOLDER + "/AccountListView.jsp";
 	/** Account List Controller URL */
 	public String ACCOUNT_LIST_CTL = APP_CONTEXT + "/ctl/AccountListCtl";
+
+	/** Registration View JSP */
+	public String REGISTRATION_VIEW = PAGE_FOLDER + "/RegistrationView.jsp";
+	/** Registration Controller URL */
+	public String REGISTRATION_CTL = APP_CONTEXT + "/ctl/RegistrationCtl";
+	
+	/** Registration List JSP */
+	public String REGISTRATION_LIST_VIEW = PAGE_FOLDER + "/RegistrationListView.jsp";
+	/** Registration List Controller URL */
+	public String REGISTRATION_LIST_CTL = APP_CONTEXT + "/ctl/RegistrationListCtl";
+
+	/** Voice View JSP */
+	public String VOICE_VIEW = PAGE_FOLDER + "/VoiceView.jsp";
+	/** Voice Controller URL */
+	public String VOICE_CTL = APP_CONTEXT + "/ctl/VoiceCtl";
+	
+	/** Voice List JSP */
+	public String VOICE_LIST_VIEW = PAGE_FOLDER + "/VoiceListView.jsp";
+	/** Voice List Controller URL */
+	public String VOICE_LIST_CTL = APP_CONTEXT + "/ctl/VoiceListCtl";
+
+	/** Chat View JSP */
+	public String CHAT_VIEW = PAGE_FOLDER + "/ChatView.jsp";
+	/** Chat Controller URL */
+	public String CHAT_CTL = APP_CONTEXT + "/ctl/ChatCtl";
+	
+	/** Chat List JSP */
+	public String CHAT_LIST_VIEW = PAGE_FOLDER + "/ChatListView.jsp";
+	/** Chat List Controller URL */
+	public String CHAT_LIST_CTL = APP_CONTEXT + "/ctl/ChatListCtl";
 }
