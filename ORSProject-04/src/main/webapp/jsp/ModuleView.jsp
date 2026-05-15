@@ -1,4 +1,5 @@
 <%@page import="in.co.rays.proj4.bean.UserBean"%>
+<%@page import="in.co.rays.proj4.bean.RoleBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
@@ -111,6 +112,10 @@
 	<a href="<%=ORSView.VOICE_CTL%>">Add Voice Command</a>
 	<b>|</b>
 	<a href="<%=ORSView.VOICE_LIST_CTL%>">Voice Command List</a>
+	<b>|</b>
+	<a href="<%=ORSView.CHAT_CTL%>">Add Chat Room</a>
+	<b>|</b>
+	<a href="<%=ORSView.CHAT_LIST_CTL%>">Chat Room List</a>
 	<%
 	}
 	%>
