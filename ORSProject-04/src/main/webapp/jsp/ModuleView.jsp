@@ -35,8 +35,8 @@
 		<%=user.getFirstName()%>
 		(<%=session.getAttribute("role")%>)
 	</h3>
-
-
+	<a href="<%=ORSView.WELCOME_CTL%>"><b>Main Header</b></a>
+	<b>|</b>
 	<a href="<%=ORSView.HEALTH_CTL%>">Add Health</a>
 	<b>|</b>
 	<a href="<%=ORSView.HEALTH_LIST_CTL%>">Health List</a>
@@ -116,15 +116,27 @@
 	<a href="<%=ORSView.CHAT_CTL%>">Add Chat Room</a>
 	<b>|</b>
 	<a href="<%=ORSView.CHAT_LIST_CTL%>">Chat Room List</a>
+	<b>|</b>
+	<a href="<%=ORSView.STORY_CTL%>">Add Story</a>
+	<b>|</b>
+	<a href="<%=ORSView.STORY_LIST_CTL%>">Story Upload List</a>
+	<b>|</b>
+	<a href="<%=ORSView.LOGIN_HISTORY_CTL%>">Add Login History</a>
+	<b>|</b>
+	<a href="<%=ORSView.LOGIN_HISTORY_LIST_CTL%>">Login History List</a>
 	<%
 	}
 	%>
 	<hr>
-	
-	<br> <br> <br><br><br>
-		<h1 align="center">
-			<font size="10px" color="navy">Welcome to Daily Modules</font>
-		</h1>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<h1 align="center">
+		<font size="10px" color="navy">Welcome to Daily Modules</font>
+	</h1>
 	<%@ include file="Footer.jsp"%>
 
 </body>

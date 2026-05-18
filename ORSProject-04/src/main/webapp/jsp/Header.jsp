@@ -94,9 +94,9 @@
 	<!-- Daily Module -->
 	<a href="<%=ORSView.MODULE_CTL%>"><b>Other Modules</b></a>
 	<b>|</b>
-	<a href="<%=ORSView.STORY_CTL%>">Add Story</a>
+	<a href="<%=ORSView.CRICKET_CTL%>">Add Cricket Match</a>
 	<b>|</b>
-	<a href="<%=ORSView.STORY_LIST_CTL%>">Story Upload List</a>
+	<a href="<%=ORSView.CRICKET_LIST_CTL%>">Cricket Match List</a>
 	<%
 	}
 	%>

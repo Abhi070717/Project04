@@ -71,7 +71,7 @@ public class ErrorCtl extends BaseCtl {
 	private void process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		String lastCtl = (String) request.getAttribute("javax.servlet.error.request_uri");
+		String lastCtl = (String) request.getAttribute("javax.servlet.error.request_uri"); 
 		if (lastCtl == null) {
 			lastCtl = (String) request.getAttribute("lastCtl");
 		}
