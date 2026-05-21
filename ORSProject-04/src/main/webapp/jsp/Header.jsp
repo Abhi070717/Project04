@@ -50,9 +50,9 @@
 	<%
 	if (user.getRoleId() == RoleBean.ADMIN) {
 	%>
-	
-	
-	
+
+
+
 	<a href="<%=ORSView.ROLE_CTL%>">Add Role</a>
 	<b>|</b>
 	<a href="<%=ORSView.ROLE_LIST_CTL%>">Role List</a>
@@ -94,9 +94,9 @@
 	<!-- Daily Module -->
 	<a href="<%=ORSView.MODULE_CTL%>"><b>Other Modules</b></a>
 	<b>|</b>
-	<a href="<%=ORSView.CRICKET_CTL%>">Add Cricket Match</a>
+	<a href="<%=ORSView.MEETING_CTL%>">Add Online Meeting</a>
 	<b>|</b>
-	<a href="<%=ORSView.CRICKET_LIST_CTL%>">Cricket Match List</a>
+	<a href="<%=ORSView.MEETING_LIST_CTL%>">Online Meeting List</a>
 	<%
 	}
 	%>

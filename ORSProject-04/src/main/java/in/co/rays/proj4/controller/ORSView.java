@@ -357,4 +357,34 @@ public interface ORSView {
 	public String CRICKET_LIST_VIEW = PAGE_FOLDER + "/CricketListView.jsp";
 	/** Cricket List Controller URL */
 	public String CRICKET_LIST_CTL = APP_CONTEXT + "/ctl/CricketListCtl";
+
+	/** Achievement View JSP */
+	public String ACHIEVEMENT_VIEW = PAGE_FOLDER + "/AchievementView.jsp";
+	/** Achievement Controller URL */
+	public String ACHIEVEMENT_CTL = APP_CONTEXT + "/ctl/AchievementCtl";
+	
+	/** Achievement List JSP */
+	public String ACHIEVEMENT_LIST_VIEW = PAGE_FOLDER + "/AchievementListView.jsp";
+	/** Achievement List Controller URL */
+	public String ACHIEVEMENT_LIST_CTL = APP_CONTEXT + "/ctl/AchievementListCtl";
+
+	/** Assistant View JSP */
+	public String ASSISTANT_VIEW = PAGE_FOLDER + "/AssistantView.jsp";
+	/** Assistant Controller URL */
+	public String ASSISTANT_CTL = APP_CONTEXT + "/ctl/AssistantCtl";
+	
+	/** Assistant List JSP */
+	public String ASSISTANT_LIST_VIEW = PAGE_FOLDER + "/AssistantListView.jsp";
+	/** Assistant List Controller URL */
+	public String ASSISTANT_LIST_CTL = APP_CONTEXT + "/ctl/AssistantListCtl";
+
+	/** Meeting View JSP */
+	public String MEETING_VIEW = PAGE_FOLDER + "/MeetingView.jsp";
+	/** Meeting Controller URL */
+	public String MEETING_CTL = APP_CONTEXT + "/ctl/MeetingCtl";
+	
+	/** Meeting List JSP */
+	public String MEETING_LIST_VIEW = PAGE_FOLDER + "/MeetingListView.jsp";
+	/** Meeting List Controller URL */
+	public String MEETING_LIST_CTL = APP_CONTEXT + "/ctl/MeetingListCtl";
 }

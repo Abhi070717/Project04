@@ -4,28 +4,28 @@
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
-<%@page import="in.co.rays.proj4.controller.BlockListCtl"%>
+<%@page import="in.co.rays.proj4.controller.AchievementListCtl"%>
 <%@page import="in.co.rays.proj4.controller.BaseCtl"%>
-<%@page import="in.co.rays.proj4.bean.BlockBean"%>
+<%@page import="in.co.rays.proj4.bean.AchievementBean"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 
 <html>
 <head>
-<title>Block Trail List</title>
+<title>Achievement Badge List</title>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
 	<%@include file="Header.jsp"%>
 
-	<jsp:useBean id="bean" class="in.co.rays.proj4.bean.BlockBean"
+	<jsp:useBean id="bean" class="in.co.rays.proj4.bean.AchievementBean"
 		scope="request"></jsp:useBean>
 
 	<div align="center">
-		<h1 align="center" style="margin-bottom: -15; color: navy;">Block
-			Trail List</h1>
+		<h1 align="center" style="margin-bottom: -15; color: navy;">Achievement
+			Badge List</h1>
 
 		<div style="height: 15px; margin-bottom: 12px">
 			<h3>
@@ -36,17 +36,17 @@
 			</h3>
 		</div>
 
-		<form action="<%=ORSView.BLOCK_LIST_CTL%>" method="post">
+		<form action="<%=ORSView.ACHIEVEMENT_LIST_CTL%>" method="post">
 			<%
 			int pageNo = ServletUtility.getPageNo(request);
 			int pageSize = ServletUtility.getPageSize(request);
 			int index = ((pageNo - 1) * pageSize) + 1;
 			int nextListSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-			List<BlockBean> nameList = (List<BlockBean>) request.getAttribute("nameList");
+			List<AchievementBean> nameList = (List<AchievementBean>) request.getAttribute("nameList");
 
-			List<BlockBean> list = (List<BlockBean>) ServletUtility.getList(request);
-			Iterator<BlockBean> it = list.iterator();
+			List<AchievementBean> list = (List<AchievementBean>) ServletUtility.getList(request);
+			Iterator<AchievementBean> it = list.iterator();
 
 			if (list.size() != 0) {
 			%>
@@ -55,14 +55,15 @@
 
 			<table style="width: 100%">
 				<tr>
-					<td align="center"><label><b>Block Code:</b></label> <input
-						type="text" name="code" placeholder="Enter Block Code"
+					<td align="center"><label><b>Badge Code:</b></label> <input
+						type="text" name="code" placeholder="Enter Badge Code"
 						value="<%=ServletUtility.getParameter("code", request)%>">&emsp;
 
-						<label><b>User Name: </b></label> <%=HTMLUtility.getList("name", String.valueOf(bean.getUserName()), nameList)%>
+						<label><b>Badge Name: </b></label> <%=HTMLUtility.getList("name", String.valueOf(bean.getBadgeName()), nameList)%>
 						&nbsp; <input type="submit" name="operation"
-						value="<%=BlockListCtl.OP_SEARCH%>">&nbsp; <input
-						type="submit" name="operation" value="<%=BlockListCtl.OP_RESET%>"></td>
+						value="<%=AchievementListCtl.OP_SEARCH%>">&nbsp; <input
+						type="submit" name="operation"
+						value="<%=AchievementListCtl.OP_RESET%>"></td>
 				</tr>
 			</table>
 			<br>
@@ -70,26 +71,26 @@
 				<tr style="background-color: #e1e6f1e3;">
 					<th width="5%"><input type="checkbox" id="selectall" /></th>
 					<th width="5%">S.No</th>
-					<th width="25%">Block Code</th>
-					<th width="25%">User Name</th>
-					<th width="30%">Reason</th>
+					<th width="25%">Badge Code</th>
+					<th width="25%">Badge Name</th>
+					<th width="30%">Earned By</th>
 					<th width="25%">Status</th>
 					<th width="10%">Edit</th>
 				</tr>
 				<%
 				while (it.hasNext()) {
-					bean = (BlockBean) it.next();
+					bean = (AchievementBean) it.next();
 				%>
 				<tr>
 					<td style="text-align: center;"><input type="checkbox"
 						class="case" name="ids" value="<%=bean.getId()%>"></td>
 					<td style="text-align: center;"><%=index++%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=bean.getBlockCode()%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=bean.getUserName()%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=bean.getReason()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getBadgeCode()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getBadgeName()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getEarnedBy()%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getStatus()%></td>
 					<td style="text-align: center;"><a
-						href="BlockCtl?id=<%=bean.getId()%>">Edit</a></td>
+						href="AchievementCtl?id=<%=bean.getId()%>">Edit</a></td>
 					<%
 					}
 					%>
@@ -98,14 +99,14 @@
 			<table style="width: 100%">
 				<tr>
 					<td style="width: 25%"><input type="submit" name="operation"
-						value="<%=BlockListCtl.OP_PREVIOUS%>"
+						value="<%=AchievementListCtl.OP_PREVIOUS%>"
 						<%=pageNo > 1 ? "" : "disabled"%>></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=BlockListCtl.OP_NEW%>"></td>
+						name="operation" value="<%=AchievementListCtl.OP_NEW%>"></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=BlockListCtl.OP_DELETE%>"></td>
+						name="operation" value="<%=AchievementListCtl.OP_DELETE%>"></td>
 					<td style="width: 25%" align="right"><input type="submit"
-						name="operation" value="<%=BlockListCtl.OP_NEXT%>"
+						name="operation" value="<%=AchievementListCtl.OP_NEXT%>"
 						<%=nextListSize != 0 ? "" : "disabled"%>></td>
 				</tr>
 			</table>
@@ -116,7 +117,7 @@
 			<table>
 				<tr>
 					<td align="right"><input type="submit" name="operation"
-						value="<%=BlockListCtl.OP_BACK%>"></td>
+						value="<%=AchievementListCtl.OP_BACK%>"></td>
 				</tr>
 			</table>
 			<%

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Daily Module</title>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <link rel="stylesheet"
@@ -124,6 +124,18 @@
 	<a href="<%=ORSView.LOGIN_HISTORY_CTL%>">Add Login History</a>
 	<b>|</b>
 	<a href="<%=ORSView.LOGIN_HISTORY_LIST_CTL%>">Login History List</a>
+	<b>|</b>
+	<a href="<%=ORSView.CRICKET_CTL%>">Add Cricket Match</a>
+	<b>|</b>
+	<a href="<%=ORSView.CRICKET_LIST_CTL%>">Cricket Match List</a>
+	<b>|</b>
+	<a href="<%=ORSView.ACHIEVEMENT_CTL%>">Add Achievement Badge</a>
+	<b>|</b>
+	<a href="<%=ORSView.ACHIEVEMENT_LIST_CTL%>">Achievement Badge List</a>
+	<b>|</b>
+	<a href="<%=ORSView.ASSISTANT_CTL%>">Add Voice Assistant</a>
+	<b>|</b>
+	<a href="<%=ORSView.ASSISTANT_LIST_CTL%>">Voice Assistant List</a>
 	<%
 	}
 	%>
