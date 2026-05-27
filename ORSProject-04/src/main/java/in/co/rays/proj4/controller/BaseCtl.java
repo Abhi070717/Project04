@@ -26,7 +26,7 @@ import in.co.rays.proj4.util.ServletUtility;
  * @author Abhishish Bhawsar
  * 
  * @version 1.0
- */
+ */	
 public abstract class BaseCtl extends HttpServlet {
 
 	private static final Logger log = Logger.getLogger(BaseCtl.class);
@@ -68,10 +68,10 @@ public abstract class BaseCtl extends HttpServlet {
 	 * lists and related data. Subclasses may override this method as needed.
 	 *
 	 * @param request the HttpServletRequest object
-	 * @throws ServletException
-	 * @throws IOException
+	 * @throws ServletException 
+	 * @throws IOException 
 	 */
-	protected void preload(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	protected void preload(HttpServletRequest request, HttpServletResponse responses) throws IOException, ServletException {
 		log.debug("BaseCtl preload() called");
 	}
 
@@ -97,7 +97,7 @@ public abstract class BaseCtl extends HttpServlet {
 	 */
 	protected BaseBean populateDTO(BaseBean dto, HttpServletRequest request) {
 
-		log.debug("BaseCtl populateBean() called");
+		log.debug("BaseCtl populateDTO() started");
 
 		String createdBy = request.getParameter("createdBy");
 		String modifiedBy = null;
@@ -159,12 +159,14 @@ public abstract class BaseCtl extends HttpServlet {
 				&& !OP_DELETE.equalsIgnoreCase(op) && !OP_RESET.equalsIgnoreCase(op)) {
 
 			if (!validate(request)) {
+				log.warn("Validation failed for operation: " + op);
 				BaseBean bean = (BaseBean) populateBean(request);
 				ServletUtility.setBean(bean, request);
 				ServletUtility.forward(getView(), request, response);
 				return;
 			}
 		}
+
 		super.service(request, response);
 
 		log.info("Request Method: " + request.getMethod());

@@ -1,3 +1,4 @@
+
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.controller.RoleCtl"%>
 <%@page import="in.co.rays.proj4.controller.BaseCtl"%>
@@ -19,11 +20,11 @@
 		<div align="center">
 			<h1 align="center" style="margin-bottom: -15; color: navy">
 				<%
-				if (bean != null && bean.getId() > 0) {
+					if (bean != null && bean.getId() > 0) {
 				%>Update<%
-				} else {
+					} else {
 				%>Add<%
-				}
+					}
 				%>
 				Role
 			</h1>
@@ -73,25 +74,26 @@
 				<tr>
 					<th></th>
 					<%
-					if (bean != null && bean.getId() > 0) {
+						if (bean != null && bean.getId() > 0) {
 					%>
 					<td align="left" colspan="2"><input type="submit"
 						name="operation" value="<%=RoleCtl.OP_UPDATE%>"> <input
 						type="submit" name="operation" value="<%=RoleCtl.OP_CANCEL%>">
 					</td>
 					<%
-					} else {
+						} else {
 					%>
 					<td align="left" colspan="2"><input type="submit"
 						name="operation" value="<%=RoleCtl.OP_SAVE%>"> <input
 						type="submit" name="operation" value="<%=RoleCtl.OP_RESET%>">
 					</td>
 					<%
-					}
+						}
 					%>
 				</tr>
 			</table>
 		</div>
 	</form>
+	<%@ include file="Footer.jsp"%>
 </body>
 </html>

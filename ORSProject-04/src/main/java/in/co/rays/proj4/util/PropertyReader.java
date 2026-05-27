@@ -32,7 +32,6 @@ import java.util.ResourceBundle;
  * </p>
  *
  * @author Abhishish Bhawsar
- * 
  * @version 1.0
  */
 public class PropertyReader {

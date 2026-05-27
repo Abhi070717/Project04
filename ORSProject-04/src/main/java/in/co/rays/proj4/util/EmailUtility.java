@@ -47,7 +47,6 @@ import in.co.rays.proj4.exception.ApplicationException;
  * </pre>
  *
  * @author Abhishish Bhawsar
- * 
  * @version 1.0
  */
 public class EmailUtility {

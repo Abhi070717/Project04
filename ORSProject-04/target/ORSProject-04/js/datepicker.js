@@ -3,12 +3,12 @@ $(document).ready(function() {
 	var maxYear = currentYear - 18;
 
 	$("#udate").datepicker({
-		dateFormat: 'dd-mm-yy',
-		changeMonth: true,
-		changeYear: true,
-		yearRange: '1970:' + maxYear,
-		minDate: new Date(1970, 0, 1),
-		maxDate: new Date(maxYear, 11, 31)
+		dateFormat : 'dd-mm-yy',
+		changeMonth : true,
+		changeYear : true,
+		yearRange : '1970:' + maxYear,
+		minDate : new Date(1970, 0, 1),
+		maxDate : new Date(maxYear, 11, 31)
 	});
 });
 
@@ -21,14 +21,14 @@ $(function() {
 	var maxDate = new Date(currentYear, currentMonth + 3, currentDay);
 
 	$("#udatee").datepicker({
-		dateFormat: 'dd-mm-yy',
-		changeMonth: true,
-		changeYear: true,
-		yearRange: currentYear + ":" + currentYear,
-		minDate: today,
-		maxDate: maxDate,
-		beforeShowDay: function(date) {
-			return [date.getDay() !== 0];
+		dateFormat : 'dd-mm-yy',
+		changeMonth : true,
+		changeYear : true,
+		yearRange : currentYear + ":" + currentYear,
+		minDate : today,
+		maxDate : maxDate,
+		beforeShowDay : function(date) {
+			return [ date.getDay() !== 0 ];
 		}
 	});
 });

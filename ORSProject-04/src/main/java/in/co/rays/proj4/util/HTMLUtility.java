@@ -34,7 +34,6 @@ import in.co.rays.proj4.model.RoleModel;
  * </p>
  *
  * @author Abhishish Bhawsar
- * 
  * @version 1.0
  */
 public class HTMLUtility {

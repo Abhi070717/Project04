@@ -29,7 +29,6 @@ public class DepartmentModel {
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new DatabaseException("Exception : Exception in getting PK");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
@@ -42,35 +41,29 @@ public class DepartmentModel {
 		Connection conn = null;
 		int pk = 0;
 
-		DepartmentBean existBean = findByCode(bean.getCode());
-
+		// Duplicate check by departmentcode
+		DepartmentBean existBean = findByCode(bean.getDepartmentcode());
 		if (existBean != null) {
-			throw new DuplicateRecordException("Department Already Exist");
+			throw new DuplicateRecordException("Department Code already exists");
 		}
 
 		try {
-			conn = JDBCDataSource.getConnection();
 			pk = nextPk();
+			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 
-			PreparedStatement pstmt = conn
-					.prepareStatement("insert into st_department values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
+			PreparedStatement pstmt = conn.prepareStatement("insert into st_department values(?, ?, ?, ?, ?)");
 			pstmt.setInt(1, pk);
-			pstmt.setString(2, bean.getCode());
-			pstmt.setString(3, bean.getName());
-			pstmt.setString(4, bean.getHead());
-			pstmt.setString(5, bean.getLocation());
-			pstmt.setString(6, bean.getCreatedBy());
-			pstmt.setString(7, bean.getModifiedBy());
-			pstmt.setTimestamp(8, bean.getCreatedDatetime());
-			pstmt.setTimestamp(9, bean.getModifiedDatetime());
-			int i = pstmt.executeUpdate();
-			conn.commit();
+			pstmt.setString(2, bean.getDepartmentcode());
+			pstmt.setString(3, bean.getDepartmentname());
+			pstmt.setString(4, bean.getHeadname());
+			pstmt.setString(5, bean.getDepartmentstatus());
 
-			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
-					+ "Records: Added successfully Duplicates: 0  Warnings: 0");
+			pstmt.executeUpdate();
+			conn.commit();
 			pstmt.close();
+
+			System.out.println("DATA ADDED");
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -82,19 +75,17 @@ public class DepartmentModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
-
 		return pk;
-
 	}
 
 	public void update(DepartmentBean bean) throws ApplicationException, DuplicateRecordException {
 
 		Connection conn = null;
 
-		DepartmentBean existBean = findByCode(bean.getCode());
-
+		// Duplicate check while update
+		DepartmentBean existBean = findByCode(bean.getDepartmentcode());
 		if (existBean != null && existBean.getId() != bean.getId()) {
-			throw new DuplicateRecordException("Department Already Exist");
+			throw new DuplicateRecordException("Department Code already exists");
 		}
 
 		try {
@@ -102,31 +93,27 @@ public class DepartmentModel {
 			conn.setAutoCommit(false);
 
 			PreparedStatement pstmt = conn.prepareStatement(
-					"update st_department set dept_code = ?, dept_name = ?, dept_head = ?, location = ?, created_by = ?, modified_by = ?, created_datetime = ?, modified_datetime = ? where id = ?");
+					"update st_department set st_departmentcode=?, st_departmentname=?, st_headname=?, st_departmentstatus=? where id=?");
 
-			pstmt.setLong(9, bean.getId());
-			pstmt.setString(1, bean.getCode());
-			pstmt.setString(2, bean.getName());
-			pstmt.setString(3, bean.getHead());
-			pstmt.setString(4, bean.getLocation());
-			pstmt.setString(5, bean.getCreatedBy());
-			pstmt.setString(6, bean.getModifiedBy());
-			pstmt.setTimestamp(7, bean.getCreatedDatetime());
-			pstmt.setTimestamp(8, bean.getModifiedDatetime());
-			int i = pstmt.executeUpdate();
+			pstmt.setString(1, bean.getDepartmentcode());
+			pstmt.setString(2, bean.getDepartmentname());
+			pstmt.setString(3, bean.getHeadname());
+			pstmt.setString(4, bean.getDepartmentstatus());
+			pstmt.setLong(5, bean.getId());
+
+			pstmt.executeUpdate();
 			conn.commit();
-
-			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
-					+ "Records: Updated successfully Duplicates: 0  Warnings: 0");
 			pstmt.close();
+
+			System.out.println("DATA UPDATE");
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : update rollback exception " + ex.getMessage());
+				throw new ApplicationException("Exception : Update rollback exception " + ex.getMessage());
 			}
-			throw new ApplicationException("Exception : Exception in update Department");
+			throw new ApplicationException("Exception in updating Department ");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -141,23 +128,18 @@ public class DepartmentModel {
 			conn.setAutoCommit(false);
 
 			PreparedStatement pstmt = conn.prepareStatement("delete from st_department where id = ?");
-
 			pstmt.setLong(1, bean.getId());
-
-			int i = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 			conn.commit();
-
-			System.out.println(i + " Query OK, The rows affected (0.02 sec)" + "\n"
-					+ "Records: Deleted successfully Duplicates: 0  Warnings: 0");
 			pstmt.close();
+
 		} catch (Exception e) {
-			e.printStackTrace();
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : Deleted rollback exception " + ex.getMessage());
+				throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
 			}
-			throw new ApplicationException("Exception : Exception in Deleted Department");
+			throw new ApplicationException("Exception : Exception in delete Department");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -165,33 +147,27 @@ public class DepartmentModel {
 
 	public DepartmentBean findByPk(long pk) throws ApplicationException {
 
-		Connection conn = null;
 		DepartmentBean bean = null;
-
-		StringBuffer sb = new StringBuffer("select * from st_department where id = ?");
+		Connection conn = null;
 
 		try {
 			conn = JDBCDataSource.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sb.toString());
+			PreparedStatement pstmt = conn.prepareStatement("select * from st_department where id = ?");
 			pstmt.setLong(1, pk);
 			ResultSet rs = pstmt.executeQuery();
+
 			while (rs.next()) {
 				bean = new DepartmentBean();
 				bean.setId(rs.getLong(1));
-				bean.setCode(rs.getString(2));
-				bean.setName(rs.getString(3));
-				bean.setHead(rs.getString(4));
-				bean.setLocation(rs.getString(5));
-				bean.setCreatedBy(rs.getString(6));
-				bean.setModifiedBy(rs.getString(7));
-				bean.setCreatedDatetime(rs.getTimestamp(8));
-				bean.setModifiedDatetime(rs.getTimestamp(9));
+				bean.setDepartmentcode(rs.getString(2));
+				bean.setDepartmentname(rs.getString(3));
+				bean.setHeadname(rs.getString(4));
+				bean.setDepartmentstatus(rs.getString(5));
 			}
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in getting Department by PK");
+			throw new ApplicationException("Exception : Exception in getting Department by pk");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -200,32 +176,26 @@ public class DepartmentModel {
 
 	public DepartmentBean findByCode(String code) throws ApplicationException {
 
-		Connection conn = null;
 		DepartmentBean bean = null;
-
-		StringBuffer sb = new StringBuffer("select * from st_department where dept_code = ?");
+		Connection conn = null;
 
 		try {
 			conn = JDBCDataSource.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sb.toString());
+			PreparedStatement pstmt = conn.prepareStatement("select * from st_department where st_departmentcode = ?");
 			pstmt.setString(1, code);
 			ResultSet rs = pstmt.executeQuery();
+
 			while (rs.next()) {
 				bean = new DepartmentBean();
 				bean.setId(rs.getLong(1));
-				bean.setCode(rs.getString(2));
-				bean.setName(rs.getString(3));
-				bean.setHead(rs.getString(4));
-				bean.setLocation(rs.getString(5));
-				bean.setCreatedBy(rs.getString(6));
-				bean.setModifiedBy(rs.getString(7));
-				bean.setCreatedDatetime(rs.getTimestamp(8));
-				bean.setModifiedDatetime(rs.getTimestamp(9));
+				bean.setDepartmentcode(rs.getString(2));
+				bean.setDepartmentname(rs.getString(3));
+				bean.setHeadname(rs.getString(4));
+				bean.setDepartmentstatus(rs.getString(5));
 			}
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new ApplicationException("Exception : Exception in getting Department by code");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
@@ -233,28 +203,29 @@ public class DepartmentModel {
 		return bean;
 	}
 
+	public List<DepartmentBean> list() throws ApplicationException {
+		return search(null, 0, 0);
+	}
+
 	public List<DepartmentBean> search(DepartmentBean bean, int pageNo, int pageSize) throws ApplicationException {
 
-		Connection conn = null;
-		List<DepartmentBean> list = new ArrayList<DepartmentBean>();
-
-		StringBuffer sql = new StringBuffer("select * from st_department where 1 = 1");
+		StringBuffer sql = new StringBuffer("select * from st_department where 1=1");
 
 		if (bean != null) {
 			if (bean.getId() > 0) {
 				sql.append(" and id = " + bean.getId());
 			}
-			if (bean.getCode() != null && bean.getCode().length() > 0) {
-				sql.append(" and dept_Code like '" + bean.getCode() + "%'");
+			if (bean.getDepartmentcode() != null && bean.getDepartmentcode().length() > 0) {
+				sql.append(" and st_departmentcode like '" + bean.getDepartmentcode() + "%'");
 			}
-			if (bean.getName() != null && bean.getName().length() > 0) {
-				sql.append(" and dept_name like '" + bean.getName() + "%'");
+			if (bean.getDepartmentname() != null && bean.getDepartmentname().length() > 0) {
+				sql.append(" and st_departmentname like '" + bean.getDepartmentname() + "%'");
 			}
-			if (bean.getHead() != null && bean.getHead().length() > 0) {
-				sql.append(" and dept_Head like '" + bean.getHead() + "%'");
+			if (bean.getHeadname() != null && bean.getHeadname().length() > 0) {
+				sql.append(" and st_headname like '" + bean.getHeadname() + "%'");
 			}
-			if (bean.getLocation() != null && bean.getLocation().length() > 0) {
-				sql.append(" and Location like '" + bean.getLocation() + "%'");
+			if (bean.getDepartmentstatus() != null && bean.getDepartmentstatus().length() > 0) {
+				sql.append(" and st_departmentstatus like '" + bean.getDepartmentstatus() + "%'");
 			}
 		}
 
@@ -263,28 +234,28 @@ public class DepartmentModel {
 			sql.append(" limit " + pageNo + ", " + pageSize);
 		}
 
+		Connection conn = null;
+		ArrayList<DepartmentBean> list = new ArrayList<DepartmentBean>();
+
 		try {
 			conn = JDBCDataSource.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = pstmt.executeQuery();
+
 			while (rs.next()) {
 				bean = new DepartmentBean();
 				bean.setId(rs.getLong(1));
-				bean.setCode(rs.getString(2));
-				bean.setName(rs.getString(3));
-				bean.setHead(rs.getString(4));
-				bean.setLocation(rs.getString(5));
-				bean.setCreatedBy(rs.getString(6));
-				bean.setModifiedBy(rs.getString(7));
-				bean.setCreatedDatetime(rs.getTimestamp(8));
-				bean.setModifiedDatetime(rs.getTimestamp(9));
+				bean.setDepartmentcode(rs.getString(2));
+				bean.setDepartmentname(rs.getString(3));
+				bean.setHeadname(rs.getString(4));
+				bean.setDepartmentstatus(rs.getString(5));
 				list.add(bean);
 			}
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in getting Department by PK");
+			throw new ApplicationException("Exception : Exception in search Department");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}

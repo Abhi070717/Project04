@@ -1,42 +1,42 @@
-  package in.co.rays.proj4.bean;
+package in.co.rays.proj4.bean;
 
 public class DepartmentBean extends BaseBean {
 
-	private String code;
-	private String name;
-	private String head;
-	private String location;
+	private String departmentcode;
+	private String departmentname;
+	private String headname;
+	private String departmentstatus;
 
-	public String getCode() {
-		return code;
+	public String getDepartmentcode() {
+		return departmentcode;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setDepartmentcode(String departmentcode) {
+		this.departmentcode = departmentcode;
 	}
 
-	public String getName() {
-		return name;
+	public String getDepartmentname() {
+		return departmentname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setDepartmentname(String departmentname) {
+		this.departmentname = departmentname;
 	}
 
-	public String getHead() {
-		return head;
+	public String getHeadname() {
+		return headname;
 	}
 
-	public void setHead(String head) {
-		this.head = head;
+	public void setHeadname(String headname) {
+		this.headname = headname;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getDepartmentstatus() {
+		return departmentstatus;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setDepartmentstatus(String departmentstatus) {
+		this.departmentstatus = departmentstatus;
 	}
 
 	@Override

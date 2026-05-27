@@ -1,7 +1,7 @@
 package in.co.rays.proj4.exception;
 
 /**
-  * ApplicationException is a custom checked exception used to represent 
+ * ApplicationException is a custom checked exception used to represent 
  * general application-level errors in the project.
  * 
  * It is typically thrown when:
@@ -13,16 +13,15 @@ package in.co.rays.proj4.exception;
  * user errors, database errors, and application errors.
  *
  * @author Abhishish Bhawsar
- *
  */
 public class ApplicationException extends Exception {
 
-	/**
-	 * Creates an ApplicationException instance with a descriptive message.
-	 *
-	 * @param msg the detailed error message
-	 */
-	public ApplicationException(String msg) {
-		super(msg);
-	}
+    /**
+     * Creates an ApplicationException instance with a descriptive message.
+     *
+     * @param msg the detailed error message
+     */
+    public ApplicationException(String msg) {
+        super(msg);
+    }
 }

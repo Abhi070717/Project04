@@ -1,7 +1,7 @@
 package in.co.rays.proj4.exception;
 
 /**
- *  * DuplicateRecordException is thrown when an attempt is made to add or update
+ * DuplicateRecordException is thrown when an attempt is made to add or update
  * a record that already exists in the database.
  *
  * Typical scenarios:
@@ -10,19 +10,17 @@ package in.co.rays.proj4.exception;
  *  - Attempting to insert duplicate roll numbers in marksheets
  *
  * This helps enforce unique constraints at the application level.
- * 
- * @author Abhishish Bhawsar
  *
+ * @author Abhishish Bhawsar
  */
 public class DuplicateRecordException extends Exception {
 
-	/**
-	 * Creates a DuplicateRecordException with a specific error message.
+    /**
+     * Creates a DuplicateRecordException with a specific error message.
      *
      * @param msg the detail message explaining the duplicate condition
-	 */
-	public DuplicateRecordException(String msg) {
-		super(msg);
-	}
-
+     */
+    public DuplicateRecordException(String msg) {
+        super(msg);
+    }
 }

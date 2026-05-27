@@ -68,7 +68,8 @@
 					<th align="left">Confirm Password<span style="color: red">*</span></th>
 					<td align="center"><input type="password"
 						name="confirmPassword" placeholder="Enter Confirm Password"
-						value="<%=DataUtility.getString(request.getParameter("confirmPassword") == null ? "" : DataUtility.getString(request.getParameter("confirmPassword")))%>">
+						value="<%=DataUtility.getString(request.getParameter("confirmPassword") == null ? ""
+					: DataUtility.getString(request.getParameter("confirmPassword")))%>">
 					</td>
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("confirmPassword", request)%>
 					</font></td>
@@ -89,6 +90,6 @@
 			</table>
 		</div>
 	</form>
-	<%@ include file="Footer.jsp"%>
+	<%@include file="Footer.jsp"%>
 </body>
 </html>
