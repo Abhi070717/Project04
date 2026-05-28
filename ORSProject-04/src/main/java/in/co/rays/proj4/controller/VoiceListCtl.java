@@ -69,7 +69,7 @@ public class VoiceListCtl extends BaseCtl {
 
 		} catch (ApplicationException e) {
 			e.printStackTrace();
-			ServletUtility.handleException(e, request, response);
+			ServletUtility.handleException(e, request, response, getView());
 		}
 	}
 
@@ -140,7 +140,7 @@ public class VoiceListCtl extends BaseCtl {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			ServletUtility.handleException(e, request, response);
+			ServletUtility.handleException(e, request, response, getView());
 		}
 	}
 

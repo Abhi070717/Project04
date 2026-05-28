@@ -1,3 +1,4 @@
+<%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@ page isErrorPage="true"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -5,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Error Page</title>
 </head>
 <body>
 	<br>
@@ -18,7 +19,7 @@
 				the network cables, modem and router</b></font>
 	</div>
 	<h4 align="center">
-		<font size="5px" color="black"> <a href="WelcomeCtl"
+		<font size="5px" color="black"> <a href="<%=ORSView.WELCOME_CTL %>"
 			style="color: deepskyblue;">*Please click here to Go Back*</a></font>
 	</h4>
 </html>

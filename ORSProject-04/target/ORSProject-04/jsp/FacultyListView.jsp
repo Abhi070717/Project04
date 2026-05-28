@@ -1,5 +1,5 @@
-<%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
 <%@page import="in.co.rays.proj4.controller.FacultyListCtl"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
@@ -29,15 +29,15 @@
 
 		<form action="<%=ORSView.FACULTY_LIST_CTL%>" method="post">
 			<%
-				int pageNo = ServletUtility.getPageNo(request);
-				int pageSize = ServletUtility.getPageSize(request);
-				int index = ((pageNo - 1) * pageSize) + 1;
-				int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
+			int pageNo = ServletUtility.getPageNo(request);
+			int pageSize = ServletUtility.getPageSize(request);
+			int index = ((pageNo - 1) * pageSize) + 1;
+			int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-				List<FacultyBean> list = (List<FacultyBean>) ServletUtility.getList(request);
-				Iterator<FacultyBean> it = list.iterator();
+			List<FacultyBean> list = (List<FacultyBean>) ServletUtility.getList(request);
+			Iterator<FacultyBean> it = list.iterator();
 
-				if (list.size() != 0) {
+			if (list.size() != 0) {
 			%>
 
 			<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
@@ -79,8 +79,8 @@
 				</tr>
 
 				<%
-					while (it.hasNext()) {
-							FacultyBean bean = it.next();
+				while (it.hasNext()) {
+					FacultyBean bean = it.next();
 				%>
 				<tr>
 					<td style="text-align: center;"><input type="checkbox"
@@ -95,15 +95,15 @@
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getGender()%></td>
 					<td style="text-align: center;"><%=bean.getMobileNo()%></td>
 					<%
-						SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-								String date = sdf.format(bean.getDob());
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+					String date = sdf.format(bean.getDob());
 					%>
 					<td style="text-align: center;"><%=date%></td>
 					<td style="text-align: center;"><a
 						href="FacultyCtl?id=<%=bean.getId()%>">Edit</a></td>
 				</tr>
 				<%
-					}
+				}
 				%>
 			</table>
 
@@ -123,8 +123,8 @@
 			</table>
 
 			<%
-				}
-				if (list.size() == 0) {
+			}
+			if (list.size() == 0) {
 			%>
 			<table>
 				<tr>
@@ -133,10 +133,9 @@
 				</tr>
 			</table>
 			<%
-				}
+			}
 			%>
 		</form>
-		<%@include file="Footer.jsp"%>
 	</div>
 </body>
 </html>

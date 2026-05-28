@@ -20,228 +20,235 @@ import in.co.rays.proj4.util.ServletUtility;
 
 /**
  * Controller that handles listing, searching, pagination and bulk actions for
- * Course entities. It preloads data required by the view, populates {@link CourseBean}
- * from request parameters, and delegates business operations to {@link CourseModel}.
+ * Course entities. It preloads data required by the view, populates
+ * {@link CourseBean} from request parameters, and delegates business operations
+ * to {@link CourseModel}.
  * <p>
- * Supported operations include Search, Next, Previous, New, Delete, Reset and Back.
+ * Supported operations include Search, Next, Previous, New, Delete, Reset and
+ * Back.
  * </p>
  *
  * @author Abhishish Bhawsar
+ * 
  * @version 1.0
  * @see in.co.rays.proj4.model.CourseModel
  * @see in.co.rays.proj4.bean.CourseBean
+ *
  */
 @WebServlet(name = "CourseListCtl", urlPatterns = { "/ctl/CourseListCtl" })
 public class CourseListCtl extends BaseCtl {
 
-    private static final Logger log = Logger.getLogger(CourseListCtl.class);
+	private static final Logger log = Logger.getLogger(CourseListCtl.class);
 
-    /**
-     * Preloads the list of courses and sets it as request attribute "courseList".
-     * This method is invoked before forwarding to the view so that dropdowns or
-     * auxiliary lists can be rendered.
-     *
-     * @param request the {@link HttpServletRequest}
-     * @throws ServletException 
-     * @throws IOException 
-     */
-    @Override
-    protected void preload(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	/**
+	 * Preloads the list of courses and sets it as request attribute "courseList".
+	 * This method is invoked before forwarding to the view so that dropdowns or
+	 * auxiliary lists can be rendered.
+	 *
+	 * @param request the {@link HttpServletRequest}
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	@Override
+	protected void preload(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 
-        log.debug("CourseListCtl preload() started");
+		log.debug("CourseListCtl preload() started");
 
-        CourseModel courseModel = new CourseModel();
+		CourseModel courseModel = new CourseModel();
 
-        try {
-            List courseList = courseModel.list();
-            request.setAttribute("courseList", courseList);
-            log.debug("Course list preloaded, size: " + courseList.size());
-        } catch (ApplicationException e) {
-            log.error("Error while preloading course list", e);
-            ServletUtility.handleException(e, request, response, getView());
-            e.printStackTrace();
-        }
-    }
+		try {
+			List courseList = courseModel.list();
+			request.setAttribute("courseList", courseList);
+			log.debug("Course list preloaded, size: " + courseList.size());
+		} catch (ApplicationException e) {
+			log.error("Error while preloading course list", e);
+			ServletUtility.handleException(e, request, response, getView());
+			e.printStackTrace();
+		}
+	}
 
-    /**
-     * Populates a {@link CourseBean} from request parameters for use in search
-     * or other operations.
-     *
-     * @param request the {@link HttpServletRequest} containing parameters
-     * @return populated {@link BaseBean} (actually a {@link CourseBean})
-     */
-    @Override
-    protected BaseBean populateBean(HttpServletRequest request) {
+	/**
+	 * Populates a {@link CourseBean} from request parameters for use in search or
+	 * other operations.
+	 *
+	 * @param request the {@link HttpServletRequest} containing parameters
+	 * @return populated {@link BaseBean} (actually a {@link CourseBean})
+	 */
+	@Override
+	protected BaseBean populateBean(HttpServletRequest request) {
 
-        log.debug("CourseListCtl populateBean() called");
+		log.debug("CourseListCtl populateBean() called");
 
-        CourseBean bean = new CourseBean();
+		CourseBean bean = new CourseBean();
 
-        bean.setName(DataUtility.getString(request.getParameter("name")));
-        bean.setId(DataUtility.getLong(request.getParameter("courseId")));
-        bean.setDuration(DataUtility.getString(request.getParameter("duration")));
+		bean.setName(DataUtility.getString(request.getParameter("name")));
+		bean.setId(DataUtility.getLong(request.getParameter("courseId")));
+		bean.setDuration(DataUtility.getString(request.getParameter("duration")));
 
-        return bean;
-    }
+		return bean;
+	}
 
-    /**
-     * Handles HTTP GET requests. Performs an initial search and forwards the
-     * result list to the view. If no records are found, an error message is set.
-     *
-     * @param request  the {@link HttpServletRequest}
-     * @param response the {@link HttpServletResponse}
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	/**
+	 * Handles HTTP GET requests. Performs an initial search and forwards the result
+	 * list to the view. If no records are found, an error message is set.
+	 *
+	 * @param request  the {@link HttpServletRequest}
+	 * @param response the {@link HttpServletResponse}
+	 * @throws ServletException if a servlet-specific error occurs
+	 * @throws IOException      if an I/O error occurs
+	 */
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        log.info("CourseListCtl doGet() started");
+		log.info("CourseListCtl doGet() started");
 
-        int pageNo = 1;
-        int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
+		int pageNo = 1;
+		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
 
-        CourseBean bean = (CourseBean) populateBean(request);
-        CourseModel model = new CourseModel();
+		CourseBean bean = (CourseBean) populateBean(request);
+		CourseModel model = new CourseModel();
 
-        try {
-            List<CourseBean> list = model.search(bean, pageNo, pageSize);
-            List<CourseBean> next = model.search(bean, pageNo + 1, pageSize);
+		try {
+			List<CourseBean> list = model.search(bean, pageNo, pageSize);
+			List<CourseBean> next = model.search(bean, pageNo + 1, pageSize);
 
-            if (list == null || list.isEmpty()) {
-                log.warn("No course records found");
-                ServletUtility.setErrorMessage("No record found", request);
-            }
+			if (list == null || list.isEmpty()) {
+				log.warn("No course records found");
+				ServletUtility.setErrorMessage("No record found", request);
+			}
 
-            ServletUtility.setList(list, request);
-            ServletUtility.setPageNo(pageNo, request);
-            ServletUtility.setPageSize(pageSize, request);
-            ServletUtility.setBean(bean, request);
-            request.setAttribute("nextListSize", next.size());
+			ServletUtility.setList(list, request);
+			ServletUtility.setPageNo(pageNo, request);
+			ServletUtility.setPageSize(pageSize, request);
+			ServletUtility.setBean(bean, request);
+			request.setAttribute("nextListSize", next.size());
 
-            log.debug("Forwarding to course list view");
-            ServletUtility.forward(getView(), request, response);
+			log.debug("Forwarding to course list view");
 
-        } catch (ApplicationException e) {
-            log.error("ApplicationException in doGet()", e);
-            e.printStackTrace();
-            ServletUtility.handleException(e, request, response, getView());
-            return;
-        }
-    }
+			ServletUtility.forward(getView(), request, response);
 
-    /**
-     * Handles HTTP POST requests for search, pagination, new, delete, reset and back
-     * operations. After performing the requested operation it forwards the updated
-     * list and pagination metadata to the view.
-     *
-     * @param request  the {@link HttpServletRequest}
-     * @param response the {@link HttpServletResponse}
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+		} catch (ApplicationException e) {
+			log.error("ApplicationException in doGet()", e);
+			e.printStackTrace();
 
-        log.info("CourseListCtl doPost() started");
+			ServletUtility.handleException(e, request, response, getView());
+			return;
+		}
+	}
 
-        List list = null;
-        List next = null;
+	/**
+	 * Handles HTTP POST requests for search, pagination, new, delete, reset and
+	 * back operations. After performing the requested operation it forwards the
+	 * updated list and pagination metadata to the view.
+	 *
+	 * @param request  the {@link HttpServletRequest}
+	 * @param response the {@link HttpServletResponse}
+	 * @throws ServletException if a servlet-specific error occurs
+	 * @throws IOException      if an I/O error occurs
+	 */
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
-        int pageSize = DataUtility.getInt(request.getParameter("pageSize"));
+		log.info("CourseListCtl doPost() started");
 
-        pageNo = (pageNo == 0) ? 1 : pageNo;
-        pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
+		List list = null;
+		List next = null;
 
-        CourseBean bean = (CourseBean) populateBean(request);
-        CourseModel model = new CourseModel();
+		int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
+		int pageSize = DataUtility.getInt(request.getParameter("pageSize"));
 
-        String op = DataUtility.getString(request.getParameter("operation"));
-        String[] ids = request.getParameterValues("ids");
+		pageNo = (pageNo == 0) ? 1 : pageNo;
+		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 
-        log.debug("Operation received: " + op + ", PageNo: " + pageNo);
+		CourseBean bean = (CourseBean) populateBean(request);
+		CourseModel model = new CourseModel();
 
-        try {
+		String op = DataUtility.getString(request.getParameter("operation"));
+		String[] ids = request.getParameterValues("ids");
 
-            if (OP_SEARCH.equalsIgnoreCase(op) || "Next".equalsIgnoreCase(op) || "Previous".equalsIgnoreCase(op)) {
+		log.debug("Operation received: " + op + ", PageNo: " + pageNo);
 
-                if (OP_SEARCH.equalsIgnoreCase(op)) {
-                    pageNo = 1;
-                    log.debug("Search operation triggered");
-                } else if (OP_NEXT.equalsIgnoreCase(op)) {
-                    pageNo++;
-                    log.debug("Next page requested");
-                } else if (OP_PREVIOUS.equalsIgnoreCase(op) && pageNo > 1) {
-                    pageNo--;
-                    log.debug("Previous page requested");
-                }
+		try {
 
-            } else if (OP_NEW.equalsIgnoreCase(op)) {
-                log.info("Redirecting to Course form");
-                ServletUtility.redirect(ORSView.COURSE_CTL, request, response);
-                return;
+			if (OP_SEARCH.equalsIgnoreCase(op) || "Next".equalsIgnoreCase(op) || "Previous".equalsIgnoreCase(op)) {
 
-            } else if (OP_DELETE.equalsIgnoreCase(op)) {
-                pageNo = 1;
-                if (ids != null && ids.length > 0) {
-                    CourseBean deletebean = new CourseBean();
-                    for (String id : ids) {
-                        deletebean.setId(DataUtility.getInt(id));
-                        model.delete(deletebean);
-                        log.info("Deleted course id: " + id);
-                        ServletUtility.setSuccessMessage("Course deleted successfully", request);
-                    }
-                } else {
-                    log.warn("Delete operation requested without selecting records");
-                    ServletUtility.setErrorMessage("Select at least one record", request);
-                }
+				if (OP_SEARCH.equalsIgnoreCase(op)) {
+					pageNo = 1;
+					log.debug("Search operation triggered");
+				} else if (OP_NEXT.equalsIgnoreCase(op)) {
+					pageNo++;
+					log.debug("Next page requested");
+				} else if (OP_PREVIOUS.equalsIgnoreCase(op) && pageNo > 1) {
+					pageNo--;
+					log.debug("Previous page requested");
+				}
 
-            } else if (OP_RESET.equalsIgnoreCase(op)) {
-                log.info("Reset operation triggered");
-                ServletUtility.redirect(ORSView.COLLEGE_LIST_CTL, request, response);
-                return;
+			} else if (OP_NEW.equalsIgnoreCase(op)) {
+				log.info("Redirecting to Course form");
+				ServletUtility.redirect(ORSView.COURSE_CTL, request, response);
+				return;
 
-            } else if (OP_BACK.equalsIgnoreCase(op)) {
-                log.info("Back operation triggered");
-                ServletUtility.redirect(ORSView.COLLEGE_LIST_CTL, request, response);
-                return;
-            }
+			} else if (OP_DELETE.equalsIgnoreCase(op)) {
+				pageNo = 1;
+				if (ids != null && ids.length > 0) {
+					CourseBean deletebean = new CourseBean();
+					for (String id : ids) {
+						deletebean.setId(DataUtility.getInt(id));
+						model.delete(deletebean);
+						log.info("Deleted course id: " + id);
+						ServletUtility.setSuccessMessage("Course deleted successfully", request);
+					}
+				} else {
+					log.warn("Delete operation requested without selecting records");
+					ServletUtility.setErrorMessage("Select at least one record", request);
+				}
 
-            list = model.search(bean, pageNo, pageSize);
-            next = model.search(bean, pageNo + 1, pageSize);
+			} else if (OP_RESET.equalsIgnoreCase(op)) {
+				log.info("Reset operation triggered");
+				ServletUtility.redirect(ORSView.COURSE_LIST_CTL, request, response);
+				return;
 
-            if (list == null || list.size() == 0) {
-                log.warn("No course records found after operation");
-                ServletUtility.setErrorMessage("No record found ", request);
-            }
+			} else if (OP_BACK.equalsIgnoreCase(op)) {
+				log.info("Back operation triggered");
+				ServletUtility.redirect(ORSView.COURSE_LIST_CTL, request, response);
+				return;
+			}
 
-            ServletUtility.setList(list, request);
-            ServletUtility.setPageNo(pageNo, request);
-            ServletUtility.setPageSize(pageSize, request);
-            ServletUtility.setBean(bean, request);
-            request.setAttribute("nextListSize", next.size());
+			list = model.search(bean, pageNo, pageSize);
+			next = model.search(bean, pageNo + 1, pageSize);
 
-            log.debug("Forwarding to course list view");
-            ServletUtility.forward(getView(), request, response);
+			if (list == null || list.size() == 0) {
+				log.warn("No course records found after operation");
+				ServletUtility.setErrorMessage("No record found ", request);
+			}
 
-        } catch (ApplicationException e) {
-            log.error("ApplicationException in doPost()", e);
-            e.printStackTrace();
-            ServletUtility.handleException(e, request, response, getView());
-            return;
-        }
-    }
+			ServletUtility.setList(list, request);
+			ServletUtility.setPageNo(pageNo, request);
+			ServletUtility.setPageSize(pageSize, request);
+			ServletUtility.setBean(bean, request);
+			request.setAttribute("nextListSize", next.size());
 
-    /**
-     * Returns the JSP view path for the course list.
-     *
-     * @return view page path as {@link String}
-     */
-    @Override
-    protected String getView() {
-        return ORSView.COURSE_LIST_VIEW;
-    }
+			log.debug("Forwarding to course list view");
+			ServletUtility.forward(getView(), request, response);
+
+		} catch (ApplicationException e) {
+			log.error("ApplicationException in doPost()", e);
+			e.printStackTrace();
+			ServletUtility.handleException(e, request, response, getView());
+			return;
+		}
+	}
+
+	/**
+	 * Returns the JSP view path for the course list.
+	 *
+	 * @return view page path as {@link String}
+	 */
+	@Override
+	protected String getView() {
+		return ORSView.COURSE_LIST_VIEW;
+	}
 }

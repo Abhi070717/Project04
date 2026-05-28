@@ -65,7 +65,7 @@ public class ClaimCtl extends BaseCtl {
 				ClaimBean bean = model.findByPk(id);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
-				ServletUtility.handleException(e, request, response);
+				ServletUtility.handleException(e, request, response, getView());
 				return;
 			}
 		}
@@ -95,7 +95,7 @@ public class ClaimCtl extends BaseCtl {
 				ServletUtility.setErrorMessage("Claim Number Already Exists", request);
 				e.printStackTrace();
 			} catch (ApplicationException e) {
-				ServletUtility.handleException(e, request, response);
+				ServletUtility.handleException(e, request, response, getView());
 				e.printStackTrace();
 				return;
 			}
@@ -112,7 +112,7 @@ public class ClaimCtl extends BaseCtl {
 				ServletUtility.setErrorMessage("Claim Number already exists", request);
 			} catch (ApplicationException e) {
 				e.printStackTrace();
-				ServletUtility.handleException(e, request, response);
+				ServletUtility.handleException(e, request, response, getView());
 				return;
 			}
 		} else if (OP_CANCEL.equalsIgnoreCase(op)) {

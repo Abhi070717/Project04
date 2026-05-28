@@ -4,16 +4,16 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Collections"%>
 <%@page import="in.co.rays.proj4.controller.UserCtl"%>
-<%@page import="in.co.rays.proj4.bean.TimetableBean"%>
+<%@page import="in.co.rays.proj4.bean.TimeTableBean"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
-<%@page import="in.co.rays.proj4.controller.TimetableCtl"%>
+<%@page import="in.co.rays.proj4.controller.TimeTableCtl"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
 <html>
 <head>
-<title>Add Timetable</title>
+<title>Add TimeTable</title>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
@@ -21,24 +21,24 @@
 	<form action="<%=ORSView.TIMETABLE_CTL%>" method="POST">
 		<%@ include file="Header.jsp"%>
 
-		<jsp:useBean id="bean" class="in.co.rays.proj4.bean.TimetableBean"
+		<jsp:useBean id="bean" class="in.co.rays.proj4.bean.TimeTableBean"
 			scope="request"></jsp:useBean>
 
 		<%
-			List<TimetableBean> courseList = (List<TimetableBean>) request.getAttribute("courseList");
-			List<TimetableBean> subjectList = (List<TimetableBean>) request.getAttribute("subjectList");
+		List<TimeTableBean> courseList = (List<TimeTableBean>) request.getAttribute("courseList");
+		List<TimeTableBean> subjectList = (List<TimeTableBean>) request.getAttribute("subjectList");
 		%>
 
 		<div align="center">
 			<h1 align="center" style="margin-bottom: -15; color: navy">
 				<%
-					if (bean != null && bean.getId() > 0) {
+				if (bean != null && bean.getId() > 0) {
 				%>Update<%
-					} else {
+				} else {
 				%>Add<%
-					}
+				}
 				%>
-				Timetable
+				TimeTable
 			</h1>
 
 			<div style="height: 15px; margin-bottom: 12px">
@@ -75,17 +75,17 @@
 					<th align="left">Semester<span style="color: red">*</span></th>
 					<td>
 						<%
-							HashMap<String, String> map = new HashMap<String, String>();
-							map.put("1", "1");
-							map.put("2", "2");
-							map.put("3", "3");
-							map.put("4", "4");
-							map.put("5", "5");
-							map.put("6", "6");
-							map.put("7", "7");
-							map.put("8", "8");
+						HashMap<String, String> map = new HashMap<String, String>();
+						map.put("1", "1");
+						map.put("2", "2");
+						map.put("3", "3");
+						map.put("4", "4");
+						map.put("5", "5");
+						map.put("6", "6");
+						map.put("7", "7");
+						map.put("8", "8");
 
-							String htmlList = HTMLUtility.getList("semester", bean.getSemester(), map);
+						String htmlList = HTMLUtility.getList("semester", bean.getSemester(), map);
 						%> <%=htmlList%>
 					</td>
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("semester", request)%></font></td>
@@ -101,12 +101,12 @@
 					<th align="left">Exam Time<span style="color: red">*</span></th>
 					<td>
 						<%
-							LinkedHashMap<String, String> map1 = new LinkedHashMap<String, String>();
-							map1.put("08:00 AM to 11:00 AM", "08:00 AM to 11:00 AM");
-							map1.put("12:00 PM to 03:00 PM", "12:00 PM to 03:00 PM");
-							map1.put("04:00 PM to 07:00 PM", "04:00 PM to 07:00 PM");
+						LinkedHashMap<String, String> map1 = new LinkedHashMap<String, String>();
+						map1.put("08:00 AM to 11:00 AM", "08:00 AM to 11:00 AM");
+						map1.put("12:00 PM to 03:00 PM", "12:00 PM to 03:00 PM");
+						map1.put("04:00 PM to 07:00 PM", "04:00 PM to 07:00 PM");
 
-							String htmlList1 = HTMLUtility.getList("examTime", bean.getExamTime(), map1);
+						String htmlList1 = HTMLUtility.getList("examTime", bean.getExamTime(), map1);
 						%> <%=htmlList1%>
 					</td>
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("examTime", request)%></font></td>
@@ -127,19 +127,19 @@
 				<tr>
 					<th></th>
 					<%
-						if (bean != null && bean.getId() > 0) {
+					if (bean != null && bean.getId() > 0) {
 					%>
 					<td align="left" colspan="2"><input type="submit"
-						name="operation" value="<%=TimetableCtl.OP_UPDATE%>"> <input
-						type="submit" name="operation" value="<%=TimetableCtl.OP_CANCEL%>">
+						name="operation" value="<%=TimeTableCtl.OP_UPDATE%>"> <input
+						type="submit" name="operation" value="<%=TimeTableCtl.OP_CANCEL%>">
 						<%
-							} else {
+						} else {
 						%>
 					<td align="left" colspan="2"><input type="submit"
-						name="operation" value="<%=TimetableCtl.OP_SAVE%>"> <input
-						type="submit" name="operation" value="<%=TimetableCtl.OP_RESET%>">
+						name="operation" value="<%=TimeTableCtl.OP_SAVE%>"> <input
+						type="submit" name="operation" value="<%=TimeTableCtl.OP_RESET%>">
 						<%
-							}
+						}
 						%>
 			</table>
 		</div>

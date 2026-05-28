@@ -71,7 +71,7 @@ public class ClaimListCtl extends BaseCtl {
 
 		} catch (ApplicationException e) {
 			e.printStackTrace();
-			ServletUtility.handleException(e, request, response);
+			ServletUtility.handleException(e, request, response, getView());
 		}
 	}
 
@@ -117,6 +117,7 @@ public class ClaimListCtl extends BaseCtl {
 
 				if (ids != null && ids.length > 0) {
 					for (String id : ids) {
+						deletebean.setId(Integer.parseInt(id));
 						model.delete(deletebean);
 					}
 					ServletUtility.setSuccessMessage("Claim deleted successfully", request);
@@ -130,7 +131,6 @@ public class ClaimListCtl extends BaseCtl {
 			if (list == null || list.size() == 0) {
 				ServletUtility.setErrorMessage("No Record Found ", request);
 			}
-
 			ServletUtility.setList(list, request);
 			ServletUtility.setPageNo(pageNo, request);
 			ServletUtility.setPageSize(pageSize, request);
@@ -141,7 +141,7 @@ public class ClaimListCtl extends BaseCtl {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			ServletUtility.handleException(e, request, response);
+			ServletUtility.handleException(e, request, response, getView());
 		}
 	}
 

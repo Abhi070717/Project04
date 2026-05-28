@@ -1,4 +1,3 @@
-
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
 <%@page import="java.util.Collections"%>
@@ -34,17 +33,17 @@
 
 		<form action="<%=ORSView.COLLEGE_LIST_CTL%>" method="POST">
 			<%
-				int pageNo = ServletUtility.getPageNo(request);
-				int pageSize = ServletUtility.getPageSize(request);
-				int index = ((pageNo - 1) * pageSize) + 1;
-				int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
+			int pageNo = ServletUtility.getPageNo(request);
+			int pageSize = ServletUtility.getPageSize(request);
+			int index = ((pageNo - 1) * pageSize) + 1;
+			int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-				List<CollegeBean> collegeList = (List<CollegeBean>) request.getAttribute("collegeList");
+			List<CollegeBean> collegeList = (List<CollegeBean>) request.getAttribute("collegeList");
 
-				List<CollegeBean> list = (List<CollegeBean>) ServletUtility.getList(request);
-				Iterator<CollegeBean> it = list.iterator();
+			List<CollegeBean> list = (List<CollegeBean>) ServletUtility.getList(request);
+			Iterator<CollegeBean> it = list.iterator();
 
-				if (list.size() != 0) {
+			if (list.size() != 0) {
 			%>
 
 			<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
@@ -77,8 +76,8 @@
 				</tr>
 
 				<%
-					while (it.hasNext()) {
-							bean = it.next();
+				while (it.hasNext()) {
+					bean = it.next();
 				%>
 				<tr>
 					<td style="text-align: center;"><input type="checkbox"
@@ -90,10 +89,10 @@
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getCity()%></td>
 					<td style="text-align: center;"><%=bean.getPhoneNo()%></td>
 					<td style="text-align: center;"><a
-						href="<%=ORSView.COLLEGE_CTL%>?id=<%=bean.getId()%>">Edit</a></td>
+						href="CollegeCtl?id=<%=bean.getId()%>">Edit</a></td>
 				</tr>
 				<%
-					}
+				}
 				%>
 			</table>
 
@@ -113,8 +112,8 @@
 			</table>
 
 			<%
-				}
-				if (list.size() == 0) {
+			}
+			if (list.size() == 0) {
 			%>
 			<table>
 				<tr>
@@ -123,10 +122,9 @@
 				</tr>
 			</table>
 			<%
-				}
+			}
 			%>
 		</form>
-		<%@ include file="Footer.jsp"%>
 	</div>
 </body>
 </html>

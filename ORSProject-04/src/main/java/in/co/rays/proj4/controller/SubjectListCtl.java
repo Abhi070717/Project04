@@ -156,9 +156,6 @@ public class SubjectListCtl extends BaseCtl {
 
         log.info("SubjectListCtl doPost() started");
 
-        List list = null;
-        List next = null;
-
         int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
         int pageSize = DataUtility.getInt(request.getParameter("pageSize"));
 
@@ -214,8 +211,8 @@ public class SubjectListCtl extends BaseCtl {
                 return;
             }
 
-            list = model.search(bean, pageNo, pageSize);
-            next = model.search(bean, pageNo + 1, pageSize);
+            List<SubjectBean> list = model.search(bean, pageNo, pageSize);
+            List<SubjectBean> next = model.search(bean, pageNo + 1, pageSize);
 
             if (list == null || list.size() == 0) {
                 ServletUtility.setErrorMessage("No record found ", request);

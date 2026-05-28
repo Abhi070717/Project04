@@ -3,21 +3,21 @@
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
-<%@page import="in.co.rays.proj4.controller.TimetableListCtl"%>
+<%@page import="in.co.rays.proj4.controller.TimeTableListCtl"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
-<%@page import="in.co.rays.proj4.bean.TimetableBean"%>
+<%@page import="in.co.rays.proj4.bean.TimeTableBean"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 <html>
 <head>
-<title>Timetable List</title>
+<title>TimeTable List</title>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
 	<%@include file="Header.jsp"%>
 	<div align="center">
-		<h1 align="center" style="margin-bottom: -15; color: navy;">Timetable
+		<h1 align="center" style="margin-bottom: -15; color: navy;">TimeTable
 			List</h1>
 
 		<div style="height: 15px; margin-bottom: 12px">
@@ -28,7 +28,7 @@
 				<font color="green"><%=ServletUtility.getSuccessMessage(request)%></font>
 			</h3>
 		</div>
-		<jsp:useBean id="bean" class="in.co.rays.proj4.bean.TimetableBean"
+		<jsp:useBean id="bean" class="in.co.rays.proj4.bean.TimeTableBean"
 			scope="request"></jsp:useBean>
 
 		<form action="<%=ORSView.TIMETABLE_LIST_CTL%>" method="post">
@@ -38,11 +38,11 @@
 				int index = ((pageNo - 1) * pageSize) + 1;
 				int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-				List<TimetableBean> courseList = (List<TimetableBean>) request.getAttribute("courseList");
-				List<TimetableBean> subjectList = (List<TimetableBean>) request.getAttribute("subjectList");
+				List<TimeTableBean> courseList = (List<TimeTableBean>) request.getAttribute("courseList");
+				List<TimeTableBean> subjectList = (List<TimeTableBean>) request.getAttribute("subjectList");
 
-				List<TimetableBean> list = (List<TimetableBean>) ServletUtility.getList(request);
-				Iterator<TimetableBean> it = list.iterator();
+				List<TimeTableBean> list = (List<TimeTableBean>) ServletUtility.getList(request);
+				Iterator<TimeTableBean> it = list.iterator();
 
 				if (list.size() != 0) {
 			%>
@@ -58,9 +58,9 @@
 						placeholder="Select Date of Birth"
 						value="<%=DataUtility.getDateString(bean.getExamDate())%>">
 						</label>&emsp; <input type="submit" name="operation"
-						value="<%=TimetableListCtl.OP_SEARCH%>">&nbsp; <input
+						value="<%=TimeTableListCtl.OP_SEARCH%>">&nbsp; <input
 						type="submit" name="operation"
-						value="<%=TimetableListCtl.OP_RESET%>"></td>
+						value="<%=TimeTableListCtl.OP_RESET%>"></td>
 				</tr>
 			</table>
 			<br>
@@ -97,7 +97,7 @@
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getExamTime()%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getDescription()%></td>
 					<td style="text-align: center;"><a
-						href="TimetableCtl?id=<%=bean.getId()%>">Edit</a></td>
+						href="<%=ORSView.TIMETABLE_CTL%>?id=<%=bean.getId()%>">Edit</a></td>
 				</tr>
 				<%
 					}
@@ -105,15 +105,16 @@
 			</table>
 			<table style="width: 100%">
 				<tr>
-				<td style="width: 25%"><input type="submit" name="operation"
-						value="<%=TimetableListCtl.OP_PREVIOUS%>"
-						<%=pageNo == 1 ? "" : "disabled"%>></td>
+
+					<td style="width: 25%"><input type="submit" name="operation"
+						value="<%=TimeTableListCtl.OP_PREVIOUS%>"
+						<%=pageNo > 1 ? "" : "disabled"%>></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=TimetableListCtl.OP_NEW%>"></td>
+						name="operation" value="<%=TimeTableListCtl.OP_NEW%>"></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=TimetableListCtl.OP_DELETE%>"></td>
+						name="operation" value="<%=TimeTableListCtl.OP_DELETE%>"></td>
 					<td style="width: 25%" align="right"><input type="submit"
-						name="operation" value="<%=TimetableListCtl.OP_NEXT%>"
+						name="operation" value="<%=TimeTableListCtl.OP_NEXT%>"
 						<%=(nextPageSize != 0) ? "" : "disabled"%>></td>
 
 				</tr>
@@ -126,7 +127,7 @@
 			<table>
 				<tr>
 					<td align="right"><input type="submit" name="operation"
-						value="<%=TimetableListCtl.OP_BACK%>"></td>
+						value="<%=TimeTableListCtl.OP_BACK%>"></td>
 				</tr>
 			</table>
 			<%
@@ -135,6 +136,6 @@
 
 		</form>
 	</div>
-	<%@include file="Footer.jsp"%>
+	<%@ include file="Footer.jsp"%>
 </body>
 </html>

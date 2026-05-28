@@ -1,3 +1,4 @@
+<%@page import="in.co.rays.proj4.bean.UserBean"%>
 <%@page import="in.co.rays.proj4.bean.RoleBean"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
@@ -38,16 +39,16 @@
 
 		<form action="<%=ORSView.USER_LIST_CTL%>" method="post">
 			<%
-				int pageNo = ServletUtility.getPageNo(request);
-				int pageSize = ServletUtility.getPageSize(request);
-				int index = ((pageNo - 1) * pageSize) + 1;
-				int nextListSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
+			int pageNo = ServletUtility.getPageNo(request);
+			int pageSize = ServletUtility.getPageSize(request);
+			int index = ((pageNo - 1) * pageSize) + 1;
+			int nextListSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-				List<RoleBean> roleList = (List<RoleBean>) request.getAttribute("roleList");
-				List<UserBean> list = (List<UserBean>) ServletUtility.getList(request);
-				Iterator<UserBean> it = list.iterator();
+			List<RoleBean> roleList = (List<RoleBean>) request.getAttribute("roleList");
+			List<UserBean> list = (List<UserBean>) ServletUtility.getList(request);
+			Iterator<UserBean> it = list.iterator();
 
-				if (list.size() != 0) {
+			if (list.size() != 0) {
 			%>
 
 			<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
@@ -58,6 +59,10 @@
 					<td align="center"><label><b>First Name :</b></label> <input
 						type="text" name="firstName" placeholder="Enter First Name"
 						value="<%=ServletUtility.getParameter("firstName", request)%>">&emsp;
+
+						<label><b>DOB :</b></label> <input type="text" id="udate"
+						name="dob" placeholder="Enter DOB"
+						value="<%=ServletUtility.getParameter("dob", request)%>">&emsp;
 
 						<label><b>Login Id:</b></label> <input type="text" name="login"
 						placeholder="Enter Email ID"
@@ -88,13 +93,13 @@
 				</tr>
 
 				<%
-					while (it.hasNext()) {
-							bean = (UserBean) it.next();
-							RoleModel model = new RoleModel();
-							RoleBean roleBean = model.findByPk(bean.getRoleId());
+				while (it.hasNext()) {
+					bean = (UserBean) it.next();
+					RoleModel model = new RoleModel();
+					RoleBean roleBean = model.findByPk(bean.getRoleId());
 
-							SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-							String date = sdf.format(bean.getDob());
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+					String date = sdf.format(bean.getDob());
 				%>
 
 				<tr>
@@ -112,14 +117,12 @@
 					<td style="text-align: center; text-transform: capitalize;"><%=roleBean.getName()%></td>
 					<td style="text-align: center;"><a
 						href="UserCtl?id=<%=bean.getId()%>"
-						<%=(user.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN)
-							? "onclick='return false;'"
-							: ""%>>Edit</a>
+						<%=(user.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN) ? "onclick='return false;'" : ""%>>Edit</a>
 					</td>
 				</tr>
 
 				<%
-					}
+				}
 				%>
 			</table>
 
@@ -139,7 +142,7 @@
 			</table>
 
 			<%
-				} else {
+			} else {
 			%>
 
 			<table>
@@ -150,10 +153,9 @@
 			</table>
 
 			<%
-				}
+			}
 			%>
 		</form>
 	</div>
-	<%@include file="Footer.jsp"%>
 </body>
 </html>

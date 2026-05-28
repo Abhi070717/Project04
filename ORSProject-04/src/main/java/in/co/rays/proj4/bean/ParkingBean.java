@@ -1,13 +1,11 @@
 package in.co.rays.proj4.bean;
 
-import java.util.Date;
-
 public class ParkingBean extends BaseBean {
-
 	private String vehicleNumber;
 	private String slotNumber;
-	private Date entryTime;
-	private Date exitTime;
+	private String entryTime;
+	private long parkingCharge;
+
 
 	public String getVehicleNumber() {
 		return vehicleNumber;
@@ -25,31 +23,30 @@ public class ParkingBean extends BaseBean {
 		this.slotNumber = slotNumber;
 	}
 
-	public Date getEntryTime() {
+	public String getEntryTime() {
 		return entryTime;
 	}
 
-	public void setEntryTime(Date entryTime) {
+	public void setEntryTime(String entryTime) {
 		this.entryTime = entryTime;
 	}
 
-	public Date getExitTime() {
-		return exitTime;
+	public long getParkingCharge() {
+		return parkingCharge;
 	}
 
-	public void setExitTime(Date exitTime) {
-		this.exitTime = exitTime;
+	public void setParkingCharge(long parkingCharge) {
+		this.parkingCharge = parkingCharge;
 	}
 
 	@Override
 	public String getKey() {
-		// TODO Auto-generated method stub
-		return null;
+		return slotNumber;
 	}
 
 	@Override
 	public String getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return slotNumber;
 	}
+
 }

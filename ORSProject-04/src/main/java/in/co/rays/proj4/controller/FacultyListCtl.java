@@ -121,9 +121,6 @@ public class FacultyListCtl extends BaseCtl {
 
         log.info("FacultyListCtl doPost() started");
 
-        List list = null;
-        List next = null;
-
         int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
         int pageSize = DataUtility.getInt(request.getParameter("pageSize"));
 
@@ -184,8 +181,8 @@ public class FacultyListCtl extends BaseCtl {
                 return;
             }
 
-            list = model.search(bean, pageNo, pageSize);
-            next = model.search(bean, pageNo + 1, pageSize);
+            List<FacultyBean> list = model.search(bean, pageNo, pageSize);
+            List<FacultyBean> next = model.search(bean, pageNo + 1, pageSize);
 
             if (list == null || list.size() == 0) {
                 log.warn("No faculty records found after operation");

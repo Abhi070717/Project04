@@ -1,8 +1,5 @@
 package in.co.rays.proj4.controller;
 
-import in.co.rays.proj4.controller.ORSView;
-import in.co.rays.proj4.util.ServletUtility;
-
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -18,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import in.co.rays.proj4.util.ServletUtility;
+
 /**
  * FrontController is a servlet filter that performs session checking before any
  * application controller is invoked. It prevents access to protected resources
@@ -29,67 +28,68 @@ import org.apache.log4j.Logger;
  * </p>
  *
  * @author Abhishish Bhawsar
+ * 
  * @version 1.0
  */
 @WebFilter(urlPatterns = { "/doc/*", "/ctl/*" })
 public class FrontController implements Filter {
 
-    private static final Logger log = Logger.getLogger(FrontController.class);
+	private static final Logger log = Logger.getLogger(FrontController.class);
 
-    /** 
-     * Initializes the filter. No special initialization is required for this
-     * implementation, but the method is provided for completeness and future use.
-     *
-     * @param conf the {@link FilterConfig} provided by the servlet container
-     * @throws ServletException if an error occurs during initialization
-     */
-    public void init(FilterConfig conf) throws ServletException {
-        log.info("FrontController filter initialized");
-        // No initialization required currently
-    }
+	/**
+	 * Initializes the filter. No special initialization is required for this
+	 * implementation, but the method is provided for completeness and future use.
+	 *
+	 * @param conf the {@link FilterConfig} provided by the servlet container
+	 * @throws ServletException if an error occurs during initialization
+	 */
+	public void init(FilterConfig conf) throws ServletException {
+		log.info("FrontController filter initialized");
+		// No initialization required currently
+	}
 
-    /**
-     * Performs session validation for incoming requests to protected URL
-     * patterns. If the session does not contain a "user" attribute, the request
-     * is forwarded to the login view with an appropriate error message; otherwise
-     * the request proceeds through the filter chain.
-     *
-     * @param req   the {@link ServletRequest}
-     * @param resp  the {@link ServletResponse}
-     * @param chain the {@link FilterChain} to pass control to the next filter or servlet
-     * @throws IOException      if an I/O error occurs during filtering
-     * @throws ServletException if a servlet-specific error occurs during filtering
-     */
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
-            throws IOException, ServletException {
+	/**
+	 * Performs session validation for incoming requests to protected URL patterns.
+	 * If the session does not contain a "user" attribute, the request is forwarded
+	 * to the login view with an appropriate error message; otherwise the request
+	 * proceeds through the filter chain.
+	 * 
+	 * @param req   the {@link ServletRequest}
+	 * @param resp  the {@link ServletResponse}
+	 * @param chain the {@link FilterChain} to pass control to the next filter or
+	 *              servlet
+	 * @throws IOException      if an I/O error occurs during filtering
+	 * @throws ServletException if a servlet-specific error occurs during filtering
+	 */
+	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
+			throws IOException, ServletException {
 
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) resp;
-        request.setAttribute("ORIGINAL_CTL", request.getRequestURI());
-        HttpSession session = request.getSession();
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) resp;
+		request.setAttribute("ORIGINAL_CTL", request.getRequestURI());
+		HttpSession session = request.getSession();
 
-        String uri = request.getRequestURI();
-        request.setAttribute("uri", uri);
+		if (session.getAttribute("user") == null) {
+			log.warn("Unauthorized access attempt detected. Session expired or user not logged in.");
+//			request.setAttribute("message", "Your session has been expired. Please Login again!");
+			ServletUtility.setErrorMessage("Your session has been expired. Please Login again!", request);
+			String uri = request.getRequestURI();
+			request.setAttribute("uri", uri);
+			log.debug("Intercepted request URI: " + uri);
+			ServletUtility.forward(ORSView.LOGIN_VIEW, request, response);
+			return;
+		} else {
+			log.debug("User session valid. Proceeding with filter chain.");
+			chain.doFilter(req, resp);
+		}
+	}
 
-        log.debug("Intercepted request URI: " + uri);
-
-        if (session.getAttribute("user") == null) {
-            log.warn("Un@authorized access attempt detected. Session expired or user not logged in.");
-            request.setAttribute("error", "Your session has been expired. Please Login again!");
-            ServletUtility.forward(ORSView.LOGIN_VIEW, request, response);
-            return;
-        } else {
-            log.debug("User session valid. Proceeding with filter chain.");
-            chain.doFilter(req, resp);
-        }
-    }
-
-    /**
-     * Cleans up any resources held by the filter. No cleanup is required for
-     * this implementation, but the method is present for completeness.
-     */
-    public void destroy() {
-        log.info("FrontController filter destroyed");
-        // No cleanup required currently
-    }
+	/**
+	 * Cleans up any resources held by the filter. No cleanup is required for this
+	 * implementation, but the method is present for completeness.
+	 */
+	public void destroy() {
+		log.info("FrontController filter destroyed");
+		// No cleanup required currently
+	}
 }

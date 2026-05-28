@@ -1,7 +1,6 @@
 package in.co.rays.proj4.controller;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,25 +16,19 @@ import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.PropertyReader;
 import in.co.rays.proj4.util.ServletUtility;
 
-@WebServlet(name = "ParkingListCtl", urlPatterns = { "/ParkingListCtl" })
+@WebServlet(name = "ParkingListCtl", urlPatterns = { "/ctl/ParkingListCtl" })
 public class ParkingListCtl extends BaseCtl {
 
 	@Override
-	protected void preload(HttpServletRequest request) {
-
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("1st slot", "1st slot");
-		map.put("2st slot", "2nd slot");
-		map.put("3st slot", "3rd slot");
-		map.put("4st slot", "4th slot");
-		map.put("5st slot", "5th slot");
-		map.put("6st slot", "6th slot");
-		map.put("7st slot", "7th slot");
-		map.put("8st slot", "8th slot");
-		map.put("9st slot", "9th slot");
-		map.put("10st slot", "10th slot");
-
-		request.setAttribute("map", map);
+	protected void preload(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		ParkingModel Model = new ParkingModel();
+		try {
+			List<ParkingBean> slotList = Model.list();
+			request.setAttribute("slotList", slotList);
+		} catch (ApplicationException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -44,11 +37,11 @@ public class ParkingListCtl extends BaseCtl {
 		ParkingBean bean = new ParkingBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
-		bean.setVehicleNumber(DataUtility.getString(request.getParameter("vehicle")));
+		bean.setVehicleNumber(DataUtility.getString(request.getParameter("number")));
 		bean.setSlotNumber(DataUtility.getString(request.getParameter("slot")));
-		bean.setEntryTime(DataUtility.getDate(request.getParameter("entry")));
-		bean.setExitTime(DataUtility.getDate(request.getParameter("exit")));
-
+		bean.setParkingCharge(DataUtility.getLong(request.getParameter("charge")));
+		bean.setEntryTime(DataUtility.getString(request.getParameter("time")));
+		populateDTO(bean, request);
 		return bean;
 	}
 
@@ -80,7 +73,7 @@ public class ParkingListCtl extends BaseCtl {
 
 		} catch (ApplicationException e) {
 			e.printStackTrace();
-			ServletUtility.handleException(e, request, response);
+			ServletUtility.handleException(e, request, response, getView());
 		}
 	}
 
@@ -98,6 +91,7 @@ public class ParkingListCtl extends BaseCtl {
 		ParkingModel model = new ParkingModel();
 
 		String op = request.getParameter("operation");
+		String[] ids = request.getParameterValues("ids");
 
 		try {
 
@@ -119,14 +113,15 @@ public class ParkingListCtl extends BaseCtl {
 				return;
 
 			} else if (OP_DELETE.equalsIgnoreCase(op)) {
+				pageNo = 1;
+				ParkingBean deletebean = new ParkingBean();
 
-				String[] ids = request.getParameterValues("ids");
-
-				if (ids != null) {
+				if (ids != null && ids.length > 0) {
 					for (String id : ids) {
-						model.delete(DataUtility.getLong(id));
+						deletebean.setId(Integer.parseInt(id));
+						model.delete(deletebean);
 					}
-					ServletUtility.setSuccessMessage("Data deleted successfully", request);
+					ServletUtility.setSuccessMessage("Smart Parking deleted successfully", request);
 				} else {
 					ServletUtility.setErrorMessage("Select at least one record", request);
 				}
@@ -139,16 +134,17 @@ public class ParkingListCtl extends BaseCtl {
 				ServletUtility.setErrorMessage("No Record Found ", request);
 			}
 
-			request.setAttribute("nextListSize", next.size());
 			ServletUtility.setList(list, request);
 			ServletUtility.setPageNo(pageNo, request);
 			ServletUtility.setPageSize(pageSize, request);
+			ServletUtility.setBean(bean, request);
+			request.setAttribute("nextListSize", next.size());
 
 			ServletUtility.forward(getView(), request, response);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			ServletUtility.handleException(e, request, response);
+			ServletUtility.handleException(e, request, response, getView());
 		}
 	}
 

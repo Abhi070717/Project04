@@ -10,19 +10,19 @@ package in.co.rays.proj4.exception;
  *  - Trying to fetch a timetable, subject, or course that is not present
  *
  * This exception is used to indicate genuine "no data found" conditions.
- */
-/**
+ * 
  * @author Abhishish Bhawsar
  *
  */
 public class RecordNotFoundException extends Exception {
 
 	/**
-	 * Constructs a RecordNotFoundException with a detailed message.
-	 *
-	 * @param msg the message explaining which record was not found
+     * Constructs a RecordNotFoundException with a detailed message.
+     *
+     * @param msg the message explaining which record was not found
 	 */
 	public RecordNotFoundException(String msg) {
 		super(msg);
 	}
+
 }

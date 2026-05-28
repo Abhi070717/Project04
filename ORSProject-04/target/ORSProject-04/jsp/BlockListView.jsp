@@ -25,7 +25,7 @@
 
 	<div align="center">
 		<h1 align="center" style="margin-bottom: -15; color: navy;">Block
-			List</h1>
+			Trail List</h1>
 
 		<div style="height: 15px; margin-bottom: 12px">
 			<h3>
@@ -59,7 +59,7 @@
 						type="text" name="code" placeholder="Enter Block Code"
 						value="<%=ServletUtility.getParameter("code", request)%>">&emsp;
 
-						<label><b>User Name: </b></label> <%=HTMLUtility.getList("name", String.valueOf(bean.getBlockCode()), nameList)%>
+						<label><b>User Name: </b></label> <%=HTMLUtility.getList("name", String.valueOf(bean.getUserName()), nameList)%>
 						&nbsp; <input type="submit" name="operation"
 						value="<%=BlockListCtl.OP_SEARCH%>">&nbsp; <input
 						type="submit" name="operation" value="<%=BlockListCtl.OP_RESET%>"></td>

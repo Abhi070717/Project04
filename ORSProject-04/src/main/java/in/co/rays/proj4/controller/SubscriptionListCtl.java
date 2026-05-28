@@ -73,7 +73,7 @@ public class SubscriptionListCtl extends BaseCtl {
 
 		} catch (ApplicationException e) {
 			e.printStackTrace();
-			ServletUtility.handleException(e, request, response);
+			ServletUtility.handleException(e, request, response, getView());
 		}
 	}
 
@@ -144,7 +144,7 @@ public class SubscriptionListCtl extends BaseCtl {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			ServletUtility.handleException(e, request, response);
+			ServletUtility.handleException(e, request, response, getView());
 		}
 	}
 

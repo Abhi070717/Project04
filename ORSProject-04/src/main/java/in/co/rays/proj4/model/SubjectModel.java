@@ -14,16 +14,16 @@ import in.co.rays.proj4.exception.DuplicateRecordException;
 import in.co.rays.proj4.util.JDBCDataSource;
 
 /**
- * SubjectModel provides CRUD and search operations for SubjectBean,
- * interacting with the {@code st_subject} table via JDBC.
+ * SubjectModel provides CRUD and search operations for SubjectBean, interacting
+ * with the {@code st_subject} table via JDBC.
  *
  * <p>
  * This class throws project-specific exceptions (ApplicationException,
- * DatabaseException, DuplicateRecordException) to indicate failure
- * conditions.
+ * DatabaseException, DuplicateRecordException) to indicate failure conditions.
  * </p>
  *
  * @author Abhishish Bhawsar
+ * 
  * @version 1.0
  */
 public class SubjectModel {
@@ -58,7 +58,8 @@ public class SubjectModel {
 	 *
 	 * @param bean SubjectBean containing subject data to add
 	 * @return primary key of newly inserted subject
-	 * @throws ApplicationException     if any SQL exception occurs while adding subject
+	 * @throws ApplicationException     if any SQL exception occurs while adding
+	 *                                  subject
 	 * @throws DuplicateRecordException if a subject with same name already exists
 	 */
 	public long add(SubjectBean bean) throws ApplicationException, DuplicateRecordException {
@@ -264,7 +265,8 @@ public class SubjectModel {
 	 * Searches subjects based on provided filter bean and supports pagination.
 	 *
 	 * @param bean     SubjectBean filter (null means no filter)
-	 * @param pageNo   page number (1-based). If pageSize &gt; 0, pageNo is used to compute offset.
+	 * @param pageNo   page number (1-based). If pageSize &gt; 0, pageNo is used to
+	 *                 compute offset.
 	 * @param pageSize number of records per page. If 0, returns all matching rows.
 	 * @return List of SubjectBean matching criteria
 	 * @throws ApplicationException if a SQL error occurs during search

@@ -186,8 +186,8 @@ public class RoleListCtl extends BaseCtl {
 
             } else if (OP_NEW.equalsIgnoreCase(op)) {
 
-                log.info("Redirecting to User Controller");
-                ServletUtility.redirect(ORSView.USER_CTL, request, response);
+                log.info("Redirecting to ROLE Controller");
+                ServletUtility.redirect(ORSView.ROLE_CTL, request, response);
                 return;
 
             } else if (OP_DELETE.equalsIgnoreCase(op)) {
@@ -211,13 +211,13 @@ public class RoleListCtl extends BaseCtl {
             } else if (OP_RESET.equalsIgnoreCase(op)) {
 
                 log.info("Reset operation triggered");
-                ServletUtility.redirect(ORSView.USER_LIST_CTL, request, response);
+                ServletUtility.redirect(ORSView.ROLE_LIST_CTL, request, response);
                 return;
 
             } else if (OP_BACK.equalsIgnoreCase(op)) {
 
                 log.info("Back operation triggered");
-                ServletUtility.redirect(ORSView.USER_LIST_CTL, request, response);
+                ServletUtility.redirect(ORSView.ROLE_LIST_CTL, request, response);
                 return;
             }
 

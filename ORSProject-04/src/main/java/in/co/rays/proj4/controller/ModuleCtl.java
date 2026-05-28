@@ -14,7 +14,7 @@ public class ModuleCtl extends BaseCtl {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ServletUtility.forward(getView(), request, response);
+			ServletUtility.forward(getView(), request, response);
 	}
 
 	@Override

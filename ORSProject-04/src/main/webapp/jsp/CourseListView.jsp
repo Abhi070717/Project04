@@ -34,19 +34,19 @@
 
 		<form action="<%=ORSView.COURSE_LIST_CTL%>" method="post">
 			<%
-				int pageNo = ServletUtility.getPageNo(request);
-				int pageSize = ServletUtility.getPageSize(request);
-				int index = ((pageNo - 1) * pageSize) + 1;
-				int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
+			int pageNo = ServletUtility.getPageNo(request);
+			int pageSize = ServletUtility.getPageSize(request);
+			int index = ((pageNo - 1) * pageSize) + 1;
+			int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-				@SuppressWarnings("unchecked")
-				List<CourseBean> courseList = (List<CourseBean>) request.getAttribute("courseList");
+			@SuppressWarnings("unchecked")
+			List<CourseBean> courseList = (List<CourseBean>) request.getAttribute("courseList");
 
-				@SuppressWarnings("unchecked")
-				List<CourseBean> list = (List<CourseBean>) ServletUtility.getList(request);
-				Iterator<CourseBean> it = list.iterator();
+			@SuppressWarnings("unchecked")
+			List<CourseBean> list = (List<CourseBean>) ServletUtility.getList(request);
+			Iterator<CourseBean> it = list.iterator();
 
-				if (list.size() != 0) {
+			if (list.size() != 0) {
 			%>
 
 			<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
@@ -74,8 +74,8 @@
 				</tr>
 
 				<%
-					while (it.hasNext()) {
-							bean = (CourseBean) it.next();
+				while (it.hasNext()) {
+					bean = (CourseBean) it.next();
 				%>
 				<tr>
 					<td style="text-align: center;"><input type="checkbox"
@@ -85,10 +85,10 @@
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getDuration()%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getDescription()%></td>
 					<td style="text-align: center;"><a
-						href="<%=ORSView.COURSE_CTL%>?id=<%=bean.getId()%>">Edit</a></td>
+						href="CourseCtl?id=<%=bean.getId()%>">Edit</a></td>
 				</tr>
 				<%
-					}
+				}
 				%>
 			</table>
 
@@ -108,8 +108,8 @@
 			</table>
 
 			<%
-				}
-				if (list.size() == 0) {
+			}
+			if (list.size() == 0) {
 			%>
 			<table>
 				<tr>
@@ -118,13 +118,9 @@
 				</tr>
 			</table>
 			<%
-				}
+			}
 			%>
-
 		</form>
 	</div>
-
-	<%@ include file="Footer.jsp"%>
-
 </body>
 </html>

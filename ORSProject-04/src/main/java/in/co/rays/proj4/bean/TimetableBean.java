@@ -8,10 +8,10 @@ import java.util.Date;
  * subject, and a description. This class extends {@link BaseBean}
  * to inherit standard audit attributes.
  *
- * @author Abhishish Bhawsar
+  * @author Abhishish Bhawsar
  * @version 1.0
  */
-public class TimetableBean extends BaseBean {
+public class TimeTableBean extends BaseBean {
 
     /** Semester for which the timetable is scheduled. */
     private String semester;

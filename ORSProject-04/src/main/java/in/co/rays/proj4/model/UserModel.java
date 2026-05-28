@@ -3,6 +3,7 @@ package in.co.rays.proj4.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLClientInfoException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ import in.co.rays.proj4.util.JDBCDataSource;
  * operations like registration, password change, and password recovery.
  * 
  * @author Abhishish Bhawsar
+ * 
  * @version 1.0
  */
 public class UserModel {
@@ -72,7 +74,7 @@ public class UserModel {
 
 		UserBean existbean = findByLogin(bean.getLogin());
 
-		if (existbean != null) {
+		if (existbean != null && existbean.getId() != bean.getId()) {
 			throw new DuplicateRecordException("Login Id already exists");
 		}
 
@@ -89,7 +91,8 @@ public class UserModel {
 			pstmt.setString(5, bean.getPassword());
 			pstmt.setDate(6, new java.sql.Date(bean.getDob().getTime()));
 			pstmt.setString(7, bean.getMobileNo());
-			pstmt.setLong(8, bean.getRoleId());
+			/* pstmt.setLong(8, bean.getRoleId()); */
+			pstmt.setLong(8,  bean.getRoleId());	
 			pstmt.setString(9, bean.getGender());
 			pstmt.setString(10, bean.getCreatedBy());
 			pstmt.setString(11, bean.getModifiedBy());
@@ -126,7 +129,7 @@ public class UserModel {
 
 		UserBean beanExist = findByLogin(bean.getLogin());
 
-		if (beanExist != null && !(beanExist.getId() == bean.getId())) {
+		if (beanExist != null && beanExist.getId() != bean.getId()) {
 			throw new DuplicateRecordException("Login Id is already exist");
 		}
 
@@ -326,7 +329,8 @@ public class UserModel {
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			throw new ApplicationException("Exception : Exception in get roles");
+			e.printStackTrace();
+			throw new ApplicationException(e.getMessage() + "Exception : Exception in get roles");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -347,7 +351,6 @@ public class UserModel {
 	 * @throws ApplicationException if an application-level exception occurs
 	 */
 	public List<UserBean> search(UserBean bean, int pageNo, int pageSize) throws ApplicationException {
-
 		Connection conn = null;
 		ArrayList<UserBean> list = new ArrayList<UserBean>();
 
@@ -370,7 +373,7 @@ public class UserModel {
 				sql.append(" and password like '" + bean.getPassword() + "%'");
 			}
 			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
-				sql.append(" and dob like '" + new java.sql.Date(bean.getDob().getTime()) + " %'");
+				sql.append(" and dob = '" + new java.sql.Date(bean.getDob().getTime()) + "'");
 			}
 			if (bean.getMobileNo() != null && bean.getMobileNo().length() > 0) {
 				sql.append(" and mobile_no = " + bean.getMobileNo());
@@ -387,7 +390,7 @@ public class UserModel {
 			pageNo = (pageNo - 1) * pageSize;
 			sql.append(" limit " + pageNo + ", " + pageSize);
 		}
-
+		System.out.println("sql ===== > " + sql.toString());
 		try {
 			conn = JDBCDataSource.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());

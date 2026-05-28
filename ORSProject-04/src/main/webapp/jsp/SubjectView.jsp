@@ -1,15 +1,15 @@
-<%@page import="in.co.rays.proj4.controller.ORSView"%>
-<%@page import="in.co.rays.proj4.controller.UserCtl"%>
-<%@page import="in.co.rays.proj4.bean.SubjectBean"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="in.co.rays.proj4.util.HTMLUtility"%>
 <%@page import="in.co.rays.proj4.controller.SubjectCtl"%>
+<%@page import="in.co.rays.proj4.util.HTMLUtility"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
-
+<%@page import="in.co.rays.proj4.bean.SubjectBean"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <html>
 <head>
+<meta charset="ISO-8859-1">
 <title>Add Subject</title>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
@@ -22,21 +22,21 @@
 			scope="request"></jsp:useBean>
 
 		<%
-			List<SubjectBean> courseList = (List<SubjectBean>) request.getAttribute("courseList");
+		List<SubjectBean> courseList = (List<SubjectBean>) request.getAttribute("courseList");
 		%>
 
 		<div align="center">
 			<h1 align="center" style="margin-bottom: -15; color: navy">
 				<%
-					if (bean != null && bean.getId() > 0) {
+				if (bean != null && bean.getId() > 0) {
 				%>
 				Update
 				<%
-					} else {
+				} else {
 				%>
 				Add
 				<%
-					}
+				}
 				%>
 				Subject
 			</h1>
@@ -92,26 +92,25 @@
 				<tr>
 					<th></th>
 					<%
-						if (bean != null && bean.getId() > 0) {
+					if (bean != null && bean.getId() > 0) {
 					%>
 					<td align="left" colspan="2"><input type="submit"
 						name="operation" value="<%=SubjectCtl.OP_UPDATE%>"> <input
 						type="submit" name="operation" value="<%=SubjectCtl.OP_CANCEL%>">
 					</td>
 					<%
-						} else {
+					} else {
 					%>
 					<td align="left" colspan="2"><input type="submit"
 						name="operation" value="<%=SubjectCtl.OP_SAVE%>"> <input
 						type="submit" name="operation" value="<%=SubjectCtl.OP_RESET%>">
 					</td>
 					<%
-						}
+					}
 					%>
 				</tr>
 			</table>
 		</div>
 	</form>
-	<%@ include file="Footer.jsp"%>
 </body>
 </html>

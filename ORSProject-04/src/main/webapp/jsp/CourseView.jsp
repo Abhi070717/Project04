@@ -1,15 +1,15 @@
-
-<%@page import="in.co.rays.proj4.controller.ORSView"%>
-<%@page import="in.co.rays.proj4.util.HTMLUtility"%>
 <%@page import="java.util.LinkedHashMap"%>
-<%@page import="in.co.rays.proj4.controller.CourseCtl"%>
-<%@page import="in.co.rays.proj4.controller.BaseCtl"%>
-<%@page import="in.co.rays.proj4.util.DataUtility"%>
+<%@page import="in.co.rays.proj4.util.HTMLUtility"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
-
+<%@page import="in.co.rays.proj4.util.DataUtility"%>
+<%@page import="in.co.rays.proj4.controller.CourseCtl"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <html>
 <head>
-<title>User</title>
+<meta charset="ISO-8859-1">
+<title>Add Course</title>
 <style type="text/css">
 .panel-default1 {
 	border-color: red;
@@ -26,15 +26,15 @@
 		<div align="center">
 			<h1 align="center" style="margin-bottom: -15; color: navy">
 				<%
-					if (bean != null && bean.getId() > 0) {
+				if (bean != null && bean.getId() > 0) {
 				%>
 				Update
 				<%
-					} else {
+				} else {
 				%>
 				Add
 				<%
-					}
+				}
 				%>
 				Course
 			</h1>
@@ -73,16 +73,16 @@
 					<th align="left">Duration<span style="color: red">*</span></th>
 					<td>
 						<%
-							LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-							map.put("1 Year", "1 Year");
-							map.put("2 Year", "2 Year");
-							map.put("3 Year", "3 Year");
-							map.put("4 Year", "4 Year");
-							map.put("5 Year", "5 Year");
-							map.put("6 Year", "6 Year");
-							map.put("7 Year", "7 Year");
+						LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+						map.put("1 Year", "1 Year");
+						map.put("2 Year", "2 Year");
+						map.put("3 Year", "3 Year");
+						map.put("4 Year", "4 Year");
+						map.put("5 Year", "5 Year");
+						map.put("6 Year", "6 Year");
+						map.put("7 Year", "7 Year");
 
-							String htmlList = HTMLUtility.getList("duration", bean.getDuration(), map);
+						String htmlList = HTMLUtility.getList("duration", bean.getDuration(), map);
 						%> <%=htmlList%>
 					</td>
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("duration", request)%>
@@ -107,28 +107,25 @@
 				<tr>
 					<th></th>
 					<%
-						if (bean != null && bean.getId() > 0) {
+					if (bean != null && bean.getId() > 0) {
 					%>
 					<td align="left" colspan="2"><input type="submit"
 						name="operation" value="<%=CourseCtl.OP_UPDATE%>"> <input
 						type="submit" name="operation" value="<%=CourseCtl.OP_CANCEL%>">
 					</td>
 					<%
-						} else {
+					} else {
 					%>
 					<td align="left" colspan="2"><input type="submit"
 						name="operation" value="<%=CourseCtl.OP_SAVE%>"> <input
 						type="submit" name="operation" value="<%=CourseCtl.OP_RESET%>">
 					</td>
 					<%
-						}
+					}
 					%>
 				</tr>
 			</table>
 		</div>
 	</form>
-
-	<%@ include file="Footer.jsp"%>
-
 </body>
 </html>

@@ -9,10 +9,10 @@
 	</welcome-file-list>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/ErrorCtl</location>
+		<location>/ErrorCtl</location>			<!-- /jsp/Error500.jsp -->
 	</error-page>
 	<error-page>
 		<error-code>404</error-code>
-		<location>/ErrorCtl</location>
+		<location>/ErrorCtl</location>			<!-- /jsp/Error404.jsp -->
 	</error-page>
 </web-app>

@@ -85,7 +85,6 @@ public class UserRegistrationCtl extends BaseCtl {
             pass = false;
             log.warn("Validation failed: firstName invalid");
         }
-
         if (DataValidator.isNull(request.getParameter("lastName"))) {
             request.setAttribute("lastName", PropertyReader.getValue("error.require", "Last Name"));
             pass = false;
@@ -95,17 +94,15 @@ public class UserRegistrationCtl extends BaseCtl {
             pass = false;
             log.warn("Validation failed: lastName invalid");
         }
-
         if (DataValidator.isNull(request.getParameter("login"))) {
             request.setAttribute("login", PropertyReader.getValue("error.require", "Login Id"));
             pass = false;
             log.warn("Validation failed: login is null");
         } else if (!DataValidator.isEmail(request.getParameter("login"))) {
-            request.setAttribute("login", PropertyReader.getValue("error.email", "Login"));
+            request.setAttribute("login", PropertyReader.getValue("error.email", " Login Id"));
             pass = false;
             log.warn("Validation failed: login not a valid email");
         }
-
         if (DataValidator.isNull(request.getParameter("password"))) {
             request.setAttribute("password", PropertyReader.getValue("error.require", "Password"));
             pass = false;
@@ -125,13 +122,11 @@ public class UserRegistrationCtl extends BaseCtl {
             pass = false;
             log.warn("Validation failed: confirmPassword is null");
         }
-
         if (DataValidator.isNull(request.getParameter("gender"))) {
             request.setAttribute("gender", PropertyReader.getValue("error.require", "Gender"));
             pass = false;
             log.warn("Validation failed: gender is null");
         }
-
         if (DataValidator.isNull(request.getParameter("dob"))) {
             request.setAttribute("dob", PropertyReader.getValue("error.require", "Date of Birth"));
             pass = false;
@@ -141,14 +136,12 @@ public class UserRegistrationCtl extends BaseCtl {
             pass = false;
             log.warn("Validation failed: dob invalid date");
         }
-
         if (!request.getParameter("password").equals(request.getParameter("confirmPassword"))
                 && !"".equals(request.getParameter("confirmPassword"))) {
             request.setAttribute("confirmPassword", "Password and Confirm Password must be Same!");
             pass = false;
             log.warn("Validation failed: password and confirmPassword mismatch");
         }
-
         if (DataValidator.isNull(request.getParameter("mobileNo"))) {
             request.setAttribute("mobileNo", PropertyReader.getValue("error.require", "Mobile No"));
             pass = false;
@@ -162,7 +155,6 @@ public class UserRegistrationCtl extends BaseCtl {
             pass = false;
             log.warn("Validation failed: mobileNo invalid");
         }
-
         return pass;
     }
 
@@ -232,7 +224,6 @@ public class UserRegistrationCtl extends BaseCtl {
                 log.info("User registered successfully: " + bean.getLogin());
             } catch (ApplicationException e) {
                 log.error("ApplicationException in doPost() during registration", e);
-                e.printStackTrace();
                 ServletUtility.handleException(e, request, response, getView());
                 return;
             } catch (DuplicateRecordException e) {

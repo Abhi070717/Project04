@@ -1,8 +1,6 @@
-<%@page import="in.co.rays.proj4.controller.ORSView"%>
-<%@page import="in.co.rays.proj4.controller.ForgetPasswordCtl"%>
-<%@page import="in.co.rays.proj4.util.DataUtility"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
-
+<%@page import="in.co.rays.proj4.controller.ForgetPasswordCtl"%>
+<%@page import="in.co.rays.proj4.util.ServletUtility"%>
 <html>
 <head>
 <title>Forget Password</title>
@@ -55,6 +53,5 @@
 			</table>
 		</div>
 	</form>
-	<%@ include file="Footer.jsp"%>
 </body>
 </html>

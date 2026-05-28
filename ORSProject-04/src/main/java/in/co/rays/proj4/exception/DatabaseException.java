@@ -1,7 +1,7 @@
 package in.co.rays.proj4.exception;
 
 /**
- * DatabaseException is a custom checked exception used to indicate 
+  * DatabaseException is a custom checked exception used to indicate 
  * errors that occur while interacting with the database layer.
  *
  * It is thrown when:
@@ -13,15 +13,18 @@ package in.co.rays.proj4.exception;
  * This exception helps isolate persistence-layer failures from 
  * general application exceptions, making debugging and handling easier.
  * 
+ * @author Abhishish Bhawsar
  */
 public class DatabaseException extends Exception {
 
-    /**
-     * Creates a DatabaseException with a detailed error message.
-     *
-     * @param msg the database-related error message
-     */
-    public DatabaseException(String msg) {
-        super(msg);
-    }
+	/**
+	 * Creates a DatabaseException with a detailed error message.
+	 *
+	 * @param msg the database-related error message
+	 */
+	public DatabaseException(String msg) {
+		super(msg);
+
+	}
+
 }

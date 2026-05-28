@@ -29,128 +29,132 @@ import in.co.rays.proj4.util.ServletUtility;
  * </p>
  *
  * @author Abhishish Bhawsar
+ * 
  * @version 1.0
+ *
  */
 @WebServlet(name = "ForgetPasswordCtl", urlPatterns = { "/ForgetPasswordCtl" })
 public class ForgetPasswordCtl extends BaseCtl {
 
-    private static final Logger log = Logger.getLogger(ForgetPasswordCtl.class);
+	private static final Logger log = Logger.getLogger(ForgetPasswordCtl.class);
 
-    /**
-     * Validates the forget-password form.
-     * <ul>
-     *   <li>login (email) is required</li>
-     *   <li>login must be a valid email format</li>
-     * </ul>
-     *
-     * @param request the {@link HttpServletRequest} containing form parameters
-     * @return {@code true} if validation passes; {@code false} otherwise
-     */
-    @Override
-    protected boolean validate(HttpServletRequest request) {
+	/**
+	 * Validates the forget-password form.
+	 * <ul>
+	 * <li>login (email) is required</li>
+	 * <li>login must be a valid email format</li>
+	 * </ul>
+	 *
+	 * @param request the {@link HttpServletRequest} containing form parameters
+	 * @return {@code true} if validation passes; {@code false} otherwise
+	 */
+	@Override
+	protected boolean validate(HttpServletRequest request) {
 
-        log.debug("ForgetPasswordCtl validate() started");
+		log.debug("ForgetPasswordCtl validate() started");
 
-        boolean pass = true;
+		boolean pass = true;
 
-        if (DataValidator.isNull(request.getParameter("login"))) {
-            log.warn("Login (email) is null");
-            request.setAttribute("login", PropertyReader.getValue("error.require", "Email Id"));
-            pass = false;
-        } else if (!DataValidator.isEmail(request.getParameter("login"))) {
-            log.warn("Invalid email format for login");
-            request.setAttribute("login", PropertyReader.getValue("error.email", "Login "));
-            pass = false;
-        }
+		if (DataValidator.isNull(request.getParameter("login"))) {
+			log.warn("Login (email) is null");
+			request.setAttribute("login", PropertyReader.getValue("error.require", "Email Id"));
+			pass = false;
+		} else if (!DataValidator.isEmail(request.getParameter("login"))) {
+			log.warn("Invalid email format for login");
+			request.setAttribute("login", PropertyReader.getValue("error.email", "Login "));
+			pass = false;
+		}
 
-        log.debug("ForgetPasswordCtl validate() completed with status: " + pass);
-        return pass;
-    }
+		log.debug("ForgetPasswordCtl validate() completed with status: " + pass);
+		return pass;
+	}
 
-    /**
-     * Populates a {@link UserBean} with the login (email) parameter from the
-     * request. This bean is then used to invoke the forget-password operation.
-     *
-     * @param request the {@link HttpServletRequest} containing parameters
-     * @return populated {@link BaseBean} (actually a {@link UserBean})
-     */
-    @Override
-    protected BaseBean populateBean(HttpServletRequest request) {
+	/**
+	 * Populates a {@link UserBean} with the login (email) parameter from the
+	 * request. This bean is then used to invoke the forget-password operation.
+	 *
+	 * @param request the {@link HttpServletRequest} containing parameters
+	 * @return populated {@link BaseBean} (actually a {@link UserBean})
+	 */
+	@Override
+	protected BaseBean populateBean(HttpServletRequest request) {
 
-        log.debug("ForgetPasswordCtl populateBean() called");
+		log.debug("ForgetPasswordCtl populateBean() called");
 
-        UserBean bean = new UserBean();
+		UserBean bean = new UserBean();
 
-        bean.setLogin(DataUtility.getString(request.getParameter("login")));
+		bean.setLogin(DataUtility.getString(request.getParameter("login")));
 
-        return bean;
-    }
+		return bean;
+	}
 
-    /**
-     * Handles HTTP GET requests by forwarding to the forget-password view.
-     *
-     * @param request  the {@link HttpServletRequest}
-     * @param response the {@link HttpServletResponse}
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	/**
+	 * Handles HTTP GET requests by forwarding to the forget-password view.
+	 *
+	 * @param request  the {@link HttpServletRequest}
+	 * @param response the {@link HttpServletResponse}
+	 * @throws ServletException if a servlet-specific error occurs
+	 * @throws IOException      if an I/O error occurs
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        log.info("ForgetPasswordCtl doGet() called");
-        ServletUtility.forward(getView(), request, response);
-    }
+		log.info("ForgetPasswordCtl doGet() called");
 
-    /**
-     * Handles HTTP POST requests. When the operation is {@link BaseCtl#OP_GO},
-     * it attempts to send the forgotten password to the user's registered email
-     * by calling {@link UserModel#forgetPassword(String)}. Appropriate success
-     * or error messages are set on the request based on the outcome.
-     *
-     * @param request  the {@link HttpServletRequest}
-     * @param response the {@link HttpServletResponse}
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+		ServletUtility.forward(getView(), request, response);
+	}
 
-        log.info("ForgetPasswordCtl doPost() started");
+	/**
+	 * Handles HTTP POST requests. When the operation is {@link BaseCtl#OP_GO}, it
+	 * attempts to send the forgotten password to the user's registered email by
+	 * calling {@link UserModel#forgetPassword(String)}. Appropriate success or
+	 * error messages are set on the request based on the outcome.
+	 *
+	 * @param request  the {@link HttpServletRequest}
+	 * @param response the {@link HttpServletResponse}
+	 * @throws ServletException if a servlet-specific error occurs
+	 * @throws IOException      if an I/O error occurs
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        String op = DataUtility.getString(request.getParameter("operation"));
-        log.debug("Operation received: " + op);
+		log.info("ForgetPasswordCtl doPost() started");
 
-        UserBean bean = (UserBean) populateBean(request);
-        UserModel model = new UserModel();
+		String op = DataUtility.getString(request.getParameter("operation"));
+		log.debug("Operation received: " + op);
 
-        if (OP_GO.equalsIgnoreCase(op)) {
-            try {
-                log.info("Processing forget password for login: " + bean.getLogin());
-                boolean flag = model.forgetPassword(bean.getLogin());
-                if (flag) {
-                    log.info("Forget password email sent successfully");
-                    ServletUtility.setSuccessMessage("Password has been sent to your email id", request);
-                }
-            } catch (RecordNotFoundException e) {
-                log.warn("Login not found for forget password", e);
-                ServletUtility.setErrorMessage(e.getMessage(), request);
-            } catch (ApplicationException e) {
-                log.error("ApplicationException during forget password", e);
-                e.printStackTrace();
-                ServletUtility.setErrorMessage("Please check your internet connection..!!", request);
-                ServletUtility.handleException(e, request, response, getView());
-            }
-            ServletUtility.forward(getView(), request, response);
-        }
-    }
+		UserBean bean = (UserBean) populateBean(request);
 
-    /**
-     * Returns the JSP view path for the forget-password page.
-     *
-     * @return view page path as {@link String}
-     */
-    @Override
-    protected String getView() {
-        return ORSView.FORGET_PASSWORD_VIEW;
-    }
+		UserModel model = new UserModel();
+
+		if (OP_GO.equalsIgnoreCase(op)) {
+			try {
+				log.info("Processing forget password for login: " + bean.getLogin());
+				boolean flag = model.forgetPassword(bean.getLogin());
+				if (flag) {
+					log.info("Forget password email sent successfully");
+					ServletUtility.setSuccessMessage("Password has been sent to your email id", request);
+				}
+			} catch (RecordNotFoundException e) {
+				log.warn("Login not found for forget password", e);
+				ServletUtility.setErrorMessage(e.getMessage(), request);
+			} catch (ApplicationException e) {
+				log.error("ApplicationException during forget password", e);
+				e.printStackTrace();
+				ServletUtility.setErrorMessage("Please check your internet connection..!!", request);
+				ServletUtility.handleException(e, request, response, getView());
+			}
+			ServletUtility.forward(getView(), request, response);
+		}
+	}
+
+	/**
+	 * Returns the JSP view path for the forget-password page.
+	 *
+	 * @return view page path as {@link String}
+	 */
+	@Override
+	protected String getView() {
+		return ORSView.FORGET_PASSWORD_VIEW;
+	}
 }

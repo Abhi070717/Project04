@@ -28,6 +28,7 @@ import java.util.HashMap;
  * </ul>
  *
  * @author Abhishish Bhawsar
+ * 
  * @version 1.0
  */
 public class EmailBuilder {

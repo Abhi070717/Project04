@@ -89,11 +89,11 @@
 					<th align="left">Gender<span style="color: red">*</span></th>
 					<td>
 						<%
-							HashMap<String, String> map = new HashMap<String, String>();
-							map.put("Female", "Female");
-							map.put("Male", "Male");
+						HashMap<String, String> map = new HashMap<String, String>();
+						map.put("Female", "Female");
+						map.put("Male", "Male");
 
-							String htmlList = HTMLUtility.getList("gender", bean.getGender(), map);
+						String htmlList = HTMLUtility.getList("gender", bean.getGender(), map);
 						%> <%=htmlList%>
 
 					</td>
@@ -120,6 +120,5 @@
 			</table>
 		</div>
 	</form>
-	<%@include file="Footer.jsp"%>
 </body>
 </html>

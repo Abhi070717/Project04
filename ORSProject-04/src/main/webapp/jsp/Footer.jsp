@@ -1,18 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <html>
 <head>
+<meta charset="ISO-8859-1">
+<title>Footer</title>
 <style type="text/css">
-div.sticky {
-	position: -webkit-sticky;
-	position: sticky;
+#Footer {
+	position: Fixed;
 	width: 100%;
-	text-align: center;
 	bottom: 0;
-	top: 100%;
+	text-align: center;
 }
 </style>
 </head>
-<div class="sticky">
-	<HR>
-	<strong>Copyrights &copy; Rays Technologies</strong>
-</div>
+<body>
+	<div id="Footer">
+		<hr>
+		<h3>&copy Rays Technology, Indore - 2026</h3>
+	</div>
+</body>
 </html>

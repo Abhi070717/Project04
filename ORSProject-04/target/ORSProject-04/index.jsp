@@ -1,4 +1,6 @@
-<%@page import="in.co.rays.proj4.controller.ORSView"%>
+<%@ page import="in.co.rays.proj4.util.ServletUtility" %>
+<%@ page import="in.co.rays.proj4.bean.UserBean" %>
+<%@ page import="in.co.rays.proj4.controller.ORSView" %>
 <html>
 <head>
 <title>Online Result System</title>
@@ -8,17 +10,18 @@
 <body>
 	<br>
 	<br>
-	<div align="center">
-		<img src="img/logo.png" align="middle" width="318" height="127">
-	</div>
+	<marquee behavior="alternate" scrollamount="300" loop="1">
+		<div align="center">
+			<img src="img/customLogo.jpg" align="middle" width="318" height="127"
+				border="0">
+		</div>
+	</marquee>
 	<br>
 	<br>
-
 	<h1 align="center">
 		<font size="10px" color="red"> <a
 			href="<%=ORSView.WELCOME_CTL%>">Online Result System</a></font>
 	</h1>
 
-	<!--  style="text-decoration: noon" -->
 </body>
 </html>

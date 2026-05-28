@@ -1,4 +1,3 @@
-
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
@@ -36,17 +35,17 @@
 
 		<form action="<%=ORSView.ROLE_LIST_CTL%>" method="post">
 			<%
-				int pageNo = ServletUtility.getPageNo(request);
-				int pageSize = ServletUtility.getPageSize(request);
-				int index = ((pageNo - 1) * pageSize) + 1;
-				int nextListSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
+			int pageNo = ServletUtility.getPageNo(request);
+			int pageSize = ServletUtility.getPageSize(request);
+			int index = ((pageNo - 1) * pageSize) + 1;
+			int nextListSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-				List<RoleBean> roleList = (List<RoleBean>) request.getAttribute("roleList");
+			List<RoleBean> roleList = (List<RoleBean>) request.getAttribute("roleList");
 
-				List<RoleBean> list = (List<RoleBean>) ServletUtility.getList(request);
-				Iterator<RoleBean> it = list.iterator();
+			List<RoleBean> list = (List<RoleBean>) ServletUtility.getList(request);
+			Iterator<RoleBean> it = list.iterator();
 
-				if (list.size() != 0) {
+			if (list.size() != 0) {
 			%>
 			<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
 				type="hidden" name="pageSize" value="<%=pageSize%>">
@@ -72,8 +71,8 @@
 				</tr>
 
 				<%
-					while (it.hasNext()) {
-							bean = (RoleBean) it.next();
+				while (it.hasNext()) {
+					bean = (RoleBean) it.next();
 				%>
 				<tr>
 					<td style="text-align: center;"><input type="checkbox"
@@ -82,10 +81,10 @@
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getName()%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getDescription()%></td>
 					<td style="text-align: center;"><a
-						href="<%=ORSView.ROLE_CTL%>?id=<%=bean.getId()%>">Edit</a></td>
+						href="RoleCtl?id=<%=bean.getId()%>">Edit</a></td>
 				</tr>
 				<%
-					}
+				}
 				%>
 			</table>
 
@@ -105,8 +104,8 @@
 			</table>
 
 			<%
-				}
-				if (list.size() == 0) {
+			}
+			if (list.size() == 0) {
 			%>
 			<table>
 				<tr>
@@ -115,10 +114,9 @@
 				</tr>
 			</table>
 			<%
-				}
+			}
 			%>
 		</form>
 	</div>
-	<%@ include file="Footer.jsp"%>
 </body>
 </html>

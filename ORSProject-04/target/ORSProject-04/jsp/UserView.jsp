@@ -1,3 +1,4 @@
+<%@page import="in.co.rays.proj4.bean.UserBean"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.controller.UserCtl"%>
 <%@page import="java.util.List"%>
@@ -20,17 +21,17 @@
 			scope="request"></jsp:useBean>
 
 		<%
-			List<UserBean> roleList = (List<UserBean>) request.getAttribute("roleList");
+		List<UserBean> roleList = (List<UserBean>) request.getAttribute("roleList");
 		%>
 
 		<div align="center">
 			<h1 align="center" style="margin-bottom: -15; color: navy">
 				<%
-					if (bean != null && bean.getId() > 0) {
+				if (bean != null && bean.getId() > 0) {
 				%>Update<%
-					} else {
+				} else {
 				%>Add<%
-					}
+				}
 				%>
 				User
 			</h1>
@@ -87,7 +88,7 @@
 				</tr>
 				<tr>
 					<th align="left">Confirm Password<span style="color: red">*</span></th>
-					<td><input type="password" name="confirmPassword"
+					<td><input type="password" name="confirmPassword"  
 						placeholder="Enter Confirm Password"
 						value="<%=DataUtility.getStringData(bean.getPassword())%>"></td>
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("confirmPassword", request)%></font></td>
@@ -104,11 +105,11 @@
 					<th align="left">Gender<span style="color: red">*</span></th>
 					<td>
 						<%
-							HashMap<String, String> map = new HashMap<String, String>();
-							map.put("Male", "Male");
-							map.put("Female", "Female");
+						HashMap<String, String> map = new HashMap<String, String>();
+						map.put("Male", "Male");
+						map.put("Female", "Female");
 
-							String htmlList = HTMLUtility.getList("gender", bean.getGender(), map);
+						String htmlList = HTMLUtility.getList("gender", bean.getGender(), map);
 						%> <%=htmlList%>
 					</td>
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("gender", request)%></font></td>
@@ -132,24 +133,23 @@
 				<tr>
 					<th></th>
 					<%
-						if (bean != null && bean.getId() > 0) {
+					if (bean != null && bean.getId() > 0) {
 					%>
 					<td align="left" colspan="2"><input type="submit"
 						name="operation" value="<%=UserCtl.OP_UPDATE%>"> <input
 						type="submit" name="operation" value="<%=UserCtl.OP_CANCEL%>">
 						<%
-							} else {
+						} else {
 						%>
 					<td align="left" colspan="2"><input type="submit"
 						name="operation" value="<%=UserCtl.OP_SAVE%>"> <input
 						type="submit" name="operation" value="<%=UserCtl.OP_RESET%>">
 						<%
-							}
+						}
 						%>
 				</tr>
 			</table>
 		</div>
 	</form>
-	<%@include file="Footer.jsp"%>
 </body>
 </html>
