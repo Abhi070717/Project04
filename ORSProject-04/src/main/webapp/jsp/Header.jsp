@@ -94,9 +94,9 @@
 	<!-- Daily Module -->
 	<a href="<%=ORSView.MODULE_CTL%>"><b>Other Modules</b></a>
 	<b>|</b>
-	<a href="<%=ORSView.EMPLOYEE_CTL%>">Add Employee Payroll</a>
+	<a href="<%=ORSView.ATM_CTL%>">Add Atm System</a>
 	<b>|</b>
-	<a href="<%=ORSView.EMPLOYEE_LIST_CTL%>">Employee Payroll List</a>
+	<a href="<%=ORSView.ATM_LIST_CTL%>">Atm System List</a>
 	<%
 	}
 	%>

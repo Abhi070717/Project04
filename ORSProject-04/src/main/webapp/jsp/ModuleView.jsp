@@ -144,6 +144,14 @@
 	<a href="<%=ORSView.LIBRARY_CTL%>">Add Digital Library</a>
 	<b>|</b>
 	<a href="<%=ORSView.LIBRARY_LIST_CTL%>">Digital Library List</a>
+	<b>|</b>
+	<a href="<%=ORSView.PARKING_CTL%>">Add Smart Parking</a>
+	<b>|</b>
+	<a href="<%=ORSView.PARKING_LIST_CTL%>">Smart Parking List</a>
+	<b>|</b>
+	<a href="<%=ORSView.EMPLOYEE_CTL%>">Add Employee Payroll</a>
+	<b>|</b>
+	<a href="<%=ORSView.EMPLOYEE_LIST_CTL%>">Employee Payroll List</a>
 	<%
 	}
 	%>
