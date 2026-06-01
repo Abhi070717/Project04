@@ -3,28 +3,28 @@
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
-<%@page import="in.co.rays.proj4.controller.LoginHistoryListCtl"%>
+<%@page import="in.co.rays.proj4.controller.CarListCtl"%>
 <%@page import="in.co.rays.proj4.controller.BaseCtl"%>
-<%@page import="in.co.rays.proj4.bean.LoginBean"%>
+<%@page import="in.co.rays.proj4.bean.CarBean"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 
 <html>
 <head>
-<title>Login History List</title>
+<title>Car Rental List</title>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
-	<%@include file="ModuleView.jsp"%>
+	<%@include file="Header.jsp"%>
 
-	<jsp:useBean id="bean" class="in.co.rays.proj4.bean.LoginBean"
+	<jsp:useBean id="bean" class="in.co.rays.proj4.bean.CarBean"
 		scope="request"></jsp:useBean>
 
 	<div align="center">
-		<h1 align="center" style="margin-bottom: -15; color: navy;">Login
-			History List</h1>
+		<h1 align="center" style="margin-bottom: -15; color: navy;">Car
+			Rental List</h1>
 
 		<div style="height: 15px; margin-bottom: 12px">
 			<h3>
@@ -35,17 +35,17 @@
 			</h3>
 		</div>
 
-		<form action="<%=ORSView.LOGIN_HISTORY_LIST_CTL%>" method="post">
+		<form action="<%=ORSView.CAR_LIST_CTL%>" method="post">
 			<%
 			int pageNo = ServletUtility.getPageNo(request);
 			int pageSize = ServletUtility.getPageSize(request);
 			int index = ((pageNo - 1) * pageSize) + 1;
 			int nextListSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-			List<LoginBean> nameList = (List<LoginBean>) request.getAttribute("nameList");
+			List<CarBean> modelList = (List<CarBean>) request.getAttribute("modelList");
 
-			List<LoginBean> list = (List<LoginBean>) ServletUtility.getList(request);
-			Iterator<LoginBean> it = list.iterator();
+			List<CarBean> list = (List<CarBean>) ServletUtility.getList(request);
+			Iterator<CarBean> it = list.iterator();
 
 			if (list.size() != 0) {
 			%>
@@ -54,15 +54,15 @@
 
 			<table style="width: 100%">
 				<tr>
-					<td align="center"><label><b>Login Code:</b></label> <input
-						type="text" name="code" placeholder="Enter Login Code"
-						value="<%=ServletUtility.getParameter("code", request)%>">&emsp;
+					<td align="center"><label><b>Customer Name:</b></label> <input
+						type="text" name="name" placeholder="Enter Customer Name"
+						value="<%=ServletUtility.getParameter("name", request)%>">&emsp;
 
-						<label><b>User Name: </b></label> <%=HTMLUtility.getList("name", String.valueOf(bean.getUserName()), nameList)%>
+						<label><b>Car Model: </b></label> <%=HTMLUtility.getList("model", String.valueOf(bean.getCarModel()), modelList)%>
 						&nbsp; <input type="submit" name="operation"
-						value="<%=LoginHistoryListCtl.OP_SEARCH%>">&nbsp; <input
+						value="<%=CarListCtl.OP_SEARCH%>">&nbsp; <input
 						type="submit" name="operation"
-						value="<%=LoginHistoryListCtl.OP_RESET%>"></td>
+						value="<%=CarListCtl.OP_RESET%>"></td>
 				</tr>
 			</table>
 			<br>
@@ -71,29 +71,27 @@
 				<tr style="background-color: #e1e6f1e3;">
 					<th width="5%"><input type="checkbox" id="selectall" /></th>
 					<th width="5%">S.No</th>
-					<th width="25%">History Code</th>
-					<th width="25%">User Name</th>
-					<th width="30%">Login Time</th>
-					<th width="25%">Status</th>
+					<th width="25%">Customer Name</th>
+					<th width="25%">Car Model</th>
+					<th width="30%">Rent Per Day</th>
+					<th width="25%">Fuel Type</th>
 					<th width="10%">Edit</th>
 				</tr>
 
 				<%
 				while (it.hasNext()) {
-					bean = (LoginBean) it.next();
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					String date = sdf.format(bean.getLoginTime());
+					bean = (CarBean) it.next();
 				%>
 				<tr>
 					<td style="text-align: center;"><input type="checkbox"
 						class="case" name="ids" value="<%=bean.getId()%>"></td>
 					<td style="text-align: center;"><%=index++%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=bean.getHistoryCode()%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=bean.getUserName()%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=date%></td>
-					<td style="text-align: center; text-transform: capitalize;"><%=bean.getStatus()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getCustomerName()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getCarModel()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getRentPerDay()%></td>
+					<td style="text-align: center; text-transform: capitalize;"><%=bean.getFuelType()%></td>
 					<td style="text-align: center;"><a
-						href="LoginHistoryCtl?id=<%=bean.getId()%>">Edit</a></td>
+						href="CarCtl?id=<%=bean.getId()%>">Edit</a></td>
 					<%
 					}
 					%>
@@ -103,14 +101,14 @@
 			<table style="width: 100%">
 				<tr>
 					<td style="width: 25%"><input type="submit" name="operation"
-						value="<%=LoginHistoryListCtl.OP_PREVIOUS%>"
+						value="<%=CarListCtl.OP_PREVIOUS%>"
 						<%=pageNo > 1 ? "" : "disabled"%>></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=LoginHistoryListCtl.OP_NEW%>"></td>
+						name="operation" value="<%=CarListCtl.OP_NEW%>"></td>
 					<td align="center" style="width: 25%"><input type="submit"
-						name="operation" value="<%=LoginHistoryListCtl.OP_DELETE%>"></td>
+						name="operation" value="<%=CarListCtl.OP_DELETE%>"></td>
 					<td style="width: 25%" align="right"><input type="submit"
-						name="operation" value="<%=LoginHistoryListCtl.OP_NEXT%>"
+						name="operation" value="<%=CarListCtl.OP_NEXT%>"
 						<%=nextListSize != 0 ? "" : "disabled"%>></td>
 				</tr>
 			</table>
@@ -122,7 +120,7 @@
 			<table>
 				<tr>
 					<td align="right"><input type="submit" name="operation"
-						value="<%=LoginHistoryListCtl.OP_BACK%>"></td>
+						value="<%=CarListCtl.OP_BACK%>"></td>
 				</tr>
 			</table>
 			<%

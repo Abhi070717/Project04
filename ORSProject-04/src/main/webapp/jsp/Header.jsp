@@ -94,9 +94,9 @@
 	<!-- Daily Module -->
 	<a href="<%=ORSView.MODULE_CTL%>"><b>Other Modules</b></a>
 	<b>|</b>
-	<a href="<%=ORSView.ATM_CTL%>">Add Atm System</a>
+	<a href="<%=ORSView.CAR_CTL%>">Add Car Rental</a>
 	<b>|</b>
-	<a href="<%=ORSView.ATM_LIST_CTL%>">Atm System List</a>
+	<a href="<%=ORSView.CAR_LIST_CTL%>">Car Rental List</a>
 	<%
 	}
 	%>

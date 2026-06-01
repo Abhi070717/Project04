@@ -50,10 +50,8 @@
 
 			if (list.size() != 0) {
 			%>
-
 			<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
 				type="hidden" name="pageSize" value="<%=pageSize%>">
-
 			<table style="width: 100%">
 				<tr>
 					<td align="center"><label><b>First Name :</b></label> <input
@@ -77,7 +75,6 @@
 				</tr>
 			</table>
 			<br>
-
 			<table border="1" style="width: 100%; border: groove;">
 				<tr style="background-color: #e1e6f1e3;">
 					<th width="5%"><input type="checkbox" id="selectall" /></th>
@@ -125,7 +122,6 @@
 				}
 				%>
 			</table>
-
 			<table style="width: 100%">
 				<tr>
 					<td style="width: 25%"><input type="submit" name="operation"

@@ -1,10 +1,10 @@
 <%@page import="java.util.concurrent.Phaser"%>
 <%@page import="in.co.rays.proj4.controller.ORSView"%>
-<%@page import="in.co.rays.proj4.bean.LoginBean"%>
+<%@page import="in.co.rays.proj4.bean.CarBean"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="in.co.rays.proj4.util.HTMLUtility"%>
-<%@page import="in.co.rays.proj4.controller.LoginHistoryCtl"%>
+<%@page import="in.co.rays.proj4.controller.CarCtl"%>
 <%@page import="in.co.rays.proj4.util.DataUtility"%>
 <%@page import="in.co.rays.proj4.util.ServletUtility"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -13,15 +13,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Add Login History</title>
+<title>Add Car Rental</title>
 <link rel="icon" type="image/png"
 	href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 </head>
 <body>
-	<form action="<%=ORSView.LOGIN_HISTORY_CTL%>" method="post">
-		<%@ include file="ModuleView.jsp"%>
+	<form action="<%=ORSView.CAR_CTL%>" method="post">
+		<%@ include file="Header.jsp"%>
 
-		<jsp:useBean id="bean" class="in.co.rays.proj4.bean.LoginBean"
+		<jsp:useBean id="bean" class="in.co.rays.proj4.bean.CarBean"
 			scope="request"></jsp:useBean>
 
 		<div align="center">
@@ -33,7 +33,7 @@
 				%>Add<%
 				}
 				%>
-				Login History
+				Car Rental
 			</h1>
 
 			<div style="height: 15px; margin-bottom: 12px">
@@ -57,34 +57,33 @@
 
 			<table>
 				<tr>
-					<th align="left">History Code<span style="color: red">*</span></th>
-					<td><input type="text" name="code"
-						placeholder="Enter History Code"
-						value="<%=DataUtility.getStringData(bean.getHistoryCode())%>"></td>
-					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("code", request)%></font></td>
-				</tr>
-				<tr>
-					<th align="left">User Name<span style="color: red">*</span></th>
+					<th align="left">Customer Name<span style="color: red">*</span></th>
 					<td><input type="text" name="name"
-						placeholder="Enter User Name"
-						value="<%=DataUtility.getStringData(bean.getUserName())%>"></td>
+						placeholder="Enter Customer Name"
+						value="<%=DataUtility.getStringData(bean.getCustomerName())%>"></td>
 					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("name", request)%></font></td>
 				</tr>
-
 				<tr>
-					<th align="left">Login Time<span style="color: red">*</span></th>
-					<td><input type="text" id=udatee name="login_time"
-						placeholder="Enter Login Time"
-						value="<%=DataUtility.getDateString(bean.getLoginTime())%>"></td>
-					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("login_time", request)%></font></td>
+					<th align="left">Car Model<span style="color: red">*</span></th>
+					<td><input type="text" name="model"
+						placeholder="Enter CarModel"
+						value="<%=DataUtility.getStringData(bean.getCarModel())%>"></td>
+					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("model", request)%></font></td>
+				</tr>
+				<tr>
+					<th align="left">Rent Per Day<span style="color: red">*</span></th>
+					<td><input type="text" name="rent"
+						placeholder="Enter Car Rent Per Day"
+						value="<%=DataUtility.getStringData(bean.getRentPerDay() > 0 ? bean.getRentPerDay() : "")%>"></td>
+					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("rent", request)%></font></td>
 				</tr>
 
 				<tr>
-					<th align="left">Status<span style="color: red">*</span></th>
-					<td><input type="text" name="status"
-						placeholder="Enter Status"
-						value="<%=DataUtility.getStringData(bean.getStatus())%>"></td>
-					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("status", request)%></font></td>
+					<th align="left">Fuel Type<span style="color: red">*</span></th>
+					<td><input type="text" name="fuel"
+						placeholder="Enter Fuel Type"
+						value="<%=DataUtility.getStringData(bean.getFuelType())%>"></td>
+					<td style="position: fixed;"><font color="red"> <%=ServletUtility.getErrorMessage("fuel", request)%></font></td>
 				</tr>
 				<tr>
 					<th></th>
@@ -96,14 +95,14 @@
 					if (bean != null && bean.getId() > 0) {
 					%>
 					<td align="left" colspan="2"><input type="submit"
-						name="operation" value="<%=LoginHistoryCtl.OP_UPDATE%>"> <input
-						type="submit" name="operation" value="<%=LoginHistoryCtl.OP_CANCEL%>">
+						name="operation" value="<%=CarCtl.OP_UPDATE%>"> <input
+						type="submit" name="operation" value="<%=CarCtl.OP_CANCEL%>">
 						<%
 						} else {
 						%>
 					<td align="left" colspan="2"><input type="submit"
-						name="operation" value="<%=LoginHistoryCtl.OP_SAVE%>"> <input
-						type="submit" name="operation" value="<%=LoginHistoryCtl.OP_RESET%>">
+						name="operation" value="<%=CarCtl.OP_SAVE%>"> <input
+						type="submit" name="operation" value="<%=CarCtl.OP_RESET%>">
 						<%
 						}
 						%>
